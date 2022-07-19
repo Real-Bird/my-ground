@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Menu from "@components/menu";
 import Image from "next/image";
+import Head from "next/head";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,10 +14,13 @@ interface LayoutProps {
 
 export default function Layout({ title, children, ...rest }: LayoutProps) {
   const [isDropdown, setIsDropdown] = useState(false);
+  const [head, setHead] = useState("Loading || JS's Ground");
   const router = useRouter();
   const toggleDropdown = () => setIsDropdown((prev) => !prev);
+  useEffect(() => setHead(`${title} || JS's Ground`), []);
   return (
     <div className="flex justify-center">
+      <title>{head}</title>
       <div className="fixed top-0 flex h-12 w-full max-w-xl  items-center justify-center border-b bg-white  px-10 text-lg font-medium text-gray-800">
         <div className="absolute left-4 top-1">
           <Image
