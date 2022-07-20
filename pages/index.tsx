@@ -85,14 +85,14 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="pt-5">
             <img src="https://ghchart.rshah.org/339933/real-bird" />
             <span>🌱 Github Progress</span>
           </div>
           <div className="flex flex-col flex-wrap space-y-3">
             <h1 className="text-2xl font-bold">About me</h1>
-            <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-2">
-              <div>
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-2">
+              <div className="space-y-3">
                 <div className="flex flex-row space-x-2 font-bold">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,7 @@ const Home: NextPage = () => {
                   </div>
                 </div>
               </div>
-              <div>
+              <div className="space-y-3">
                 <div className="flex flex-row space-x-2 font-bold">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

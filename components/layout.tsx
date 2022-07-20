@@ -63,8 +63,9 @@ export default function Layout({ title, children, ...rest }: LayoutProps) {
           </div>
         </div>
       ) : null}
-      <div className="pt-12 pb-24">{children}</div>
-
+      <div className="mt-12 h-[86vh] w-full overflow-y-scroll pb-5">
+        {children}
+      </div>
       <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700">
         <Link href="/">
           <a
