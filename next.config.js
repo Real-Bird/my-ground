@@ -10,9 +10,6 @@ const nextConfig = {
   },
 };
 
-module.exports = (phase, { defaultConfig }) => {
-  return removeImports({
-    ...defaultConfig,
-    ...nextConfig,
-  });
-};
+module.exports = removeImports({
+  ...nextConfig,
+});

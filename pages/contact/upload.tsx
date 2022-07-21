@@ -1,10 +1,9 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
 import { useForm } from "react-hook-form";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Input from "@components/input";
-import { cls } from "@libs/client/utils";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
@@ -12,8 +11,7 @@ import dynamic from "next/dynamic";
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
-
-function Upload(): JSX.Element {
+const Upload: NextPage = () => {
   const [md, setMd] = useState<string | undefined>("# Hello World");
   const router = useRouter();
   const { register, handleSubmit, watch } = useForm({ mode: "onChange" });
@@ -59,6 +57,6 @@ function Upload(): JSX.Element {
       </form>
     </Layout>
   );
-}
+};
 
 export default Upload;
