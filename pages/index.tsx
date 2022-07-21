@@ -5,11 +5,11 @@ const Home: NextPage = () => {
   return (
     <Layout title="HOME">
       <div className="mx-3 flex flex-col space-y-3">
-        <div className="hidden h-20 w-20 rounded-full bg-slate-500 sm:block" />
+        {/* <div className="hidden h-20 w-20 rounded-full bg-slate-500" /> */}
         <div className="space-y-5 divide-y-2">
           <div>
             <h1 className="text-2xl font-bold">Introduce</h1>
-            <div className="flex flex-wrap space-y-2">
+            <div className="flex flex-col flex-wrap space-y-2">
               <h2 className="text-xl font-medium">
                 <div>안녕하세요!🙋‍♂️</div>
                 <div>프론트엔드 개발자를 꿈꾸는 김진영의 놀이터입니다.</div>
@@ -91,7 +91,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex flex-col flex-wrap space-y-3">
             <h1 className="text-2xl font-bold">About me</h1>
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-2">
+            <div className="flex flex-col space-y-4">
               <div className="space-y-3">
                 <div className="flex flex-row space-x-2 font-bold">
                   <svg

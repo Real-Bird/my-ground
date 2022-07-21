@@ -21,14 +21,14 @@ export default function Layout({ title, children, ...rest }: LayoutProps) {
   return (
     <div className="flex justify-center">
       <title>{head}</title>
-      <div className="fixed top-0 flex h-12 w-full max-w-xl  items-center justify-center border-b bg-white  px-10 text-lg font-medium text-gray-800">
+      <div className="fixed top-0 flex h-12 w-full max-w-xl items-center justify-center border-b bg-white  px-10 text-lg font-medium text-gray-800">
         <div className="absolute left-4 top-1">
           <Image
             src="https://picsum.photos/200?random=1"
-            width={40}
-            height={40}
             alt="profile"
-            className="rounded-full bg-gray-500"
+            height={40}
+            width={40}
+            className="h-6 w-6 rounded-full bg-gray-500"
           />
         </div>
         <span>{title}</span>
@@ -63,7 +63,7 @@ export default function Layout({ title, children, ...rest }: LayoutProps) {
           </div>
         </div>
       ) : null}
-      <div className="mt-12 h-[86vh] w-full overflow-y-scroll pb-5">
+      <div className="mt-12 h-[86vh] w-full max-w-xl overflow-y-scroll pb-5 pt-3">
         {children}
       </div>
       <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700">
