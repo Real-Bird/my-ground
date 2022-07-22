@@ -21,7 +21,8 @@ const Upload: NextPage = () => {
   const onValid = (validForm: any) => {
     if (loading) return;
     validForm.content = md;
-    upload({ ...validForm });
+    console.log(validForm);
+    // upload({ ...validForm });
   };
   useEffect(() => {
     if (data && data.ok) {

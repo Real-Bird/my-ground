@@ -8,12 +8,13 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      body: { name, password, content },
+      body: { name, password, content, title },
     } = req;
     const post = await client.myGroundPost.create({
       data: {
         name,
         password,
+        title,
         content,
       },
     });
@@ -23,7 +24,11 @@ async function handler(
     });
   }
   if (req.method === "GET") {
-    const posts = await client.myGroundPost.findMany({});
+    const posts = await client.myGroundPost.findMany({
+      orderBy: {
+        created: "desc",
+      },
+    });
     res.json({
       ok: true,
       posts,
