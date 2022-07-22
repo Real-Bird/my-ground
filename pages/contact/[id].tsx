@@ -9,7 +9,7 @@ interface PostResponse {
   post: MyGroundPost;
 }
 
-const Home: NextPage = () => {
+const PostDetail: NextPage = () => {
   const router = useRouter();
   const { data } = useSWR<PostResponse>(
     router.query.id ? `/api/contact/${router.query.id}` : null
@@ -22,4 +22,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default PostDetail;
