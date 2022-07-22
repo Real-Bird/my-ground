@@ -7,6 +7,8 @@ import Input from "@components/input";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
+import useSWR from "swr";
+import useMutation from "@libs/client/useMutation";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -14,12 +16,18 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 const Upload: NextPage = () => {
   const [md, setMd] = useState<string | undefined>("# Hello World");
   const router = useRouter();
-  const { register, handleSubmit, watch } = useForm({ mode: "onChange" });
+  const [upload, { data, loading }] = useMutation("/api/contact");
+  const { register, handleSubmit } = useForm({ mode: "onChange" });
   const onValid = (validForm: any) => {
-    validForm.mdEditor = md;
-    console.log(validForm);
+    if (loading) return;
+    validForm.content = md;
+    upload({ ...validForm });
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (data && data.ok) {
+      router.push(`/contact`);
+    }
+  }, [data]);
   return (
     <Layout title="Opinion">
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
@@ -31,22 +39,28 @@ const Upload: NextPage = () => {
             type="text"
           />
           <Input
-            register={register("Password", { required: true })}
+            register={register("password", { required: true })}
             label="Password"
             name="pwd"
             type="password"
           />
         </div>
-        <div className="h-[590px] rounded-md bg-slate-400">
+        <Input
+          register={register("title", { required: true })}
+          label="Title"
+          name="title"
+          type="text"
+        />
+        <div className="h-[500px] rounded-md bg-slate-400">
           <MDEditor
-            {...register("mdEditor")}
+            {...register("content")}
             value={md}
             onChange={setMd}
             autoFocus
             preview="edit"
-            height={590}
-            minHeight={590}
-            maxHeight={590}
+            height={500}
+            minHeight={500}
+            maxHeight={500}
             visiableDragbar={false}
           />
         </div>

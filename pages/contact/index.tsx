@@ -1,12 +1,25 @@
 import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
+import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";
+import Link from "next/link";
+import useSWR from "swr";
+
+interface ContactReponse {
+  ok: boolean;
+  posts: MyGroundPost[];
+}
 
 const Home: NextPage = () => {
+  const { data } = useSWR<ContactReponse>("/api/contact");
   return (
     <Layout title="CONTACT">
       <div className="mx-3 flex flex-col space-y-3">
-        <h1 className="text-xl text-red-600">Contact ME</h1>
+        {data?.posts.map((post) => (
+          <Link key={post.id} href={`/contact/${post.id}`}>
+            <a className="cursor-pointer">{post.title}</a>
+          </Link>
+        ))}
         <FloatingButton href="/contact/upload">
           <svg
             xmlns="http://www.w3.org/2000/svg"
