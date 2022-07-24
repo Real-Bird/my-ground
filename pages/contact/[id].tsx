@@ -12,7 +12,7 @@ interface PostResponse {
   post: MyGroundPost;
 }
 
-const MDEditor: any = dynamic(
+const MarkdownViewer: any = dynamic(
   () =>
     import("@uiw/react-md-editor").then((mod: any) => {
       return mod.default.Markdown;
@@ -42,7 +42,7 @@ const PostDetail: NextPage = () => {
           </div>
         </div>
         <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
-          <MDEditor source={data?.post.content} />
+          <MarkdownViewer source={data?.post.content} />
         </div>
       </div>
     </Layout>

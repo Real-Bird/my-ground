@@ -6,7 +6,7 @@ interface InputProps {
   kind?: "text" | "phone" | "price";
   type: string;
   register: UseFormRegisterReturn;
-  placeholder?: string;
+  error?: string;
   value?: string;
 }
 
@@ -16,7 +16,7 @@ export default function Input({
   kind = "text",
   register,
   type,
-  placeholder,
+  error,
   value,
 }: InputProps) {
   return (
@@ -28,7 +28,7 @@ export default function Input({
         {label}
       </label>
       {kind === "text" ? (
-        <div className="relative flex items-center  rounded-md shadow-sm">
+        <div className="relative flex flex-col items-start  rounded-md shadow-sm">
           <input
             id={name}
             {...register}
@@ -36,6 +36,7 @@ export default function Input({
             className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
             value={value}
           />
+          <div className="text-red-500">{error}</div>
         </div>
       ) : null}
     </div>

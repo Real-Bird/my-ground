@@ -1,23 +1,37 @@
 import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
+import RegDate from "@components/regDate";
 import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import useSWR from "swr";
 
-interface ContactReponse {
+interface ContactResponse {
   ok: boolean;
   posts: MyGroundPost[];
 }
 
 const Home: NextPage = () => {
-  const { data } = useSWR<ContactReponse>("/api/contact");
+  const { data } = useSWR<ContactResponse>("/api/contact");
   return (
     <Layout title="CONTACT">
-      <div className="mx-3 flex flex-col space-y-3">
+      <div className="flex flex-col space-y-3 px-3">
+        <div className="flex flex-row items-center justify-between divide-x-2 font-bold">
+          <span className="w-20 text-center">작성자</span>
+          <span className="w-3/5 text-center">제 목</span>
+          <span className="w-20 text-center">작성일</span>
+        </div>
         {data?.posts.map((post) => (
           <Link key={post.id} href={`/contact/${post.id}`}>
-            <a className="cursor-pointer">{post.title}</a>
+            <a className="flex w-full cursor-pointer flex-row items-center justify-between space-x-5 divide-x-2">
+              <div className="w-20 text-start text-sm">{post.name}</div>
+              <div className="flex w-3/5 items-start justify-start pl-2 text-xl">
+                {post.title}
+              </div>
+              <div className="w-20 text-end text-sm">
+                <RegDate regDate={post.created} y m d />
+              </div>
+            </a>
           </Link>
         ))}
         <FloatingButton href="/contact/upload">
