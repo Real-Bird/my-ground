@@ -31,7 +31,7 @@ const Home: NextPage = () => {
               <a
                 className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl"
                 title={
-                  post.content.slice(0, 120).length <= 120
+                  post.content.length <= 120
                     ? post.content
                     : `${post.content.slice(0, 120)}...`
                 }

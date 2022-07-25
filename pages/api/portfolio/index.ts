@@ -10,7 +10,6 @@ async function handler(
     const {
       body: { content, title, password },
     } = req;
-    console.log(title, content, password);
 
     //   const post = await client.myPortfolio.create({
     //     data: {
@@ -36,4 +35,8 @@ async function handler(
   }
 }
 
-export default withHandler({ methods: ["POST", "GET"], handler });
+export default withHandler({
+  methods: ["POST", "GET"],
+  handler,
+  isPrivate: false,
+});
