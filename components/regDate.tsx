@@ -25,13 +25,15 @@ export default function RegDate({
   return (
     <>
       {y && m && d ? (
-        <span {...rest}>{`${date.getFullYear()}-${("0" + date.getMonth()).slice(
-          -2
-        )}-${("0" + date.getDate()).slice(-2)}`}</span>
+        <span {...rest}>{`${date.getFullYear()}-${(
+          "0" +
+          (date.getMonth() + 1)
+        ).slice(-2)}-${("0" + date.getDate()).slice(-2)}`}</span>
       ) : (
-        <span {...rest}>{`${date.getFullYear()}-${("0" + date.getMonth()).slice(
-          -2
-        )}-${("0" + date.getDate()).slice(
+        <span {...rest}>{`${date.getFullYear()}-${(
+          "0" +
+          (date.getMonth() + 1)
+        ).slice(-2)}-${("0" + date.getDate()).slice(
           -2
         )} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</span>
       )}

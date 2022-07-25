@@ -1,3 +1,4 @@
+import { cls } from "@libs/client/utils";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
@@ -8,6 +9,7 @@ interface InputProps {
   register: UseFormRegisterReturn;
   error?: string;
   value?: string;
+  isDisabled?: boolean;
 }
 
 export default function Input({
@@ -18,6 +20,7 @@ export default function Input({
   type,
   error,
   value,
+  isDisabled,
 }: InputProps) {
   return (
     <div>
@@ -33,7 +36,10 @@ export default function Input({
             id={name}
             {...register}
             type={type}
-            className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+            className={cls(
+              isDisabled ? "bg-gray-300" : "",
+              "w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+            )}
             value={value}
           />
           <div className="text-red-500">{error}</div>

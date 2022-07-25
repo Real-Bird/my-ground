@@ -22,19 +22,29 @@ const Home: NextPage = () => {
           <span className="w-20 text-center">작성일</span>
         </div>
         {data?.posts.map((post) => (
-          <Link key={post.id} href={`/contact/${post.id}`}>
-            <a className="flex w-full cursor-pointer flex-row items-center justify-between space-x-5 divide-x-2">
-              <div className="w-20 text-start text-sm">{post.name}</div>
-              <div className="flex w-3/5 items-start justify-start pl-2 text-xl">
+          <div
+            key={post.id}
+            className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
+          >
+            <div className="w-20 text-start text-sm">{post.name}</div>
+            <Link href={`/contact/${post.id}`}>
+              <a
+                className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl"
+                title={
+                  post.content.slice(0, 120).length <= 120
+                    ? post.content
+                    : `${post.content.slice(0, 120)}...`
+                }
+              >
                 {post.title}
-              </div>
-              <div className="w-20 text-end text-sm">
-                <RegDate regDate={post.created} y m d />
-              </div>
-            </a>
-          </Link>
+              </a>
+            </Link>
+            <div className="w-20 text-end text-sm">
+              <RegDate regDate={post.created} y m d />
+            </div>
+          </div>
         ))}
-        <FloatingButton href="/contact/upload">
+        <FloatingButton href="/contact/upload" type="Upload">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"

@@ -9,6 +9,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
+import { MyGroundPost } from "@prisma/client";
 import Button from "@components/button-component";
 
 interface UploadFormResponse {
@@ -18,41 +19,72 @@ interface UploadFormResponse {
   content: string;
 }
 
+interface RevisedResponse {
+  ok: boolean;
+  post: MyGroundPost;
+}
+
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
 const Upload: NextPage = () => {
-  const [md, setMd] = useState<string | undefined>("# Hello World");
+  const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
-  const [upload, { data, loading }] = useMutation("/api/contact");
+  const { data } = useSWR<RevisedResponse>(
+    router.query.id ? `/api/contact/${router.query.id}` : null
+  );
+  const [revised, { data: revisedData, loading: revisedLoading }] = useMutation(
+    router.query.id ? `/api/contact/${router.query.id}` : null
+  );
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
+    setValue,
   } = useForm<UploadFormResponse>({ mode: "onChange" });
+  const [prevPwd, setPrevPwd] = useState<string>("");
   const onValid = (validForm: any) => {
-    if (loading) return;
+    if (revisedLoading) return;
     validForm.content = md;
-    upload({ ...validForm });
+    if (validForm.password === prevPwd) {
+      revised({
+        ...validForm,
+        title: validForm.title,
+        content: validForm.content,
+      });
+    } else {
+      setError("password", {
+        type: "password",
+        message: "Plz, Correct your password",
+      });
+    }
   };
   useEffect(() => {
     if (data && data.ok) {
-      router.push(`/contact`);
+      setValue("name", data?.post.name);
+      setValue("title", data?.post.title);
+      setPrevPwd(data?.post.password);
+      setMd(data?.post.content);
     }
   }, [data]);
+  useEffect(() => {
+    if (revisedData && revisedData.ok) {
+      router.push(`/contact/${router.query.id}`);
+    }
+  }, [revisedData, router]);
   return (
-    <Layout title="Opinion" backUrl="back">
+    <Layout title="Revised" backUrl="back">
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
         <div className="flex flex-row justify-between">
           <Input
             register={register("name", {
-              required: "Plz, Write your name.",
-              maxLength: { value: 5, message: "5 letter at most." },
+              disabled: true,
             })}
             label="Name"
             name="name"
             type="text"
-            error={errors.name?.message}
+            isDisabled
           />
           <Input
             register={register("password", {
@@ -77,7 +109,7 @@ const Upload: NextPage = () => {
         <div className="h-[500px] rounded-md bg-slate-400">
           <MDEditor
             {...register("content")}
-            value={md}
+            value={data?.post.content}
             onChange={setMd}
             autoFocus
             preview="edit"
@@ -87,7 +119,7 @@ const Upload: NextPage = () => {
             visiableDragbar={false}
           />
         </div>
-        <Button text="Upload your opinion" />
+        <Button text="Revised your post" />
       </form>
     </Layout>
   );

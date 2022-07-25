@@ -20,6 +20,25 @@ async function handler(
       post,
     });
   }
+  if (req.method === "POST") {
+    const {
+      query: { id },
+      body: { title, content },
+    } = req;
+    const post = await client.myGroundPost.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        title,
+        content,
+      },
+    });
+    res.json({
+      ok: true,
+      post,
+    });
+  }
 }
 
-export default withHandler({ methods: ["GET"], handler });
+export default withHandler({ methods: ["GET", "POST"], handler });

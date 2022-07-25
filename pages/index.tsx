@@ -47,7 +47,7 @@ const Home: NextPage = () => {
                       />
                     </svg>
                   </span>
-                  <span>Frontend</span>
+                  <span>Main</span>
                 </div>
                 <div className="flex flex-row flex-wrap space-x-1 py-1">
                   <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
@@ -76,11 +76,30 @@ const Home: NextPage = () => {
                       />
                     </svg>
                   </span>
-                  <div>Backend</div>
+                  <div>Sub</div>
                 </div>
                 <div className="flex flex-row flex-wrap space-x-1 py-1">
-                  <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white" />
-                  <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white" />
+                  {/* <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white" /> */}
+                  <img
+                    src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"
+                    alt="Python"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/Django-092E20?style=flat&logo=Django&logoColor=white"
+                    alt="Django"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/FireBase-FFCA28?style=flat&logo=FireBase&logoColor=white"
+                    alt="FireBase"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=Prisma&logoColor=white"
+                    alt="Prisma"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/PlanetScale-000000?style=flat&logo=PlanetScale&logoColor=white"
+                    alt="PlanetScale"
+                  />
                 </div>
               </div>
             </div>
