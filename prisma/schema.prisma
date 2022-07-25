@@ -255,10 +255,11 @@ model MyGroundPost {
   updated  DateTime @updatedAt
 }
 
-model MyPortfolio {
-  id      Int      @id @default(autoincrement())
-  title   String
-  content String   @db.LongText
-  created DateTime @default(now())
-  updated DateTime @updatedAt
+model MyBlog {
+  id       Int      @id @default(autoincrement())
+  title    String
+  content  String   @db.LongText
+  category String   @default("")
+  created  DateTime @default(now())
+  updated  DateTime @updatedAt
 }

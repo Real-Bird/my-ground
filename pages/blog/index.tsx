@@ -1,14 +1,39 @@
 import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
+import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
+import { MyBlog } from "@prisma/client";
 import type { NextPage } from "next";
+import useSWR from "swr";
+
+interface PostsResponse {
+  ok: boolean;
+  posts: MyBlog[];
+}
 
 const Home: NextPage = () => {
   const { admin, ok } = useAdmin();
+  const { data } = useSWR<PostsResponse>("/api/blog");
   return (
     <Layout title="BLOG">
-      <div className="mx-3 flex flex-col space-y-3">
-        <h1 className="text-xl text-red-600">My Blog</h1>
+      <div className="mx-3 flex flex-col space-y-3 divide-y-2 text-center">
+        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 text-xl font-bold">
+          <div className="w-20">카테고리</div>
+          <div className="flex-1 text-center">제 목</div>
+          <div className="w-24">작성일</div>
+        </div>
+        {data?.posts?.map((post) => (
+          <div
+            key={post.id}
+            className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
+          >
+            <div className="w-20 text-sm">{post.category}</div>
+            <div className="flex-1 font-semibold">{post.title}</div>
+            <div className="w-24 text-sm">
+              <RegDate regDate={post.created} y m d />
+            </div>
+          </div>
+        ))}
       </div>
       {ok && (
         <FloatingButton href="/blog/upload" type="Portfolio Upload">

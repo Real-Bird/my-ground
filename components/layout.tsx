@@ -78,12 +78,10 @@ export default function Layout({
           className="absolute right-4 top-1 cursor-pointer"
           onClick={toggleDropdown}
         >
-          <Image
-            src="https://picsum.photos/200?random=1"
+          <img
+            src="https://picsum.photos/200"
             alt="profile"
-            height={40}
-            width={40}
-            className="h-6 w-6 rounded-full bg-gray-500"
+            className="h-10 w-10 rounded-full bg-gray-500"
           />
         </div>
       </div>
