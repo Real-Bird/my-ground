@@ -243,6 +243,8 @@ model ChatRoom {
   updated     DateTime    @updatedAt
 }
 
+// My Ground Area
+
 model MyGroundPost {
   id       Int      @id @default(autoincrement())
   name     String
@@ -251,4 +253,12 @@ model MyGroundPost {
   content  String   @db.LongText
   created  DateTime @default(now())
   updated  DateTime @updatedAt
+}
+
+model MyPortfolio {
+  id      Int      @id @default(autoincrement())
+  title   String
+  content String   @db.LongText
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 }

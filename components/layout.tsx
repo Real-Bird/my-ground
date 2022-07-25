@@ -4,13 +4,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Menu from "@components/menu";
 import Image from "next/image";
-import Head from "next/head";
+import useAdmin from "@libs/client/useAdmin";
+import useMutation from "@libs/client/useMutation";
 
 interface LayoutProps {
   children: React.ReactNode;
   title: string;
   backUrl?: string;
   [key: string]: any;
+}
+
+interface LogoutResponse {
+  ok: boolean;
 }
 
 export default function Layout({
@@ -22,7 +27,6 @@ export default function Layout({
   const [isDropdown, setIsDropdown] = useState(false);
   const [head, setHead] = useState("Loading || JS's Ground");
   const router = useRouter();
-  const toggleDropdown = () => setIsDropdown((prev) => !prev);
   const onBackUrl = () => {
     if (backUrl === "back") {
       router.back();
@@ -31,6 +35,19 @@ export default function Layout({
     }
   };
   useEffect(() => setHead(`${title} || JS's Ground`), []);
+  const { ok } = useAdmin();
+  const [logout, { data, loading }] =
+    useMutation<LogoutResponse>("/api/logout");
+  const [isLogged, setIsLogged] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdown((prev) => !prev);
+    setIsLogged((prev) => ok);
+  };
+  const onLogout = () => {
+    if (loading) return;
+    logout({});
+    setIsLogged(false);
+  };
   return (
     <div className="flex justify-center">
       <title>{head}</title>
@@ -74,7 +91,16 @@ export default function Layout({
         <div>
           <div className="absolute right-0 top-10 mt-2 w-48 origin-top-right rounded-md shadow-lg">
             <div className="rounded-md bg-white py-1 ring-1 ring-black ring-opacity-5">
-              <Menu path="/log-in" menu="Log-in" />
+              {isLogged ? (
+                <div
+                  onClick={onLogout}
+                  className="block cursor-pointer px-4 py-2 text-sm leading-5 text-gray-900 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:border-b dark:border-gray-600 last:dark:border-b-0"
+                >
+                  로그아웃
+                </div>
+              ) : (
+                <Menu path="/log-in" menu="주인장 로그인" />
+              )}
               <Menu path="/blog" menu="블로그" />
               <Menu path="/contact" menu="문의" />
             </div>

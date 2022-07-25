@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
-import * as argon2 from "argon2";
 
 async function handler(
   req: NextApiRequest,
@@ -9,24 +8,23 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      body: { name, password, content, title },
+      body: { content, title, password },
     } = req;
-    const pwdHash = await argon2.hash(password);
-    const post = await client.myGroundPost.create({
-      data: {
-        name,
-        password: pwdHash,
-        title,
-        content,
-      },
-    });
-    res.json({
-      ok: true,
-      post,
-    });
+    console.log(title, content, password);
+
+    //   const post = await client.myPortfolio.create({
+    //     data: {
+    //       title,
+    //       content,
+    //     },
+    //   });
+    //   res.json({
+    //     ok: true,
+    //     post,
+    //   });
   }
   if (req.method === "GET") {
-    const posts = await client.myGroundPost.findMany({
+    const posts = await client.myPortfolio.findMany({
       orderBy: {
         created: "desc",
       },
