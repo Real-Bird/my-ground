@@ -88,22 +88,20 @@ export default function Layout({
         </div>
       </div>
       {isDropdown ? (
-        <div>
-          <div className="absolute right-0 top-10 mt-2 w-48 origin-top-right rounded-md shadow-lg">
-            <div className="rounded-md bg-white py-1 ring-1 ring-black ring-opacity-5">
-              {isLogged ? (
-                <div
-                  onClick={onLogout}
-                  className="block cursor-pointer px-4 py-2 text-sm leading-5 text-gray-900 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:border-b dark:border-gray-600 last:dark:border-b-0"
-                >
-                  로그아웃
-                </div>
-              ) : (
-                <Menu path="/log-in" menu="주인장 로그인" />
-              )}
-              <Menu path="/blog" menu="블로그" />
-              <Menu path="/contact" menu="문의" />
-            </div>
+        <div className="absolute right-0 top-10 mt-2 w-48 origin-top-right rounded-md shadow-lg sm:right-[8%] md:right-[15%] lg:right-1/4 xl:right-[30%] 2xl:right-[36%]">
+          <div className="rounded-md bg-white py-1 ring-1 ring-black ring-opacity-5">
+            {isLogged ? (
+              <div
+                onClick={onLogout}
+                className="block cursor-pointer px-4 py-2 text-sm leading-5 text-gray-900 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:border-b dark:border-gray-600 last:dark:border-b-0"
+              >
+                로그아웃
+              </div>
+            ) : (
+              <Menu path="/log-in" menu="주인장 로그인" />
+            )}
+            <Menu path="/blog" menu="블로그" />
+            <Menu path="/contact" menu="문의" />
           </div>
         </div>
       ) : null}

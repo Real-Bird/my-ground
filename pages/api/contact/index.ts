@@ -38,4 +38,8 @@ async function handler(
   }
 }
 
-export default withHandler({ methods: ["POST", "GET"], handler });
+export default withHandler({
+  methods: ["POST", "GET"],
+  handler,
+  isPrivate: false,
+});

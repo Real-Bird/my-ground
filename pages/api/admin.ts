@@ -19,17 +19,25 @@ async function handler(
         email,
       },
     });
-    if (isUser && phone === process.env.ADMIN_PWD!) {
+    if (isUser) {
       const isVerified = await argon2.verify(isUser.phone, phone);
       if (!isVerified) {
         return res.json({ ok: false, error: "Not Verified Password" });
       }
-      req.session.user = {
-        id: isUser.id,
-      };
-      await req.session.save();
-      res.json({ ok: true });
+      if (phone === process.env.ADMIN_PWD!) {
+        req.session.user = {
+          id: isUser.id,
+        };
+        await req.session.save();
+        res.json({ ok: true });
+      }
     } else {
+      if (!(phone === process.env.ADMIN_PWD!)) {
+        return res.json({
+          ok: false,
+          error: "You are Not Admin! Don't hack me!",
+        });
+      }
       const pwdHash = await argon2.hash(phone);
       const admin = await client.user.create({
         data: {
