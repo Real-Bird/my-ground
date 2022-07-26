@@ -4,7 +4,9 @@ import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
 import { MyBlog } from "@prisma/client";
 import type { NextPage } from "next";
-import useSWR from "swr";
+import useSWR, { SWRConfig } from "swr";
+import client from "@libs/server/client";
+import Link from "next/link";
 
 interface PostsResponse {
   ok: boolean;
@@ -28,7 +30,9 @@ const Home: NextPage = () => {
             className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
           >
             <div className="w-20 text-sm">{post.category}</div>
-            <div className="flex-1 font-semibold">{post.title}</div>
+            <Link href={`/blog/${post.id}`}>
+              <a className="flex-1 font-semibold">{post.title}</a>
+            </Link>
             <div className="w-24 text-sm">
               <RegDate regDate={post.created} y m d />
             </div>
@@ -56,4 +60,34 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+const Page: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          "/api/blog": {
+            ok: true,
+            posts,
+          },
+        },
+      }}
+    >
+      <Home />
+    </SWRConfig>
+  );
+};
+
+export async function getServerSideProps() {
+  const posts = await client.myBlog.findMany({
+    orderBy: {
+      created: "desc",
+    },
+  });
+  return {
+    props: {
+      posts: JSON.parse(JSON.stringify(posts)),
+    },
+  };
+}
+
+export default Page;

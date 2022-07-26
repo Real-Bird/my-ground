@@ -9,46 +9,52 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
+import { MyBlog } from "@prisma/client";
 import Button from "@components/button-component";
+import { CategoricalResponse } from "pages/blog/upload";
 import { cls } from "@libs/client/utils";
 
-interface UploadFormResponse {
+interface BlogRevisedFormResponse {
   category: string;
   title: string;
   content: string;
 }
 
-export interface CategoricalResponse {
+interface RevisedResponse {
   ok: boolean;
-  categories: {
-    id: number;
-    category: string;
-  }[];
+  post: MyBlog;
 }
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
 
-const Upload: NextPage = () => {
-  const [md, setMd] = useState<string | undefined>("");
+const BlogRevised: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<CategoricalResponse>("/api/blog");
-  const [upload, { data: uploadData, loading: uploadLoading }] =
-    useMutation("/api/blog");
+  const { data } = useSWR<RevisedResponse>(
+    router.query.id ? `/api/blog/${router.query.id}` : null
+  );
+  const { data: categoriesData } = useSWR<CategoricalResponse>("/api/blog");
+  const [revised, { data: revisedData, loading: revisedLoading }] = useMutation(
+    router.query.id ? `/api/blog/${router.query.id}` : null
+  );
+  const [md, setMd] = useState<string | undefined>(data?.post.content);
   const {
     register,
     handleSubmit,
-    formState: { errors },
     setError,
+    formState: { errors },
     setValue,
-  } = useForm<UploadFormResponse>({ mode: "onChange" });
+    getValues,
+  } = useForm<BlogRevisedFormResponse>({ mode: "onChange" });
   const [keyword, setKeyword] = useState<string>("");
   const [viewKeyword, setViewKeyword] = useState<boolean>(false);
-  const onValid = (validForm: any) => {
-    if (uploadLoading) return;
+  const onValid = async (validForm: BlogRevisedFormResponse) => {
+    if (revisedLoading) return;
     validForm.content = md;
-    upload({ ...validForm });
+    revised({
+      ...validForm,
+    });
   };
   const searchKeyword = ({ target: { value } }: any) => {
     setKeyword(value);
@@ -59,17 +65,24 @@ const Upload: NextPage = () => {
     setViewKeyword(false);
   };
   useEffect(() => {
-    if (uploadData && uploadData.ok) {
-      router.push(`/blog`);
+    if (data && data.ok) {
+      setValue("category", data?.post.category);
+      setValue("title", data?.post.title);
+      setMd(data?.post.content);
     }
-  }, [uploadData]);
+  }, [data]);
+  useEffect(() => {
+    if (revisedData && revisedData.ok) {
+      router.push(`/blog/${router.query.id}`);
+    }
+  }, [revisedData, router]);
   return (
-    <Layout title="Post" backUrl="back">
+    <Layout title="Revised" backUrl="back">
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <Input
             register={register("category", {
-              required: "Plz, Write this post's category",
+              required: "I need a category",
               onChange: searchKeyword,
               value: keyword,
             })}
@@ -78,7 +91,7 @@ const Upload: NextPage = () => {
             type="text"
           />
           <div className="absolute z-10 w-full">
-            {data?.categories.map((category) => (
+            {categoriesData?.categories.map((category) => (
               <div
                 key={category.id}
                 className={cls(
@@ -97,6 +110,7 @@ const Upload: NextPage = () => {
         <Input
           register={register("title", {
             required: "Plz, Write the title.",
+            maxLength: { value: 30, message: "30 letter at most" },
           })}
           label="Title"
           name="title"
@@ -116,10 +130,10 @@ const Upload: NextPage = () => {
             visiableDragbar={false}
           />
         </div>
-        <Button text="Upload My Post" />
+        <Button text="Revised your post" />
       </form>
     </Layout>
   );
 };
 
-export default Upload;
+export default BlogRevised;
