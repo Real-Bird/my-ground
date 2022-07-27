@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
-import client from "@libs/server/client";
 
 async function handler(
   req: NextApiRequest,
@@ -8,29 +7,43 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      body: { content, title, password },
+      body: {
+        title,
+        thumbnail,
+        developDate,
+        content,
+        github,
+        deploy,
+        deployIcon,
+      },
     } = req;
-
-    //   const post = await client.myPortfolio.create({
-    //     data: {
-    //       title,
-    //       content,
-    //     },
-    //   });
-    //   res.json({
-    //     ok: true,
-    //     post,
-    //   });
-  }
-  if (req.method === "GET") {
-    const posts = await client.myPortfolio.findMany({
-      orderBy: {
-        created: "desc",
+    const portfolio = await client.myPortfolio.create({
+      data: {
+        title,
+        thumbnail,
+        developDate,
+        content,
+        github,
+        deploy,
+        deployIcon,
       },
     });
     res.json({
       ok: true,
-      posts,
+      portfolio,
+    });
+  }
+  if (req.method === "GET") {
+    const portfolio = await client.myPortfolio.findMany({
+      select: {
+        id: true,
+        title: true,
+        thumbnail: true,
+      },
+    });
+    res.json({
+      ok: true,
+      portfolio,
     });
   }
 }

@@ -263,3 +263,26 @@ model MyBlog {
   created  DateTime @default(now())
   updated  DateTime @updatedAt
 }
+
+model MyPortfolio {
+  id          Int          @id @default(autoincrement())
+  title       String
+  thumbnail   String
+  developDate String
+  content     String       @db.LongText
+  github      String
+  deploy      String
+  deployIcon  String?      @db.MediumText
+  created     DateTime     @default(now())
+  updated     DateTime     @updatedAt
+  stackBadge  StackBadge[]
+}
+
+model StackBadge {
+  id        Int         @id @default(autoincrement())
+  pf        MyPortfolio @relation(fields: [pfId], references: [id], onDelete: Cascade)
+  pfId      Int
+  badgeIcon String?
+  created   DateTime    @default(now())
+  updated   DateTime    @updatedAt
+}

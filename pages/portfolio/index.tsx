@@ -1,14 +1,35 @@
 import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
 import useAdmin from "@libs/client/useAdmin";
+import { MyPortfolio } from "@prisma/client";
 import type { NextPage } from "next";
+import Link from "next/link";
+import useSWR from "swr";
+
+interface PortfolioProps {
+  ok: boolean;
+  portfolio: MyPortfolio[];
+}
 
 const Portfolio: NextPage = () => {
   const { admin, ok } = useAdmin();
+  const { data } = useSWR<PortfolioProps>("/api/portfolio");
   return (
     <Layout title="PORTFOLIO">
       <div className="mx-3 flex flex-col space-y-3">
-        <h1 className="text-xl text-red-600">My Portfolio</h1>
+        <h1 className="text-center text-xl text-red-600">My Portfolio List</h1>
+        {data ? (
+          data?.portfolio.map((pf) => (
+            <Link href={`/portfolio/${pf.id}`} key={pf.id}>
+              <a className="flex aspect-video w-56 flex-col items-center">
+                <img src={pf.thumbnail} className="h-32 w-56" />
+                <div className="text-center text-xl font-bold">{pf.title}</div>
+              </a>
+            </Link>
+          ))
+        ) : (
+          <div className="h-32 w-56 bg-slate-300" />
+        )}
       </div>
       {ok && (
         <FloatingButton href="/portfolio/upload" type="Portfolio Upload">
