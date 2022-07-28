@@ -29,8 +29,55 @@ async function handler(
     });
   }
   if (req.method === "POST") {
+    const {
+      body: {
+        thumbnail,
+        developDate,
+        github,
+        deploy,
+        deployIcon,
+        title,
+        stacks,
+        content,
+      },
+      query: { id },
+    } = req;
+    const createPf = await client.myPortfolio.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        thumbnail,
+        title,
+        content,
+        deploy,
+        developDate,
+        github,
+        deployIcon,
+      },
+    });
+    stacks.map(async (stack: string) => {
+      const existStack = await client.stackBadge.findFirst({
+        where: {
+          AND: [{ pfId: +id }, { badgeIcon: stack }],
+        },
+      });
+      if (!existStack) {
+        await client.stackBadge.create({
+          data: {
+            pf: {
+              connect: {
+                id: +id,
+              },
+            },
+            badgeIcon: stack,
+          },
+        });
+      }
+    });
     res.json({
       ok: true,
+      createPf,
     });
   }
 }

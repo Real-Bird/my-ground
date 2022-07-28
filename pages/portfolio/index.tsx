@@ -19,16 +19,20 @@ const Portfolio: NextPage = () => {
       <div className="mx-3 flex flex-col space-y-3">
         <h1 className="text-center text-xl text-red-600">My Portfolio List</h1>
         {data ? (
-          data?.portfolio.map((pf) => (
-            <Link href={`/portfolio/${pf.id}`} key={pf.id}>
-              <a className="flex aspect-video w-56 flex-col items-center">
-                <img src={pf.thumbnail} className="h-32 w-56" />
-                <div className="text-center text-xl font-bold">{pf.title}</div>
-              </a>
-            </Link>
-          ))
+          <div className="flex flex-row">
+            {data?.portfolio.map((pf) => (
+              <Link href={`/portfolio/${pf.id}`} key={pf.id}>
+                <a className="flex aspect-video w-56 flex-col items-center rounded-md shadow-md">
+                  <img src={pf.thumbnail} className="h-32 w-56 rounded-md" />
+                  <div className="py-1 text-center text-xl font-bold">
+                    {pf.title}
+                  </div>
+                </a>
+              </Link>
+            ))}
+          </div>
         ) : (
-          <div className="h-32 w-56 bg-slate-300" />
+          <div className="h-32 w-56 rounded-md bg-slate-300 shadow-md" />
         )}
       </div>
       {ok && (

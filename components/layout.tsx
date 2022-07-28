@@ -98,7 +98,7 @@ export default function Layout({
             ) : (
               <Menu path="/log-in" menu="주인장 로그인" />
             )}
-            <Menu path="/blog" menu="블로그" />
+            <Menu path="/notice" menu="공지사항" />
             <Menu path="/contact" menu="문의" />
           </div>
         </div>

@@ -7,10 +7,19 @@ import Input from "@components/input";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
-import { cls } from "@libs/client/utils";
+import useSWR from "swr";
+import { MyPortfolio, StackBadge } from "@prisma/client";
+
+interface PfwithStack extends MyPortfolio {
+  stackBadge: StackBadge[];
+}
+
+interface PfResponse {
+  ok: boolean;
+  portfolio: PfwithStack;
+}
 
 interface UploadFormResponse {
   thumbnail: string;
@@ -27,10 +36,15 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
 
-const Upload: NextPage = () => {
+const Revised: NextPage = () => {
   const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
-  const [upload, { data, loading }] = useMutation(`/api/portfolio`);
+  const { data } = useSWR<PfResponse>(
+    router.query.id ? `/api/portfolio/${router.query.id}` : null
+  );
+  const [revised, { data: revisedData, loading: revisedLoading }] = useMutation(
+    `/api/portfolio/${router.query.id}`
+  );
   const {
     register,
     handleSubmit,
@@ -39,7 +53,7 @@ const Upload: NextPage = () => {
     setFocus,
   } = useForm<UploadFormResponse>({ mode: "onChange" });
   const onValid = (validForm: UploadFormResponse) => {
-    if (loading) return;
+    if (revisedLoading) return;
     validForm.content = md;
     validForm.stacks = stackNames;
     if (
@@ -51,7 +65,7 @@ const Upload: NextPage = () => {
       !validForm.title
     )
       return;
-    upload({ ...validForm });
+    revised({ ...validForm });
   };
   const [stackNames, setStackNames] = useState([]);
   const [whichStack, setWhichStack] = useState("");
@@ -71,14 +85,26 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     setFocus("thumbnail");
-  }, []);
-  useEffect(() => {
-    if (data && data.ok) {
-      router.push(`/portfolio`);
+    if (data) {
+      setValue("thumbnail", data?.portfolio.thumbnail);
+      setValue("developDate", data?.portfolio.developDate);
+      setValue("github", data?.portfolio.github);
+      setValue("deploy", data?.portfolio.deploy);
+      setValue("deployIcon", data?.portfolio.deployIcon);
+      setValue("title", data?.portfolio.title);
+      data?.portfolio.stackBadge.map((badge) =>
+        setStackNames((prev) => [...prev, badge.badgeIcon])
+      );
+      setMd(data?.portfolio.content);
     }
   }, [data]);
+  useEffect(() => {
+    if (revisedData && revisedData.ok) {
+      router.push(`/portfolio/${router.query.id}`);
+    }
+  }, [revisedData]);
   return (
-    <Layout title="Work" backUrl="back">
+    <Layout title="Revised" backUrl="back">
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
         <Input
           register={register("thumbnail")}
@@ -134,17 +160,24 @@ const Upload: NextPage = () => {
             id="stacks"
             onKeyDown={onPushStacks}
           />
-          {stackNames.map((stack, i) => (
-            <div className="py-1" key={i} onClick={onDeleteStack}>
-              <img src={stack} alt={whichStack} />
-            </div>
-          ))}
+          <div className="flex flex-row space-x-2">
+            {stackNames
+              .filter((ele, i) => {
+                return stackNames.indexOf(ele) === i;
+              })
+              .map((stack, i) => (
+                <div className="py-1" key={i} onClick={onDeleteStack}>
+                  <img src={stack} alt={whichStack} />
+                </div>
+              ))}
+          </div>
         </div>
         <div className="h-[500px] rounded-md bg-slate-400">
           <MDEditor
             {...register("content")}
             value={md}
             onChange={setMd}
+            autoFocus
             preview="edit"
             height={500}
             minHeight={500}
@@ -152,10 +185,10 @@ const Upload: NextPage = () => {
             visiableDragbar={false}
           />
         </div>
-        <Button text="Upload My Portfolio" />
+        <Button text="Revised your post" />
       </form>
     </Layout>
   );
 };
 
-export default Upload;
+export default Revised;

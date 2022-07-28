@@ -51,14 +51,14 @@ const portfolioDetail: NextPage = () => {
             </h1>
             <div className="py-5">
               <div className="flex flex-row justify-center">
-                <div className="flex flex-col items-center space-y-1">
+                <div className="flex w-1/3 flex-col items-center space-y-1">
                   <span className="font-semibold">Stack</span>
-                  <div className="flex flex-row flex-wrap justify-center space-y-1">
+                  <div className="flex flex-row flex-wrap justify-center">
                     {data?.portfolio.stackBadge.map((stack) => (
                       <img
                         key={stack.id}
                         src={stack.badgeIcon}
-                        className="mx-2"
+                        className="m-1"
                       />
                     ))}
                   </div>

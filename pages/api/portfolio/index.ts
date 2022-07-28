@@ -5,34 +5,6 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  if (req.method === "POST") {
-    const {
-      body: {
-        title,
-        thumbnail,
-        developDate,
-        content,
-        github,
-        deploy,
-        deployIcon,
-      },
-    } = req;
-    const portfolio = await client.myPortfolio.create({
-      data: {
-        title,
-        thumbnail,
-        developDate,
-        content,
-        github,
-        deploy,
-        deployIcon,
-      },
-    });
-    res.json({
-      ok: true,
-      portfolio,
-    });
-  }
   if (req.method === "GET") {
     const portfolio = await client.myPortfolio.findMany({
       select: {
@@ -46,10 +18,50 @@ async function handler(
       portfolio,
     });
   }
+  if (req.method === "POST") {
+    const {
+      body: {
+        thumbnail,
+        developDate,
+        github,
+        deploy,
+        deployIcon,
+        title,
+        stacks,
+        content,
+      },
+    } = req;
+    const createPf = await client.myPortfolio.create({
+      data: {
+        thumbnail,
+        title,
+        content,
+        deploy,
+        developDate,
+        github,
+        deployIcon,
+      },
+    });
+    stacks.map(async (stack: string) => {
+      await client.stackBadge.create({
+        data: {
+          pf: {
+            connect: {
+              id: createPf.id,
+            },
+          },
+          badgeIcon: stack,
+        },
+      });
+    });
+    res.json({
+      ok: true,
+    });
+  }
 }
 
 export default withHandler({
-  methods: ["POST", "GET"],
+  methods: ["GET", "POST"],
   handler,
   isPrivate: false,
 });
