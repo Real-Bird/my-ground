@@ -28,7 +28,7 @@ const MarkdownViewer: any = dynamic(
   }
 );
 
-const portfolioDetail: NextPage = () => {
+const PortfolioDetail: NextPage = () => {
   const router = useRouter();
   const { data } = useSWR<PortfolioProps>(
     router.query.id ? `/api/portfolio/${router.query.id}` : null
@@ -134,4 +134,4 @@ const portfolioDetail: NextPage = () => {
   );
 };
 
-export default portfolioDetail;
+export default PortfolioDetail;
