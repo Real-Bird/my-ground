@@ -6,6 +6,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
 import FloatingButton from "@components/floating-btn";
 import useAdmin from "@libs/client/useAdmin";
+import client from "@libs/server/client";
 
 interface PostResponse {
   ok: boolean;
