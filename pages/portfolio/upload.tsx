@@ -11,6 +11,7 @@ import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
 import { cls } from "@libs/client/utils";
+import useAdmin from "@libs/client/useAdmin";
 
 interface UploadFormResponse {
   thumbnail: string;
@@ -28,6 +29,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 const Upload: NextPage = () => {
+  const { admin, ok } = useAdmin();
   const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
   const [upload, { data, loading }] = useMutation(`/api/portfolio`);
@@ -69,6 +71,11 @@ const Upload: NextPage = () => {
   const onDeleteStack = ({ target: { src } }: any) => {
     setStackNames((prev) => prev.filter((i) => i !== src));
   };
+  useEffect(() => {
+    if (!ok) {
+      router.push("/portfolio");
+    }
+  }, []);
   useEffect(() => {
     setFocus("thumbnail");
   }, []);

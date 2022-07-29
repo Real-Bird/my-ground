@@ -13,6 +13,7 @@ import { MyBlog } from "@prisma/client";
 import Button from "@components/button-component";
 import { CategoricalResponse } from "pages/blog/upload";
 import { cls } from "@libs/client/utils";
+import useAdmin from "@libs/client/useAdmin";
 
 interface BlogRevisedFormResponse {
   category: string;
@@ -30,6 +31,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 const BlogRevised: NextPage = () => {
+  const { admin, ok } = useAdmin();
   const router = useRouter();
   const { data } = useSWR<RevisedResponse>(
     router.query.id ? `/api/blog/${router.query.id}` : null
@@ -64,6 +66,11 @@ const BlogRevised: NextPage = () => {
     setValue("category", textContent);
     setViewKeyword(false);
   };
+  useEffect(() => {
+    if (!ok) {
+      router.push("/blog");
+    }
+  }, []);
   useEffect(() => {
     if (data && data.ok) {
       setValue("category", data?.post.category);

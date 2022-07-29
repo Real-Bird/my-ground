@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
+import Link from "next/link";
 
 interface UploadFormResponse {
   name: string;
@@ -42,6 +43,13 @@ const Upload: NextPage = () => {
   }, [data]);
   return (
     <Layout title="Opinion" backUrl="back">
+      <div className="mx-auto w-fit border-2 text-center">
+        <Link href="/notice/02-Markdown-tutorial">
+          <a className="px-3 font-bold text-red-500">
+            ❗ 마크다운 게시글 작성법 ❗
+          </a>
+        </Link>
+      </div>
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
         <div className="flex flex-row justify-between">
           <Input

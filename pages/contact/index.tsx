@@ -16,6 +16,16 @@ const Home: NextPage = () => {
   return (
     <Layout title="CONTACT">
       <div className="flex flex-col space-y-3 px-3">
+        <div className="flex w-full flex-row items-center border-2">
+          <div className="border-r-2 px-5 font-bold">공지사항</div>
+          <div className="flex-1 text-center">
+            <Link href="notice/01-information">
+              <a target="_blank" className="text-center font-bold text-red-500">
+                Welcome My Blog
+              </a>
+            </Link>
+          </div>
+        </div>
         <div className="flex flex-row items-center justify-between divide-x-2 font-bold">
           <span className="w-20 text-center">작성자</span>
           <span className="w-3/5 text-center">제 목</span>

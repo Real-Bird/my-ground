@@ -11,6 +11,7 @@ import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
 import useSWR from "swr";
 import { MyPortfolio, StackBadge } from "@prisma/client";
+import useAdmin from "@libs/client/useAdmin";
 
 interface PfwithStack extends MyPortfolio {
   stackBadge: StackBadge[];
@@ -37,6 +38,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 const Revised: NextPage = () => {
+  const { admin, ok } = useAdmin();
   const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
   const { data } = useSWR<PfResponse>(
@@ -83,6 +85,11 @@ const Revised: NextPage = () => {
   const onDeleteStack = ({ target: { src } }: any) => {
     setStackNames((prev) => prev.filter((i) => i !== src));
   };
+  useEffect(() => {
+    if (!ok) {
+      router.push("/portfolio");
+    }
+  }, []);
   useEffect(() => {
     setFocus("thumbnail");
     if (data) {

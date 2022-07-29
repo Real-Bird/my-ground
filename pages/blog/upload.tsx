@@ -11,6 +11,7 @@ import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
 import { cls } from "@libs/client/utils";
+import useAdmin from "@libs/client/useAdmin";
 
 interface UploadFormResponse {
   category: string;
@@ -31,6 +32,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 const Upload: NextPage = () => {
+  const { admin, ok } = useAdmin();
   const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
   const { data } = useSWR<CategoricalResponse>("/api/blog");
@@ -58,6 +60,11 @@ const Upload: NextPage = () => {
     setValue("category", textContent);
     setViewKeyword(false);
   };
+  useEffect(() => {
+    if (!ok) {
+      router.push("/blog");
+    }
+  }, []);
   useEffect(() => {
     if (uploadData && uploadData.ok) {
       router.push(`/blog`);
