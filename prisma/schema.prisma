@@ -285,4 +285,6 @@ model StackBadge {
   badgeIcon String?
   created   DateTime    @default(now())
   updated   DateTime    @updatedAt
+
+  @@index([pfId])
 }
