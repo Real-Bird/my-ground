@@ -138,25 +138,25 @@ print(c) # 20
 
 - 선언 가능한 언어는 다음과 같습니다.
 
-| 언어 이름  | 작성 방식  |
-| :--------: | :--------: |
-|    Bash    |    bash    |
-|     C      |     c      |
-|     C#     |     cs     |
-|    C++     |    cpp     |
-|    CSS     |    css     |
-|    Diff    |    diff    |
-| HTML, XML  |    html    |
-|    HTTP    |    http    |
-|    Ini     |    ini     |
-|    JSON    |    json    |
-|    Java    |    java    |
-| JavaScript | javascript |
-|    PHP     |    php     |
-|    Perl    |    perl    |
-|   Python   |   python   |
-|    Ruby    |    ruby    |
-|    SQL     |    sql     |
+|언어 이름|작성 방식|
+|:----:|:----:|
+|Bash|bash|
+|C|c|
+|C#|cs|
+|C++|cpp|
+|CSS|css|
+|Diff|diff|
+|HTML, XML|html|
+|HTTP|http|
+|Ini|ini|
+|JSON|json|
+|Java|java|
+|JavaScript|javascript|
+|PHP|php|
+|Perl|perl|
+|Python|python|
+|Ruby|ruby|
+|SQL|sql|
 
 ## 구분선
 
@@ -316,11 +316,11 @@ _이탤릭_, _이탤릭_
 
 **ex**
 
-|     | 왼쪽 정렬 | 가운데 정렬 | 오른쪽 정렬 |
-| --- | :-------- | :---------: | ----------: |
-| 1행 | 좌1       |     중1     |         우1 |
-| 2행 | 좌2       |     중2     |         우2 |
-| 3행 | 좌3       |     중3     |         우3 |
+|    |왼쪽 정렬 |가운데 정렬|오른쪽 정렬
+|----|:----|:----:|----:
+|1행|좌1   |  중1  |   우1
+|2행|좌2   |  중2  |   우2
+|3행|좌3   |  중3  |   우3
 
 ---
 
