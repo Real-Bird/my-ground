@@ -45,7 +45,7 @@ const Upload: NextPage = () => {
     <Layout title="Opinion" backUrl="back">
       <div className="mx-auto w-fit border-2 text-center">
         <Link href="/notice/02-Markdown-tutorial">
-          <a className="px-3 font-bold text-red-500">
+          <a className="px-3 font-bold text-red-500" target={"_blank"}>
             ❗ 마크다운 게시글 작성법 ❗
           </a>
         </Link>
