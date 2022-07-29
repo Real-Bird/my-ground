@@ -79,7 +79,7 @@ export default function Layout({
           onClick={toggleDropdown}
         >
           <img
-            src="https://picsum.photos/200"
+            src="https://bit.ly/3Q5gYKG"
             alt="profile"
             className="h-10 w-10 rounded-full bg-gray-500"
           />
