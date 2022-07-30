@@ -16,6 +16,7 @@ async function handler(
         id: +id,
       },
     });
+    if (!post) return res.json({ ok: false, post: null });
     res.json({
       ok: true,
       post,

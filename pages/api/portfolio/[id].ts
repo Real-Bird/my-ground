@@ -23,6 +23,7 @@ async function handler(
         },
       },
     });
+    if (!portfolio) return res.json({ ok: false, portfolio: null });
     res.json({
       ok: true,
       portfolio,

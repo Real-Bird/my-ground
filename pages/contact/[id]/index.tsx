@@ -7,7 +7,7 @@ import useSWR from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
 import FloatingButton from "@components/floating-btn";
-import useNotFound from "@libs/client/useNotFound";
+import { useEffect } from "react";
 
 interface PostResponse {
   ok: boolean;
@@ -29,26 +29,32 @@ const PostDetail: NextPage = () => {
   const { data } = useSWR<PostResponse>(
     router.query.id ? `/api/contact/${router.query.id}` : null
   );
-  const { data: notFound } = useNotFound(
-    router.query.id ? `/api/contact/${router.query.id}` : null
-  );
+  useEffect(() => {
+    if (data && !data.ok) {
+      router.push("/404");
+    }
+  }, [data]);
   return (
     <Layout title="POST" backUrl="/contact">
       <div className="space-y-2 px-3">
-        <h1 className="py-1 text-center text-5xl font-bold">
-          {data?.post.title}
-        </h1>
-        <div className="flex flex-col items-end py-1">
-          <div className="text-sm">
-            <div>작성자: {data?.post.name}</div>
-            <div>
-              작성일: <RegDate regDate={data?.post.updated} y m d />
+        {data && data.post ? (
+          <>
+            <h1 className="py-1 text-center text-5xl font-bold">
+              {data?.post.title}
+            </h1>
+            <div className="flex flex-col items-end py-1">
+              <div className="text-sm">
+                <div>작성자: {data?.post.name}</div>
+                <div>
+                  작성일: <RegDate regDate={data?.post.updated} y m d />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
-          <MarkdownViewer source={data?.post.content} />
-        </div>
+            <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
+              <MarkdownViewer source={data?.post.content} />
+            </div>
+          </>
+        ) : null}
       </div>
       <FloatingButton
         href={`/contact/${router.query.id}/revised`}
