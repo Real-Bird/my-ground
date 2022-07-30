@@ -67,11 +67,6 @@ const BlogRevised: NextPage = () => {
     setViewKeyword(false);
   };
   useEffect(() => {
-    if (!ok) {
-      router.push("/blog");
-    }
-  }, []);
-  useEffect(() => {
     if (data && data.ok) {
       setValue("category", data?.post.category);
       setValue("title", data?.post.title);
