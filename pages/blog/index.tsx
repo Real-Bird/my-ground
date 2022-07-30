@@ -4,7 +4,7 @@ import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
 import { MyBlog } from "@prisma/client";
 import type { NextPage } from "next";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
 
@@ -13,9 +13,8 @@ interface PostsResponse {
   posts: MyBlog[];
 }
 
-const Home: NextPage = () => {
+const Home: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
-  const { data } = useSWR<PostsResponse>("/api/blog");
   return (
     <Layout title="BLOG">
       <div className="mx-3 flex flex-col space-y-3 divide-y-2 text-center">
@@ -24,7 +23,7 @@ const Home: NextPage = () => {
           <div className="flex-1 text-center">제 목</div>
           <div className="w-24">작성일</div>
         </div>
-        {data?.posts?.map((post) => (
+        {posts?.map((post) => (
           <div
             key={post.id}
             className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
@@ -72,7 +71,7 @@ const Page: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
         },
       }}
     >
-      <Home />
+      <Home posts={posts} />
     </SWRConfig>
   );
 };

@@ -6,6 +6,7 @@ import Menu from "@components/menu";
 import Image from "next/image";
 import useAdmin from "@libs/client/useAdmin";
 import useMutation from "@libs/client/useMutation";
+import useTimer from "@libs/client/useTimer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -39,6 +40,7 @@ export default function Layout({
   const [logout, { data, loading }] =
     useMutation<LogoutResponse>("/api/logout");
   const [isLogged, setIsLogged] = useState(false);
+  const [watchTime, setWatchTime] = useState(false);
   const toggleDropdown = () => {
     setIsDropdown((prev) => !prev);
     setIsLogged((prev) => ok);
@@ -48,6 +50,10 @@ export default function Layout({
     logout({});
     setIsLogged(false);
   };
+  const {
+    date: { year, month, day },
+    timer: { amPm, hour, minute, second },
+  } = useTimer();
   return (
     <div className="flex justify-center">
       <title>{head}</title>
@@ -74,6 +80,12 @@ export default function Layout({
           </div>
         ) : null}
         <span>{title}</span>
+        <div className="transition-color absolute right-16 h-10 w-[6rem] cursor-pointer rounded-md bg-amber-400 text-center hover:bg-amber-500">
+          <div className="text-sm">
+            <div>{`${year}.${month}.${day}`}</div>
+            <div>{`${amPm} ${hour}:${minute}:${second}`}</div>
+          </div>
+        </div>
         <div
           className="absolute right-4 top-1 cursor-pointer"
           onClick={toggleDropdown}

@@ -240,29 +240,29 @@ _이탤릭_, _이탤릭_
 
 ```
 기본 장미 이미지
-![장미 이미지](https://pixabay.com/get/g593731cd57da04008bdfc8e1aeaacd895e8009c038b596d2d64b9c72e0c6bf0f33dbe393e1fb42987d8050f6e01ee078f8377524f4d8a9349508d49c86ce4eb02b6c5de833b4cb812d09f8191bc94bb4_640.jpg)
+![장미 이미지](https://raw.githubusercontent.com/Real-Bird/pb/master/rose.jpg)
 ```
 
 ```
 설명 장미 이미지
-![장미 이미지](https://pixabay.com/get/g593731cd57da04008bdfc8e1aeaacd895e8009c038b596d2d64b9c72e0c6bf0f33dbe393e1fb42987d8050f6e01ee078f8377524f4d8a9349508d49c86ce4eb02b6c5de833b4cb812d09f8191bc94bb4_640.jpg "장미 이미지")
+![장미 이미지](https://raw.githubusercontent.com/Real-Bird/pb/master/rose.jpg "장미 이미지")
 ```
 
 ```
 링크 연결 장미 이미지
-[![장미 이미지](https://pixabay.com/get/g593731cd57da04008bdfc8e1aeaacd895e8009c038b596d2d64b9c72e0c6bf0f33dbe393e1fb42987d8050f6e01ee078f8377524f4d8a9349508d49c86ce4eb02b6c5de833b4cb812d09f8191bc94bb4_640.jpg)](https://pixabay.com/ko/photos/%EC%9E%A5%EB%AF%B8-%EA%BD%83-%EC%82%AC%EB%9E%91-%EB%A1%9C%EB%A7%A8%EC%8A%A4-729509/)
+[![장미 이미지](https://raw.githubusercontent.com/Real-Bird/pb/master/rose.jpg)](https://github.com/Real-Bird/pb/blob/master/rose.jpg)
 ```
 
 **ex**
 
 기본 장미 이미지
-![장미 이미지](https://pixabay.com/get/g593731cd57da04008bdfc8e1aeaacd895e8009c038b596d2d64b9c72e0c6bf0f33dbe393e1fb42987d8050f6e01ee078f8377524f4d8a9349508d49c86ce4eb02b6c5de833b4cb812d09f8191bc94bb4_640.jpg)
+![장미 이미지](https://raw.githubusercontent.com/Real-Bird/pb/master/rose.jpg)
 
 설명 장미 이미지
-![장미 이미지](https://pixabay.com/get/g593731cd57da04008bdfc8e1aeaacd895e8009c038b596d2d64b9c72e0c6bf0f33dbe393e1fb42987d8050f6e01ee078f8377524f4d8a9349508d49c86ce4eb02b6c5de833b4cb812d09f8191bc94bb4_640.jpg "장미 이미지")
+![장미 이미지](https://raw.githubusercontent.com/Real-Bird/pb/master/rose.jpg "장미 이미지")
 
 링크 연결 장미 이미지
-[![장미 이미지](https://pixabay.com/get/g593731cd57da04008bdfc8e1aeaacd895e8009c038b596d2d64b9c72e0c6bf0f33dbe393e1fb42987d8050f6e01ee078f8377524f4d8a9349508d49c86ce4eb02b6c5de833b4cb812d09f8191bc94bb4_640.jpg)](https://pixabay.com/ko/photos/%EC%9E%A5%EB%AF%B8-%EA%BD%83-%EC%82%AC%EB%9E%91-%EB%A1%9C%EB%A7%A8%EC%8A%A4-729509/)
+[![장미 이미지](https://raw.githubusercontent.com/Real-Bird/pb/master/rose.jpg)](https://github.com/Real-Bird/pb/blob/master/rose.jpg)
 
 ---
 

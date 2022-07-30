@@ -13,7 +13,7 @@ interface Post {
 
 const Notices: NextPage<{ posts: Post[] }> = ({ posts }) => {
   return (
-    <Layout head="Blog" title="NOTICES" canGoBack backUrl="back">
+    <Layout title="NOTICES">
       <div className="divide-y-2">
         {posts?.map((item, idx) => (
           <div key={idx} className="mb-5 mt-2 px-10 pt-5">

@@ -19,11 +19,11 @@ const Portfolio: NextPage = () => {
       <div className="mx-3 flex flex-col space-y-3">
         <h1 className="text-center text-xl text-red-600">My Portfolio List</h1>
         {data ? (
-          <div className="flex flex-row">
+          <div className="grid grid-cols-2 gap-2">
             {data?.portfolio.map((pf) => (
               <Link href={`/portfolio/${pf.id}`} key={pf.id}>
-                <a className="flex aspect-video w-56 flex-col items-center rounded-md shadow-md">
-                  <img src={pf.thumbnail} className="h-32 w-56 rounded-md" />
+                <a className="flex aspect-video w-full flex-col items-center rounded-md shadow-md">
+                  <img src={pf.thumbnail} className="h-32 w-full rounded-md" />
                   <div className="py-1 text-center text-xl font-bold">
                     {pf.title}
                   </div>

@@ -20,9 +20,12 @@ const NoticeDetail: NextPage<{ post: string; data: any }> = ({
   data,
 }) => {
   return (
-    <Layout title={data.title} canGoBack backUrl="back">
-      <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
-        <MarkdownViewer source={post} />
+    <Layout title="NOTICE" canGoBack backUrl="/notice">
+      <div className="mx-3 space-y-2">
+        <h1 className="text-center text-3xl font-bold">{data.title}</h1>
+        <div className="min-h-[68vh] w-full rounded-md bg-slate-300 p-3">
+          <MarkdownViewer source={post} />
+        </div>
       </div>
     </Layout>
   );

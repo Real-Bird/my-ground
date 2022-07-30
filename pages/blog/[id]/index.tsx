@@ -7,6 +7,8 @@ import RegDate from "@components/regDate";
 import FloatingButton from "@components/floating-btn";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
+import { Suspense, useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface PostResponse {
   ok: boolean;
@@ -25,10 +27,18 @@ const MarkdownViewer: any = dynamic(
 
 const BlogDetail: NextPage<{ post: MyBlog }> = ({ post }) => {
   const { admin, ok } = useAdmin();
+  const router = useRouter();
+  useEffect(() => {
+    if (!post) {
+      router.push("/404");
+    }
+  }, []);
   return (
     <Layout title="POST" backUrl="/blog">
       <div className="space-y-2 px-3">
-        <h1 className="py-1 text-center text-5xl font-bold">{post?.title}</h1>
+        <Suspense fallback={<div className="w-full bg-slate-300" />}>
+          <h1 className="py-1 text-center text-5xl font-bold">{post?.title}</h1>
+        </Suspense>
         <div className="flex flex-col items-end py-1">
           <div className="text-sm">
             <div className="flex flex-row">
@@ -68,7 +78,7 @@ const BlogDetail: NextPage<{ post: MyBlog }> = ({ post }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = (ctx) => {
   return {
     paths: [],
     fallback: "blocking",
