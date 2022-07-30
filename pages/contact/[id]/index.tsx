@@ -7,6 +7,7 @@ import useSWR from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
 import FloatingButton from "@components/floating-btn";
+import useNotFound from "@libs/client/useNotFound";
 
 interface PostResponse {
   ok: boolean;
@@ -26,6 +27,9 @@ const MarkdownViewer: any = dynamic(
 const PostDetail: NextPage = () => {
   const router = useRouter();
   const { data } = useSWR<PostResponse>(
+    router.query.id ? `/api/contact/${router.query.id}` : null
+  );
+  const { data: notFound } = useNotFound(
     router.query.id ? `/api/contact/${router.query.id}` : null
   );
   return (

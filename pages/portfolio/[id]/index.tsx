@@ -9,6 +9,7 @@ import FloatingButton from "@components/floating-btn";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useAdmin from "@libs/client/useAdmin";
+import useNotFound from "@libs/client/useNotFound";
 
 interface BadgeWithPf extends MyPortfolio {
   stackBadge: StackBadge[];
@@ -32,6 +33,9 @@ const MarkdownViewer: any = dynamic(
 const PortfolioDetail: NextPage = () => {
   const router = useRouter();
   const { admin, ok } = useAdmin();
+  const { data: notFound } = useNotFound(
+    router.query.id ? `/api/portfolio/${router.query.id}` : null
+  );
   const { data } = useSWR<PortfolioProps>(
     router.query.id ? `/api/portfolio/${router.query.id}` : null
   );
