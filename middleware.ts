@@ -17,9 +17,6 @@ export function middleware(req: NextRequest) {
       }
     }
   }
-  if (req.url === new URL("/api/portfolio", req.url).toString()) {
-    console.log("hi");
-  }
 }
 
 export const config = {
