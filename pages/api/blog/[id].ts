@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
+import { withApiSession } from "@libs/server/withSession";
 
 async function handler(
   req: NextApiRequest,
@@ -15,6 +16,11 @@ async function handler(
         id: +id,
       },
     });
+    if (!req.session.user?.admin)
+      return res.json({
+        ok: false,
+        message: "You are Not Admin! Don't hack me!",
+      });
     res.json({
       ok: true,
       post,
@@ -42,8 +48,10 @@ async function handler(
   }
 }
 
-export default withHandler({
-  methods: ["GET", "POST"],
-  handler,
-  isPrivate: false,
-});
+export default withApiSession(
+  withHandler({
+    methods: ["GET", "POST"],
+    handler,
+    isPrivate: false,
+  })
+);

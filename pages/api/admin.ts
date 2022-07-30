@@ -27,6 +27,7 @@ async function handler(
       if (phone === process.env.ADMIN_PWD!) {
         req.session.user = {
           id: isUser.id,
+          admin: true,
         };
         await req.session.save();
         res.json({ ok: true });
