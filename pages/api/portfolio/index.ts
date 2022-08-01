@@ -58,7 +58,8 @@ async function handler(
               id: createPf.id,
             },
           },
-          badgeIcon: stack,
+          stackName: stack[0],
+          stackColor: stack[1],
         },
       });
     });
