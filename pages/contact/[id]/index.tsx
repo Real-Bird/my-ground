@@ -8,6 +8,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
 import FloatingButton from "@components/floating-btn";
 import { useEffect } from "react";
+import { Skeleton } from "@mui/material";
 
 interface PostResponse {
   ok: boolean;
@@ -50,11 +51,35 @@ const PostDetail: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
+            <div className="min-h-[68vh] rounded-md bg-slate-300 p-4">
               <MarkdownViewer source={data?.post.content} />
             </div>
           </>
-        ) : null}
+        ) : (
+          <div className="flex flex-col items-center">
+            <Skeleton variant="text" animation="wave" height={60} width={320} />
+            <div className="mr-3 flex w-full flex-col items-end py-3">
+              <Skeleton
+                variant="text"
+                animation="wave"
+                height={20}
+                width={120}
+              />
+              <Skeleton
+                variant="text"
+                animation="wave"
+                height={20}
+                width={120}
+              />
+            </div>
+            <Skeleton
+              variant="rectangular"
+              className="min-h-[68vh] rounded-md p-3"
+              width={440}
+              animation="wave"
+            />
+          </div>
+        )}
       </div>
       <FloatingButton
         href={`/contact/${router.query.id}/revised`}

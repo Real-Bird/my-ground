@@ -5,7 +5,6 @@ const Home: NextPage = () => {
   return (
     <Layout title="HOME">
       <div className="mx-3 flex flex-col space-y-3">
-        {/* <div className="hidden h-20 w-20 rounded-full bg-slate-500" /> */}
         <div className="space-y-5 divide-y-2">
           <div>
             <h1 className="text-2xl font-bold">Introduce</h1>
@@ -14,16 +13,35 @@ const Home: NextPage = () => {
                 <div>안녕하세요!🙋‍♂️</div>
                 <div>프론트엔드 개발자를 꿈꾸는 김진영의 놀이터입니다.</div>
               </h2>
-              <p>국비지원 ICT 교육으로 코딩 공부를 시작했습니다.</p>
-              <p>
-                Python으로 코딩에 재미를 붙였고, React를 익히면서 웹 프론트엔드
-                개발자를 꿈꾸게 되었습니다.
-              </p>
-              <p>매일 깃허브에 잔디를 심으며 꾸준히 공부하고 있습니다.</p>
-              <p>최신 트렌드에 뒤처지지 않는 개발자가 되는 것이 목표입니다.</p>
-              <p>
-                풀스택 개발자로서 손색 없는 그날까지 개발 공부를 계속하겠습니다.
-              </p>
+              <div className="flex flex-row">
+                <img
+                  src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3f839e2f-12df-4547-ae58-05ff7f5c6c4a/%EC%A6%9D%EB%AA%85.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220801%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220801T171809Z&X-Amz-Expires=86400&X-Amz-Signature=75a4a22f7611365e65e2d2bc928ce149aa15bcdbb20467d7a311cdc098f1f0f5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EC%25A6%259D%25EB%25AA%2585.jpg%22&x-id=GetObject"
+                  className="h-44 w-40 bg-slate-500"
+                />
+                <div className="px-2">
+                  <p className="pb-1 text-sm">
+                    <i>국비지원 ICT 교육</i>으로 코딩 공부를 시작했습니다.
+                  </p>
+                  <p className="pb-1 text-sm">
+                    <b>Python</b>으로 코딩에 재미를 붙였고, <b>React</b>를
+                    익히면서{" "}
+                    <big>
+                      <b>Front-End Develoer</b>
+                    </big>
+                    를 꿈꾸게 되었습니다.
+                  </p>
+                  <p className="pb-1 text-sm">
+                    매일 <b>Github</b>에 잔디를 심으며 꾸준히 공부하고 있습니다.
+                  </p>
+                  <p className="pb-1 text-sm">
+                    최신 트렌드에 뒤처지지 않는 개발자가 되는 것이 목표입니다.
+                  </p>
+                  <p className="pb-1 text-sm">
+                    풀스택 개발자로서 손색 없는 그날까지 개발 공부를
+                    계속하겠습니다.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div className="space-y-1">

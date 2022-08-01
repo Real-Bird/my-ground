@@ -7,6 +7,7 @@ import type { NextPage } from "next";
 import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
+import { Skeleton } from "@mui/material";
 
 interface PostsResponse {
   ok: boolean;
@@ -23,20 +24,31 @@ const Home: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
           <div className="flex-1 text-center">제 목</div>
           <div className="w-24">작성일</div>
         </div>
-        {posts?.map((post) => (
-          <div
-            key={post.id}
-            className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
-          >
-            <div className="w-20 text-sm">{post.category}</div>
-            <Link href={`/blog/${post.id}`}>
-              <a className="flex-1 font-semibold">{post.title}</a>
-            </Link>
-            <div className="w-24 text-sm">
-              <RegDate regDate={post.created} y m d />
-            </div>
-          </div>
-        ))}
+        {posts
+          ? posts?.map((post) => (
+              <div
+                key={post.id}
+                className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
+              >
+                <div className="w-20 text-sm">{post.category}</div>
+                <Link href={`/blog/${post.id}`}>
+                  <a className="flex-1 font-semibold">{post.title}</a>
+                </Link>
+                <div className="w-24 text-sm">
+                  <RegDate regDate={post.created} y m d />
+                </div>
+              </div>
+            ))
+          : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+              <div
+                key={i}
+                className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
+              >
+                <Skeleton variant="text" className="h-5 w-20" />
+                <Skeleton variant="text" className="h-6 flex-1" />
+                <Skeleton variant="text" className="h-5 w-24" />
+              </div>
+            ))}
       </div>
       {ok && (
         <FloatingButton href="/blog/upload" type="Portfolio Upload">
