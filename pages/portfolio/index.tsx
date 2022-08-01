@@ -5,6 +5,7 @@ import { MyPortfolio } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import useSWR from "swr";
+import { Skeleton } from "@mui/material";
 
 interface PortfolioProps {
   ok: boolean;
@@ -32,7 +33,21 @@ const Portfolio: NextPage = () => {
             ))}
           </div>
         ) : (
-          <div className="h-32 w-56 rounded-md bg-slate-300 shadow-md" />
+          <div className="grid grid-cols-2 gap-2">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+              <div
+                key={i}
+                className="flex aspect-video w-full flex-col items-center rounded-md shadow-md"
+              >
+                <Skeleton
+                  animation="wave"
+                  variant="rectangular"
+                  className="h-32 w-full rounded-md"
+                />
+                <Skeleton variant="text" className="h-8 w-3/4" />
+              </div>
+            ))}
+          </div>
         )}
       </div>
       {ok && (

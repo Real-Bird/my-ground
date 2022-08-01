@@ -19,7 +19,8 @@ async function handler(
         stackBadge: {
           select: {
             id: true,
-            badgeIcon: true,
+            stackName: true,
+            stackColor: true,
           },
         },
       },
@@ -34,7 +35,8 @@ async function handler(
     const {
       body: {
         thumbnail,
-        developDate,
+        startDate,
+        endDate,
         github,
         deploy,
         deployIcon,
@@ -44,7 +46,7 @@ async function handler(
       },
       query: { id },
     } = req;
-    const createPf = await client.myPortfolio.update({
+    const updatePf = await client.myPortfolio.update({
       where: {
         id: +id,
       },
@@ -53,7 +55,8 @@ async function handler(
         title,
         content,
         deploy,
-        developDate,
+        startDate,
+        endDate,
         github,
         deployIcon,
       },
@@ -61,7 +64,7 @@ async function handler(
     stacks.map(async (stack: string) => {
       const existStack = await client.stackBadge.findFirst({
         where: {
-          AND: [{ pfId: +id }, { badgeIcon: stack }],
+          AND: [{ pfId: +id }, { stackName: stack }],
         },
       });
       if (!existStack) {
@@ -72,14 +75,15 @@ async function handler(
                 id: +id,
               },
             },
-            badgeIcon: stack,
+            stackName: stack[0],
+            stackColor: stack[1],
           },
         });
       }
     });
     res.json({
       ok: true,
-      createPf,
+      updatePf,
     });
   }
 }

@@ -35,13 +35,7 @@ const PortfolioDetail: NextPage = () => {
   const { data } = useSWR<PortfolioProps>(
     router.query.id ? `/api/portfolio/${router.query.id}` : null
   );
-  const [developDate, setDevelopDate] = useState([]);
   useEffect(() => {
-    if (data && data?.ok) {
-      setDevelopDate((prev) =>
-        data?.portfolio.developDate.replace(" ", "").split("-")
-      );
-    }
     if (data && !data.ok) {
       router.push("/404");
     }
@@ -58,12 +52,13 @@ const PortfolioDetail: NextPage = () => {
               <div className="flex flex-row justify-center">
                 <div className="flex w-1/3 flex-col items-center space-y-1">
                   <span className="font-semibold">Stack</span>
-                  <div className="flex flex-row flex-wrap justify-center">
+                  <div className="flex flex-row flex-wrap justify-around">
                     {data?.portfolio.stackBadge.map((stack) => (
                       <img
                         key={stack.id}
-                        src={stack.badgeIcon}
-                        className="m-1"
+                        src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
+                        alt={stack.stackName}
+                        className="my-0.5"
                       />
                     ))}
                   </div>
@@ -102,10 +97,10 @@ const PortfolioDetail: NextPage = () => {
                   <div className="w-28 text-center">
                     <div className="text-sm">
                       <span className="letter-spacing-1.5">Start</span>:{" "}
-                      {developDate[0]}
+                      {data?.portfolio.startDate}
                     </div>
                     <div className="text-sm">
-                      <span>Finish</span>: {developDate[1]}
+                      <span>Finish</span>: {data?.portfolio.endDate}
                     </div>
                   </div>
                 </div>

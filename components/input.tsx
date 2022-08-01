@@ -4,7 +4,7 @@ import type { UseFormRegisterReturn } from "react-hook-form";
 interface InputProps {
   label: string;
   name: string;
-  kind?: "text" | "phone" | "price";
+  kind?: "text" | "checkbox";
   type: string;
   register: UseFormRegisterReturn;
   error?: string;

@@ -8,11 +8,15 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
+    // await new Promise((resolve) => setTimeout(resolve, 10000));
     const portfolio = await client.myPortfolio.findMany({
       select: {
         id: true,
         title: true,
         thumbnail: true,
+      },
+      orderBy: {
+        startDate: "desc",
       },
     });
     res.json({
@@ -24,7 +28,8 @@ async function handler(
     const {
       body: {
         thumbnail,
-        developDate,
+        startDate,
+        endDate,
         github,
         deploy,
         deployIcon,
@@ -39,7 +44,8 @@ async function handler(
         title,
         content,
         deploy,
-        developDate,
+        startDate,
+        endDate,
         github,
         deployIcon,
       },
