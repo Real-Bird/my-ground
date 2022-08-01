@@ -21,7 +21,7 @@ const Portfolio: NextPage = () => {
         <h1 className="text-center text-xl text-red-600">My Portfolio List</h1>
         {data ? (
           <div className="grid grid-cols-2 gap-2">
-            {data?.portfolio.map((pf) => (
+            {data?.portfolio?.map((pf) => (
               <Link href={`/portfolio/${pf.id}`} key={pf.id}>
                 <a className="flex aspect-video w-full flex-col items-center rounded-md shadow-md">
                   <img src={pf.thumbnail} className="h-32 w-full rounded-md" />
@@ -42,6 +42,7 @@ const Portfolio: NextPage = () => {
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
+                  height={128}
                   className="h-32 w-full rounded-md"
                 />
                 <Skeleton variant="text" className="h-8 w-3/4" />

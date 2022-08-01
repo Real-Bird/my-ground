@@ -64,7 +64,7 @@ async function handler(
     stacks.map(async (stack: string) => {
       const existStack = await client.stackBadge.findFirst({
         where: {
-          AND: [{ pfId: +id }, { stackName: stack }],
+          AND: [{ pfId: +id }, { stackName: stack[0] }],
         },
       });
       if (!existStack) {
