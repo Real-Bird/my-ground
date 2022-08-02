@@ -3,10 +3,6 @@ import Layout from "@components/layout";
 import Link from "next/link";
 
 const Home: NextPage = () => {
-  const onOpenResume = () => {
-    window.open("resume.pdf", "_blank", "fullscreen=yes");
-    return false;
-  };
   return (
     <Layout title="HOME">
       <div className="mx-3 flex flex-col space-y-3">
@@ -21,7 +17,7 @@ const Home: NextPage = () => {
               <div className="flex flex-row">
                 <div className="flex h-fit w-60 flex-col items-center space-y-3">
                   <img
-                    src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3f839e2f-12df-4547-ae58-05ff7f5c6c4a/%EC%A6%9D%EB%AA%85.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220801%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220801T171809Z&X-Amz-Expires=86400&X-Amz-Signature=75a4a22f7611365e65e2d2bc928ce149aa15bcdbb20467d7a311cdc098f1f0f5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EC%25A6%259D%25EB%25AA%2585.jpg%22&x-id=GetObject"
+                    src="https://raw.githubusercontent.com/Real-Bird/pb/master/%EC%A6%9D%EB%AA%85.jpg"
                     className="w-54 h-48 bg-slate-500"
                   />
                   <Link href="https://real-bird.github.io/RB_todo/resume.pdf">
