@@ -23,4 +23,5 @@ category: information
 ## 개인 연락
 
 Email : **kjy_815@naver.com**
+
 오픈카톡 : <https://open.kakao.com/o/s8qJRhte>
