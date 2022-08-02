@@ -11,9 +11,9 @@ import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import { MyBlog } from "@prisma/client";
 import Button from "@components/button-component";
-import { CategoricalResponse } from "pages/blog/upload";
 import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
+import { CategoricalResponse } from "pages/blog/upload";
 
 interface BlogRevisedFormResponse {
   category: string;
@@ -21,9 +21,15 @@ interface BlogRevisedFormResponse {
   content: string;
 }
 
+interface CategoryWithBlog extends MyBlog {
+  category: {
+    category: string;
+  };
+}
+
 interface RevisedResponse {
   ok: boolean;
-  post: MyBlog;
+  post: CategoryWithBlog;
 }
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
@@ -68,7 +74,7 @@ const BlogRevised: NextPage = () => {
   };
   useEffect(() => {
     if (data && data.ok) {
-      setValue("category", data?.post.category);
+      setValue("category", data?.post.category.category);
       setValue("title", data?.post.title);
       setMd(data?.post.content);
     }

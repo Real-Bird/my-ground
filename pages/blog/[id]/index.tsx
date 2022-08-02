@@ -10,6 +10,11 @@ import client from "@libs/server/client";
 import { Suspense, useEffect } from "react";
 import { useRouter } from "next/router";
 
+interface CategoryWithBlog extends MyBlog {
+  category: {
+    category: string;
+  };
+}
 interface PostResponse {
   ok: boolean;
   post: MyBlog;
@@ -25,7 +30,7 @@ const MarkdownViewer: any = dynamic(
   }
 );
 
-const BlogDetail: NextPage<{ post: MyBlog }> = ({ post }) => {
+const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   const { admin, ok } = useAdmin();
   const router = useRouter();
   useEffect(() => {
@@ -43,7 +48,7 @@ const BlogDetail: NextPage<{ post: MyBlog }> = ({ post }) => {
           <div className="text-sm">
             <div className="flex flex-row">
               <div className="w-16 text-end">카테고리</div>
-              <div className="flex-1">: {post?.category}</div>
+              <div className="flex-1">: {post?.category.category}</div>
             </div>
             <div className="flex flex-row">
               <div className="word-spacing w-16 text-right">작 성 일</div>
@@ -89,6 +94,13 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const post = await client.myBlog.findUnique({
     where: {
       id: +ctx?.params?.id,
+    },
+    include: {
+      category: {
+        select: {
+          category: true,
+        },
+      },
     },
   });
   return {

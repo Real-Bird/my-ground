@@ -15,6 +15,13 @@ async function handler(
       where: {
         id: +id,
       },
+      include: {
+        category: {
+          select: {
+            category: true,
+          },
+        },
+      },
     });
     if (!req.session.user?.admin)
       return res.json({
@@ -31,20 +38,53 @@ async function handler(
       query: { id },
       body: { title, content, category },
     } = req;
-    const post = await client.myBlog.update({
+    const existCategory = await client.category.findFirst({
       where: {
-        id: +id,
-      },
-      data: {
         category,
-        title,
-        content,
+      },
+      select: {
+        id: true,
       },
     });
-    res.json({
-      ok: true,
-      post,
-    });
+    if (!existCategory) {
+      const post = await client.myBlog.update({
+        where: {
+          id: +id,
+        },
+        data: {
+          title,
+          content,
+          category: {
+            create: {
+              category,
+            },
+          },
+        },
+      });
+      res.json({
+        ok: true,
+        post,
+      });
+    } else {
+      const post = await client.myBlog.update({
+        where: {
+          id: +id,
+        },
+        data: {
+          category: {
+            connect: {
+              id: existCategory.id,
+            },
+          },
+          title,
+          content,
+        },
+      });
+      res.json({
+        ok: true,
+        post,
+      });
+    }
   }
 }
 

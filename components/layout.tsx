@@ -80,7 +80,7 @@ export default function Layout({
           </div>
         ) : null}
         <span>{title}</span>
-        <div className="transition-color absolute right-16 h-10 w-[6rem] cursor-pointer rounded-md bg-amber-400 text-center hover:bg-amber-500">
+        <div className="absolute right-16 h-10 w-[6rem] rounded-md bg-amber-400 text-center">
           <div className="text-sm">
             <div>{`${year}.${month}.${day}`}</div>
             <div>{`${amPm} ${hour}:${minute}:${second}`}</div>
@@ -115,7 +115,7 @@ export default function Layout({
           </div>
         </div>
       ) : null}
-      <div className="mt-12 h-[86vh] w-full max-w-xl overflow-y-scroll pb-10 pt-3 sm:pb-5">
+      <div className="mt-12 mb-16 h-[86vh] w-full max-w-xl overflow-y-scroll pb-10 pt-3 sm:pb-5">
         {children}
       </div>
       <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700">

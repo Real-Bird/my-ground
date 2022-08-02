@@ -9,12 +9,19 @@ import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
 
+interface CategoryWithBlog extends MyBlog {
+  category: {
+    category: string;
+  };
+}
+
 interface PostsResponse {
   ok: boolean;
   posts: MyBlog[];
+  category: string;
 }
 
-const Home: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
+const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
   return (
     <Layout title="BLOG">
@@ -30,7 +37,7 @@ const Home: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
                 key={post.id}
                 className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
               >
-                <div className="w-20 text-sm">{post.category}</div>
+                <div className="w-20 text-sm">{post.category.category}</div>
                 <Link href={`/blog/${post.id}`}>
                   <a className="flex-1 font-semibold">{post.title}</a>
                 </Link>
@@ -71,7 +78,7 @@ const Home: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
   );
 };
 
-const Page: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
+const Page: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   return (
     <SWRConfig
       value={{
@@ -90,6 +97,13 @@ const Page: NextPage<{ posts: MyBlog[] }> = ({ posts }) => {
 
 export async function getServerSideProps() {
   const posts = await client.myBlog.findMany({
+    include: {
+      category: {
+        select: {
+          category: true,
+        },
+      },
+    },
     orderBy: {
       created: "desc",
     },

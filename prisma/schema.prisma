@@ -250,18 +250,30 @@ model MyGroundPost {
   name     String
   password String
   title    String?
+  isSecret Boolean  @default(false)
   content  String   @db.LongText
   created  DateTime @default(now())
   updated  DateTime @updatedAt
 }
 
 model MyBlog {
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String    @db.LongText
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int?
+  created    DateTime  @default(now())
+  updated    DateTime  @updatedAt
+
+  @@index([categoryId])
+}
+
+model Category {
   id       Int      @id @default(autoincrement())
-  title    String
-  content  String   @db.LongText
-  category String   @default("")
+  category String
   created  DateTime @default(now())
   updated  DateTime @updatedAt
+  blog     MyBlog[]
 }
 
 model MyPortfolio {

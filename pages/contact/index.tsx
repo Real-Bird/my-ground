@@ -1,6 +1,8 @@
 import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
+import useAdmin from "@libs/client/useAdmin";
+import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
@@ -12,6 +14,7 @@ interface ContactResponse {
 }
 
 const Home: NextPage = () => {
+  const { admin, ok } = useAdmin();
   const { data } = useSWR<ContactResponse>("/api/contact");
   return (
     <Layout title="CONTACT">
@@ -31,29 +34,73 @@ const Home: NextPage = () => {
           <span className="w-3/5 text-center">제 목</span>
           <span className="w-20 text-center">작성일</span>
         </div>
-        {data?.posts.map((post) => (
-          <div
-            key={post.id}
-            className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
-          >
-            <div className="w-20 text-start text-sm">{post.name}</div>
-            <Link href={`/contact/${post.id}`}>
-              <a
-                className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl"
-                title={
-                  post.content.length <= 120
-                    ? post.content
-                    : `${post.content.slice(0, 120)}...`
-                }
+        {data
+          ? data?.posts.map((post) =>
+              !ok ? (
+                !post.isSecret && (
+                  <div
+                    key={post.id}
+                    className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
+                  >
+                    <div className="w-20 text-center text-sm">{post.name}</div>
+                    <Link href={`/contact/${post.id}`}>
+                      <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl">
+                        {post.title}
+                      </a>
+                    </Link>
+                    <div className="w-20 text-center text-sm">
+                      <RegDate regDate={post.created} y m d />
+                    </div>
+                  </div>
+                )
+              ) : (
+                <div
+                  key={post.id}
+                  className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
+                >
+                  <div className="w-20 text-center text-sm">{post.name}</div>
+                  <Link href={`/contact/${post.id}`}>
+                    <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl">
+                      {post.title}
+                    </a>
+                  </Link>
+                  <div className="w-20 text-center text-sm">
+                    <RegDate regDate={post.created} y m d />
+                  </div>
+                </div>
+              )
+            )
+          : [...Array.from(Array(10).keys())].map((i) => (
+              <div
+                key={i}
+                className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
               >
-                {post.title}
-              </a>
-            </Link>
-            <div className="w-20 text-end text-sm">
-              <RegDate regDate={post.created} y m d />
-            </div>
-          </div>
-        ))}
+                <div className="flex w-20 items-center justify-center">
+                  <Skeleton
+                    variant="text"
+                    animation="wave"
+                    height={40}
+                    width={60}
+                  />
+                </div>
+                <div className="flex w-3/5 items-center justify-center pl-2">
+                  <Skeleton
+                    variant="text"
+                    animation="wave"
+                    height={40}
+                    width={270}
+                  />
+                </div>
+                <div className="flex w-20 items-center justify-center">
+                  <Skeleton
+                    variant="text"
+                    animation="wave"
+                    height={40}
+                    width={60}
+                  />
+                </div>
+              </div>
+            ))}
         <FloatingButton href="/contact/upload" type="Upload">
           <svg
             xmlns="http://www.w3.org/2000/svg"

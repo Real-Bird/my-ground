@@ -50,20 +50,22 @@ const PortfolioDetail: NextPage = () => {
             </h1>
             <div className="py-5">
               <div className="flex flex-row justify-center">
-                <div className="flex w-1/3 flex-col items-center space-y-1">
+                <div className="w- flex flex-col items-center space-y-1">
                   <span className="font-semibold">Stack</span>
-                  <div className="flex flex-row flex-wrap justify-around">
-                    {data?.portfolio.stackBadge.map((stack) => (
-                      <img
-                        key={stack.id}
-                        src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
-                        alt={stack.stackName}
-                        className="my-0.5"
-                      />
-                    ))}
+                  <div className="mx-auto w-36">
+                    <div className="flex flex-row flex-wrap justify-start">
+                      {data?.portfolio.stackBadge.map((stack) => (
+                        <img
+                          key={stack.id}
+                          src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
+                          alt={stack.stackName}
+                          className="m-0.5"
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div className="flex w-1/3 flex-row justify-center space-x-5">
+                <div className="flex w-1/3 flex-row justify-evenly space-x-5">
                   <Link href={data?.portfolio.github}>
                     <a
                       target="_blank"

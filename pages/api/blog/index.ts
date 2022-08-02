@@ -11,23 +11,55 @@ async function handler(
     const {
       body: { category, content, title },
     } = req;
-    const post = await client.myBlog.create({
-      data: {
-        title,
-        content,
+    const existCategory = await client.category.findFirst({
+      where: {
         category,
       },
+      select: {
+        id: true,
+      },
     });
-    res.json({
-      ok: true,
-      post,
-    });
+    if (!existCategory) {
+      const post = await client.myBlog.create({
+        data: {
+          title,
+          content,
+          category: {
+            create: {
+              category,
+            },
+          },
+        },
+      });
+      console.log(1, post);
+      res.json({
+        ok: true,
+        post,
+      });
+    } else {
+      const post = await client.myBlog.create({
+        data: {
+          title,
+          content,
+          category: {
+            connect: {
+              id: existCategory.id,
+            },
+          },
+        },
+      });
+      console.log(2, post);
+      res.json({
+        ok: true,
+        post,
+      });
+    }
   }
   if (req.method === "GET") {
-    const categories = await client.myBlog.findMany({
+    const categories = await client.category.findMany({
       select: {
-        category: true,
         id: true,
+        category: true,
       },
     });
     const posts = await client.myBlog.findMany({

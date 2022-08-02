@@ -11,12 +11,14 @@ import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
 import Link from "next/link";
+import { cls } from "@libs/client/utils";
 
 interface UploadFormResponse {
   name: string;
   password: string;
   title: string;
   content: string;
+  secret: boolean;
 }
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
@@ -30,6 +32,8 @@ const Upload: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    getValues,
   } = useForm<UploadFormResponse>({ mode: "onChange" });
   const onValid = (validForm: any) => {
     if (loading) return;
@@ -95,7 +99,55 @@ const Upload: NextPage = () => {
             visiableDragbar={false}
           />
         </div>
-        <Button text="Upload your opinion" />
+        <div className="flex flex-row space-x-2">
+          <div className="w-32">
+            <input
+              {...register("secret")}
+              type="checkbox"
+              id="secret"
+              className="peer hidden"
+            />
+            <label
+              htmlFor="secret"
+              className={cls(
+                getValues("secret") && "border-amber-600 bg-amber-600",
+                "flex w-full cursor-pointer flex-row items-center justify-center space-x-1 rounded-lg border-2 border-amber-500 bg-amber-500 p-3 text-white hover:border-amber-600 hover:bg-amber-600 peer-checked:text-white"
+              )}
+            >
+              {watch("secret") ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-white"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                  />
+                </svg>
+              )}
+              <div className="w-full text-sm font-semibold">비밀글</div>
+            </label>
+          </div>
+          <Button text="Upload your opinion" />
+        </div>
       </form>
     </Layout>
   );

@@ -47,7 +47,7 @@ const Upload: NextPage = () => {
   } = useForm<UploadFormResponse>({ mode: "onChange" });
   const [keyword, setKeyword] = useState<string>("");
   const [viewKeyword, setViewKeyword] = useState<boolean>(false);
-  const onValid = (validForm: any) => {
+  const onValid = (validForm: UploadFormResponse) => {
     if (uploadLoading) return;
     validForm.content = md;
     upload({ ...validForm });
@@ -60,11 +60,6 @@ const Upload: NextPage = () => {
     setValue("category", textContent);
     setViewKeyword(false);
   };
-  useEffect(() => {
-    if (!ok) {
-      router.push("/blog");
-    }
-  }, []);
   useEffect(() => {
     if (uploadData && uploadData.ok) {
       router.push(`/blog`);

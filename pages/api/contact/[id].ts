@@ -11,6 +11,7 @@ async function handler(
   if (req.method === "GET") {
     const {
       query: { id },
+      session: { user },
     } = req;
     const post = await client.myGroundPost.findUnique({
       where: {
@@ -18,6 +19,9 @@ async function handler(
       },
     });
     if (!post) return res.json({ ok: false, post: null });
+    if (post.isSecret && !user?.admin) {
+      res.json({ ok: false, message: "비밀글입니다." });
+    }
     res.json({
       ok: true,
       post,
