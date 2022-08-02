@@ -17,6 +17,15 @@ async function handler(
       where: {
         id: +id,
       },
+      select: {
+        id: true,
+        name: true,
+        title: true,
+        content: true,
+        isSecret: true,
+        created: true,
+        updated: true,
+      },
     });
     if (!post) return res.json({ ok: false, post: null });
     if (post.isSecret && !user?.admin) {

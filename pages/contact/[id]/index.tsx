@@ -43,11 +43,16 @@ const PostDetail: NextPage = () => {
             <h1 className="py-1 text-center text-5xl font-bold">
               {data?.post.title}
             </h1>
-            <div className="flex flex-col items-end py-1">
+            <div className="flex flex-col items-end py-1 px-1">
               <div className="text-sm">
                 <div>작성자: {data?.post.name}</div>
-                <div>
-                  작성일: <RegDate regDate={data?.post.updated} y m d />
+                <div className="flex flex-col">
+                  <span>
+                    작성일: <RegDate regDate={data?.post.created} y m d />
+                  </span>
+                  <span>
+                    수정일: <RegDate regDate={data?.post.updated} y m d />
+                  </span>
                 </div>
               </div>
             </div>
