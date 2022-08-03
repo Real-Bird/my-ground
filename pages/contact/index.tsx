@@ -7,6 +7,8 @@ import useToken from "@libs/client/useToken";
 import { cls } from "@libs/client/utils";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
+import { readdirSync, readFileSync } from "fs";
+import matter from "gray-matter";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -19,7 +21,7 @@ interface ContactResponse {
 
 interface NoticeResponse {
   ok: boolean;
-  noticePosts: {
+  notices: {
     title: string;
     category: string;
     slug: string;
@@ -28,14 +30,15 @@ interface NoticeResponse {
   }[];
 }
 
-const Contact: NextPage = () => {
+const Contact: NextPage<{ noticePosts: NoticeResponse }> = ({
+  noticePosts,
+}) => {
   const { admin, ok } = useAdmin();
   const { token, ok: tokenOk } = useToken();
   const { data } = useSWR<ContactResponse>("/api/contact");
-  const { data: noticeData } = useSWR<NoticeResponse>("/api/notice");
   useEffect(() => {
-    if (noticeData && noticeData.ok) {
-      noticeData.noticePosts.map((e) => {
+    if (noticePosts && noticePosts.ok) {
+      noticePosts.notices.map((e) => {
         const alterDate = new Date(e.date);
         const today = new Date();
         e.date = alterDate.toString();
@@ -50,31 +53,33 @@ const Contact: NextPage = () => {
         }
       });
     }
-  }, [noticeData]);
+  }, [noticePosts]);
   return (
     <Layout title="CONTACT">
       <div className="flex flex-col space-y-3 px-3">
         <div className="flex w-full flex-row items-center border-2">
           <div className="w-24 border-r-2 text-center font-bold">공지사항</div>
           <div className="flex flex-1 flex-col items-center justify-center">
-            {noticeData?.noticePosts
-              ?.filter((e) => e.category === "main")
-              .sort((a, b) => (a.date > b.date ? -1 : 1))
-              .map(
-                (notice) =>
-                  notice.newer && (
-                    <div key={notice.slug} className="flex-1 text-center">
-                      <Link href={`notice/${notice.slug}`}>
-                        <a
-                          target="_blank"
-                          className="animate-pulse text-center font-bold text-slate-500"
-                        >
-                          {notice.title}
-                        </a>
-                      </Link>
-                    </div>
+            {noticePosts
+              ? noticePosts?.notices
+                  .filter((e) => e.category === "main")
+                  .sort((a, b) => (a.date > b.date ? -1 : 1))
+                  .map(
+                    (notice) =>
+                      notice.newer && (
+                        <div key={notice.slug} className="flex-1 text-center">
+                          <Link href={`notice/${notice.slug}`}>
+                            <a
+                              target="_blank"
+                              className="animate-pulse text-center font-bold text-slate-500"
+                            >
+                              {notice.title}
+                            </a>
+                          </Link>
+                        </div>
+                      )
                   )
-              )}
+              : null}
           </div>
         </div>
         <div className="flex flex-row items-center justify-between divide-x-2 font-bold">
@@ -193,3 +198,15 @@ const Contact: NextPage = () => {
 };
 
 export default Contact;
+
+export async function getStaticProps() {
+  const noticePosts = readdirSync("./notice").map((file) => {
+    const content = readFileSync(`./notice/${file}`, "utf-8");
+    const [slug, _] = file.split(".");
+    return { ...matter(content).data, slug };
+  });
+  const notices = JSON.parse(JSON.stringify(noticePosts.reverse()));
+  return {
+    props: { noticePosts: { notices, ok: true } },
+  };
+}
