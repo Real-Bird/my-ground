@@ -58,7 +58,7 @@ const Contact: NextPage = () => {
           <div className="w-24 border-r-2 text-center font-bold">공지사항</div>
           <div className="flex flex-1 flex-col items-center justify-center">
             {noticeData?.noticePosts
-              .filter((e) => e.category === "main")
+              ?.filter((e) => e.category === "main")
               .sort((a, b) => (a.date > b.date ? -1 : 1))
               .map(
                 (notice) =>
