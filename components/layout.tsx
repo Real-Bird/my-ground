@@ -98,7 +98,7 @@ export default function Layout({
         </div>
       </div>
       {isDropdown ? (
-        <div className="absolute right-0 top-10 mt-2 w-48 origin-top-right rounded-md shadow-lg sm:right-[8%] md:right-[15%] lg:right-1/4 xl:right-[30%] 2xl:right-[36%]">
+        <div className="absolute right-0 top-10 z-10 mt-2 w-48 origin-top-right rounded-md shadow-lg sm:right-[8%] md:right-[15%] lg:right-1/4 xl:right-[30%] 2xl:right-[36%]">
           <div className="rounded-md bg-white py-1 ring-1 ring-black ring-opacity-5">
             {isLogged ? (
               <div
