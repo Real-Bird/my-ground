@@ -19,67 +19,39 @@ interface ContactResponse {
   posts: MyGroundPost[];
 }
 
-interface NoticeResponse {
-  ok: boolean;
-  notices: {
-    title: string;
-    category: string;
-    slug: string;
-    date: string;
-    newer: boolean;
-  }[];
-}
-
-const Contact: NextPage<{ noticePosts: NoticeResponse }> = ({
-  noticePosts,
-}) => {
+const Contact: NextPage = () => {
   const { admin, ok } = useAdmin();
   const { token, ok: tokenOk } = useToken();
   const { data } = useSWR<ContactResponse>("/api/contact");
-  useEffect(() => {
-    if (noticePosts && noticePosts.ok) {
-      noticePosts.notices.map((e) => {
-        const alterDate = new Date(e.date);
-        const today = new Date();
-        e.date = alterDate.toString();
-        if (
-          Math.floor(
-            (today.getTime() - alterDate.getTime()) / (1000 * 60 * 60 * 24)
-          ) > 7
-        ) {
-          e.newer = false;
-        } else {
-          e.newer = true;
-        }
-      });
-    }
-  }, [noticePosts]);
   return (
     <Layout title="CONTACT">
       <div className="flex flex-col space-y-3 px-3">
         <div className="flex w-full flex-row items-center border-2">
-          <div className="w-24 border-r-2 text-center font-bold">공지사항</div>
-          <div className="flex flex-1 flex-col items-center justify-center">
-            {noticePosts
-              ? noticePosts?.notices
-                  .filter((e) => e.category === "main")
-                  .sort((a, b) => (a.date > b.date ? -1 : 1))
-                  .map(
-                    (notice) =>
-                      notice.newer && (
-                        <div key={notice.slug} className="flex-1 text-center">
-                          <Link href={`notice/${notice.slug}`}>
-                            <a
-                              target="_blank"
-                              className="animate-pulse text-center font-bold text-slate-500"
-                            >
-                              {notice.title}
-                            </a>
-                          </Link>
-                        </div>
-                      )
-                  )
-              : null}
+          <div className="w-24 border-r-2 text-center font-bold sm:w-28">
+            공지사항
+          </div>
+          <div className="flex flex-1 flex-col items-center justify-center space-y-1">
+            <div className="flex-1 text-center">
+              <Link href={"/notice/01-information"}>
+                <a
+                  target="_blank"
+                  className="animate-pulse text-center font-bold text-slate-500"
+                >
+                  Welcome My Blog
+                </a>
+              </Link>
+            </div>
+            <hr className="w-full flex-1" />
+            <div className="flex-1 text-center">
+              <Link href={"/notice/01-information"}>
+                <a
+                  target="_blank"
+                  className="animate-pulse text-center font-bold text-slate-500"
+                >
+                  업데이트 사항
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="flex flex-row items-center justify-between divide-x-2 font-bold">
@@ -198,15 +170,3 @@ const Contact: NextPage<{ noticePosts: NoticeResponse }> = ({
 };
 
 export default Contact;
-
-export async function getStaticProps() {
-  const noticePosts = readdirSync("./notice").map((file) => {
-    const content = readFileSync(`./notice/${file}`, "utf-8");
-    const [slug, _] = file.split(".");
-    return { ...matter(content).data, slug };
-  });
-  const notices = JSON.parse(JSON.stringify(noticePosts.reverse()));
-  return {
-    props: { noticePosts: { notices, ok: true } },
-  };
-}
