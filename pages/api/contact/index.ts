@@ -21,9 +21,9 @@ async function handler(
         .update(`${name}${password}${title}`)
         .digest("hex");
       req.session.user = {
-        id: post.id,
+        id: Math.floor(Math.random() * 154846),
         admin: false,
-        token: token,
+        token,
       };
       await req.session.save();
     } else {

@@ -1,7 +1,7 @@
 ---
 title: Welcome My Blog
 date: 2022.07.29
-category: information
+category: main
 ---
 
 # 제 블로그를 방문해주셔서 감사합니다!

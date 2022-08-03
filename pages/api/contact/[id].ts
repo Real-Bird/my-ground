@@ -27,9 +27,17 @@ async function handler(
         updated: true,
       },
     });
+    const compareToken = await client.myGroundPost.findUnique({
+      where: {
+        id: +id,
+      },
+      select: {
+        token: true,
+      },
+    });
     if (!post) return res.json({ ok: false, post: null });
-    if (post.isSecret && !user?.admin) {
-      res.json({ ok: false, message: "비밀글입니다." });
+    if (post.isSecret && !user?.admin && compareToken.token !== user?.token) {
+      return res.json({ ok: false, message: "비밀글입니다." });
     }
     res.json({
       ok: true,
@@ -39,7 +47,7 @@ async function handler(
   if (req.method === "POST") {
     const {
       query: { id },
-      body: { title, content, password },
+      body: { title, content, password, secret },
     } = req;
     const cryptoPwd = await client.myGroundPost.findUnique({
       where: {
@@ -56,6 +64,7 @@ async function handler(
       data: {
         title,
         content,
+        isSecret: secret,
       },
     });
     res.json({

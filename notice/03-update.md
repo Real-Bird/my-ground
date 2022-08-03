@@ -1,7 +1,7 @@
 ---
 title: 업데이트 사항
 date: 2022.08.03
-category: information
+category: main
 ---
 
 ## 업데이트 사항

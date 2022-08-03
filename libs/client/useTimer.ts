@@ -31,5 +31,8 @@ export default function useTimer(): TimeResponse {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-  return { date: { year, month, day }, timer: { amPm, hour, minute, second } };
+  return {
+    date: { year, month, day },
+    timer: { amPm, hour, minute, second },
+  };
 }

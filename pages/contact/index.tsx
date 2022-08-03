@@ -2,12 +2,14 @@ import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
+import useTimer from "@libs/client/useTimer";
 import useToken from "@libs/client/useToken";
 import { cls } from "@libs/client/utils";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useEffect } from "react";
 import useSWR from "swr";
 
 interface ContactResponse {
@@ -15,21 +17,64 @@ interface ContactResponse {
   posts: MyGroundPost[];
 }
 
+interface NoticeResponse {
+  ok: boolean;
+  noticePosts: {
+    title: string;
+    category: string;
+    slug: string;
+    date: string;
+    newer: boolean;
+  }[];
+}
+
 const Contact: NextPage = () => {
   const { admin, ok } = useAdmin();
   const { token, ok: tokenOk } = useToken();
   const { data } = useSWR<ContactResponse>("/api/contact");
+  const { data: noticeData } = useSWR<NoticeResponse>("/api/notice");
+  useEffect(() => {
+    if (noticeData && noticeData.ok) {
+      noticeData.noticePosts.map((e) => {
+        const alterDate = new Date(e.date);
+        const today = new Date();
+        e.date = alterDate.toString();
+        if (
+          Math.floor(
+            (today.getTime() - alterDate.getTime()) / (1000 * 60 * 60 * 24)
+          ) > 7
+        ) {
+          e.newer = false;
+        } else {
+          e.newer = true;
+        }
+      });
+    }
+  }, [noticeData]);
   return (
     <Layout title="CONTACT">
       <div className="flex flex-col space-y-3 px-3">
         <div className="flex w-full flex-row items-center border-2">
-          <div className="border-r-2 px-5 font-bold">공지사항</div>
-          <div className="flex-1 text-center">
-            <Link href="notice/01-information">
-              <a target="_blank" className="text-center font-bold text-red-500">
-                Welcome My Blog
-              </a>
-            </Link>
+          <div className="w-24 border-r-2 text-center font-bold">공지사항</div>
+          <div className="flex flex-1 flex-col items-center justify-center">
+            {noticeData?.noticePosts
+              .filter((e) => e.category === "main")
+              .sort((a, b) => (a.date > b.date ? -1 : 1))
+              .map(
+                (notice) =>
+                  notice.newer && (
+                    <div key={notice.slug} className="flex-1 text-center">
+                      <Link href={`notice/${notice.slug}`}>
+                        <a
+                          target="_blank"
+                          className="animate-pulse text-center font-bold text-slate-500"
+                        >
+                          {notice.title}
+                        </a>
+                      </Link>
+                    </div>
+                  )
+              )}
           </div>
         </div>
         <div className="flex flex-row items-center justify-between divide-x-2 font-bold">
