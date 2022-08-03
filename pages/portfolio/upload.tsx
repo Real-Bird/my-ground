@@ -70,7 +70,7 @@ const Upload: NextPage = () => {
   };
   useEffect(() => {
     if (!ok) {
-      router.push("/portfolio");
+      router.push("/403");
     }
   }, []);
   useEffect(() => {

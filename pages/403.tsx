@@ -4,7 +4,7 @@ import Button from "@components/button-component";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const NotFound: NextPage = () => {
+const NotAuth: NextPage = () => {
   const router = useRouter();
   const [countDown, setCountDown] = useState(30);
   useEffect(() => {
@@ -23,10 +23,8 @@ const NotFound: NextPage = () => {
   return (
     <Layout title="404:NOT FOUND" backUrl="/">
       <div className="mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
-        <div className="text-4xl font-bold">404</div>
-        <div className="text-2xl font-semibold">
-          요청하신 페이지를 찾을 수 없습니다.
-        </div>
+        <div className="text-4xl font-bold">403</div>
+        <div className="text-2xl font-semibold">접근 권한이 없습니다.</div>
         <div>
           <span className="font-semibold text-red-600">{countDown} 초</span> 후
           홈으로 돌아갑니다.
@@ -39,4 +37,4 @@ const NotFound: NextPage = () => {
   );
 };
 
-export default NotFound;
+export default NotAuth;

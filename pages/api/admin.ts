@@ -28,6 +28,7 @@ async function handler(
         req.session.user = {
           id: isUser.id,
           admin: true,
+          token: "admin",
         };
         await req.session.save();
         res.json({ ok: true });
@@ -54,10 +55,14 @@ async function handler(
     }
   }
   if (req.method === "GET") {
-    if (req.session.user) {
+    if (req.session.user?.admin) {
       const admin = await client.user.findUnique({
         where: {
           id: req.session.user?.id,
+        },
+        select: {
+          id: true,
+          name: true,
         },
       });
       res.json({

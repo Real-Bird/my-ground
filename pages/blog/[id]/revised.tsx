@@ -14,6 +14,7 @@ import Button from "@components/button-component";
 import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
 import { CategoricalResponse } from "pages/blog/upload";
+import { NextResponse } from "next/server";
 
 interface BlogRevisedFormResponse {
   category: string;
@@ -84,6 +85,11 @@ const BlogRevised: NextPage = () => {
       router.push(`/blog/${router.query.id}`);
     }
   }, [revisedData, router]);
+  useEffect(() => {
+    if (!ok) {
+      router.push("/403");
+    }
+  }, []);
   return (
     <Layout title="Revised" backUrl="back">
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>

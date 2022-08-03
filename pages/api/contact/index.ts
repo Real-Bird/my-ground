@@ -3,6 +3,7 @@ import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import * as argon2 from "argon2";
 import { withApiSession } from "@libs/server/withSession";
+import crypto from "crypto";
 
 async function handler(
   req: NextApiRequest,
@@ -13,6 +14,21 @@ async function handler(
       body: { name, password, content, title, secret },
     } = req;
     const pwdHash = await argon2.hash(password);
+    let token;
+    if (!req.session.user) {
+      token = crypto
+        .createHash("sha256")
+        .update(`${name}${password}${title}`)
+        .digest("hex");
+      req.session.user = {
+        id: post.id,
+        admin: false,
+        token: token,
+      };
+      await req.session.save();
+    } else {
+      token = req.session.user?.token;
+    }
     const post = await client.myGroundPost.create({
       data: {
         name,
@@ -20,6 +36,7 @@ async function handler(
         title,
         content,
         isSecret: secret,
+        token,
       },
     });
     res.json({
@@ -40,13 +57,14 @@ async function handler(
         created: true,
         updated: true,
         isSecret: true,
+        token: true,
       },
       orderBy: {
         created: "desc",
       },
     });
     posts.map((p) => {
-      if (p.isSecret && !user?.admin) {
+      if (p.isSecret && !user?.admin && user?.token !== p.token) {
         p.name = "XXXXX";
         p.title = "XXXXX";
       }

@@ -252,6 +252,7 @@ model MyGroundPost {
   title    String?
   isSecret Boolean  @default(false)
   content  String   @db.LongText
+  token    String?
   created  DateTime @default(now())
   updated  DateTime @updatedAt
 }

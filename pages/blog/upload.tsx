@@ -65,6 +65,11 @@ const Upload: NextPage = () => {
       router.push(`/blog`);
     }
   }, [uploadData]);
+  useEffect(() => {
+    if (!ok) {
+      router.push("/403");
+    }
+  }, []);
   return (
     <Layout title="Post" backUrl="back">
       <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>

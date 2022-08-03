@@ -2,6 +2,8 @@ import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
+import useToken from "@libs/client/useToken";
+import { cls } from "@libs/client/utils";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";
@@ -13,8 +15,9 @@ interface ContactResponse {
   posts: MyGroundPost[];
 }
 
-const Home: NextPage = () => {
+const Contact: NextPage = () => {
   const { admin, ok } = useAdmin();
+  const { token, ok: tokenOk } = useToken();
   const { data } = useSWR<ContactResponse>("/api/contact");
   return (
     <Layout title="CONTACT">
@@ -35,41 +38,64 @@ const Home: NextPage = () => {
           <span className="w-20 text-center">작성일</span>
         </div>
         {data
-          ? data?.posts.map((post) =>
-              !ok ? (
-                !post.isSecret && (
-                  <div
-                    key={post.id}
-                    className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
-                  >
-                    <div className="w-20 text-center text-sm">{post.name}</div>
-                    <Link href={`/contact/${post.id}`}>
-                      <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl">
-                        {post.title}
-                      </a>
-                    </Link>
-                    <div className="w-20 text-center text-sm">
-                      <RegDate regDate={post.created} y m d />
-                    </div>
+          ? data?.posts.map((post) => (
+              <div
+                key={post.id}
+                className={cls(
+                  ok
+                    ? "block"
+                    : !post.isSecret
+                    ? "block"
+                    : post.token === token
+                    ? "block"
+                    : "hidden",
+                  "flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
+                )}
+              >
+                <div className="relative flex w-20 flex-row items-center text-center text-sm">
+                  <div className="absolute -right-2.5 sm:-right-5">
+                    {post.isSecret ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-amber-500"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+                        />
+                      </svg>
+                    )}
                   </div>
-                )
-              ) : (
-                <div
-                  key={post.id}
-                  className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
-                >
-                  <div className="w-20 text-center text-sm">{post.name}</div>
-                  <Link href={`/contact/${post.id}`}>
-                    <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl">
-                      {post.title}
-                    </a>
-                  </Link>
-                  <div className="w-20 text-center text-sm">
-                    <RegDate regDate={post.created} y m d />
-                  </div>
+                  <div>{post.name}</div>
                 </div>
-              )
-            )
+                <Link href={`/contact/${post.id}`}>
+                  <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl">
+                    {post.title}
+                  </a>
+                </Link>
+                <div className="w-20 text-center text-sm">
+                  <RegDate regDate={post.created} y m d />
+                </div>
+              </div>
+            ))
           : [...Array.from(Array(10).keys())].map((i) => (
               <div
                 key={i}
@@ -121,4 +147,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Contact;
