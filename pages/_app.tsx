@@ -3,7 +3,9 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
 import { Router } from "next/router";
-import Layout from "@components/layout";
+import useTimer from "@libs/client/useTimer";
+import FullNavBar from "@components/full-navbar";
+import Link from "next/link";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -13,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       setLoading(true);
     };
     const end = () => {
-      console.log("findished");
+      console.log("finished");
       setLoading(false);
     };
     Router.events.on("routeChangeStart", start);
@@ -25,15 +27,34 @@ function MyApp({ Component, pageProps }: AppProps) {
       Router.events.off("routeChangeError", end);
     };
   }, []);
+  const {
+    date: { year, month, day },
+    timer: { amPm, hour, minute, second },
+  } = useTimer();
   return (
     <SWRConfig
       value={{
         fetcher: (url: string) => fetch(url).then((res) => res.json()),
       }}
     >
-      {loading ? (
-        <Layout title="Loading">
-          <div className="mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
+      <div className="flex w-full flex-col items-center justify-center">
+        <div className="fixed right-16 top-1 z-[100] h-10 w-24 rounded-md bg-amber-400 text-center xl:h-14 xl:w-36">
+          <div className="text-sm xl:text-xl">
+            <div>{`${year}.${month}.${day}`}</div>
+            <div>{`${amPm} ${hour}:${minute}:${second}`}</div>
+          </div>
+        </div>
+        <header className="fixed top-0 z-[98] hidden h-12 w-full max-w-xl items-center justify-center border-b  bg-white px-10 text-lg font-medium text-gray-800 md:h-16 md:max-w-full xl:flex">
+          <div className="absolute left-1/4 hidden md:inline-block">
+            <img src="myground.logo.png" className="h-12 w-12" />
+          </div>
+          <div className="absolute right-64 hidden xl:block">
+            <FullNavBar />
+          </div>
+        </header>
+        {loading ? (
+          <div className="absolute top-[15%] mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
+            <title>LOADING || JS's Ground</title>
             <svg
               width="135"
               height="135"
@@ -63,10 +84,10 @@ function MyApp({ Component, pageProps }: AppProps) {
               </path>
             </svg>
           </div>
-        </Layout>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        ) : (
+          <Component {...pageProps} />
+        )}
+      </div>
     </SWRConfig>
   );
 }

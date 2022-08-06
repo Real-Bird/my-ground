@@ -6,6 +6,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import useSWR from "swr";
 import { Skeleton } from "@mui/material";
+import Button from "@components/button-component";
 
 interface PortfolioProps {
   ok: boolean;
@@ -16,15 +17,30 @@ const Portfolio: NextPage = () => {
   const { admin, ok } = useAdmin();
   const { data } = useSWR<PortfolioProps>("/api/portfolio");
   return (
-    <Layout title="PORTFOLIO">
-      <div className="mx-3 flex flex-col space-y-3">
-        <h1 className="text-center text-xl text-red-600">My Portfolio List</h1>
+    <Layout title="PORTFOLIO" isFooter>
+      <div className="mx-3 flex flex-col space-y-3 md:my-5">
+        <div className="flex w-full flex-row items-center justify-center">
+          <h1 className="text-center text-xl text-red-600 md:py-5 md:text-2xl md:font-bold">
+            My Portfolio List
+          </h1>
+          {ok && (
+            <Link href={"/portfolio/upload"}>
+              <Button
+                text="Upload"
+                className="hidden xl:absolute xl:right-16 xl:block xl:h-12 xl:w-24"
+              />
+            </Link>
+          )}
+        </div>
         {data ? (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
             {data?.portfolio?.map((pf) => (
               <Link href={`/portfolio/${pf.id}`} key={pf.id}>
                 <a className="flex aspect-video w-full flex-col items-center rounded-md shadow-md">
-                  <img src={pf.thumbnail} className="h-32 w-full rounded-md" />
+                  <img
+                    src={pf.thumbnail}
+                    className="h-32 w-full rounded-md md:h-48"
+                  />
                   <div className="py-1 text-center text-xl font-bold">
                     {pf.title}
                   </div>

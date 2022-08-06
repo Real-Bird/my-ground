@@ -27,7 +27,7 @@ const Contact: NextPage = () => {
     <Layout title="CONTACT">
       <div className="flex flex-col space-y-3 px-3">
         <div className="flex w-full flex-row items-center border-2">
-          <div className="w-24 border-r-2 text-center font-bold sm:w-28">
+          <div className="w-24 border-r-2 text-center font-bold md:w-28">
             공지사항
           </div>
           <div className="flex flex-1 flex-col items-center justify-center space-y-1">
@@ -75,7 +75,7 @@ const Contact: NextPage = () => {
                 )}
               >
                 <div className="relative flex w-20 flex-row items-center text-center text-sm">
-                  <div className="absolute -right-2.5 sm:-right-5">
+                  <div className="absolute -right-2.5 md:-right-5">
                     {post.isSecret ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

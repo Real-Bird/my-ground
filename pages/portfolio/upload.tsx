@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Input from "@components/input";
 import "@uiw/react-md-editor/markdown-editor.css";
@@ -41,7 +41,6 @@ const Upload: NextPage = () => {
     formState: { errors },
     setValue,
     setFocus,
-    watch,
   } = useForm<UploadFormResponse>({ mode: "onChange" });
   const onValid = (validForm: UploadFormResponse) => {
     if (loading) return;
@@ -52,6 +51,8 @@ const Upload: NextPage = () => {
   };
   const [stackNames, setStackNames] = useState([]);
   const [whichStack, setWhichStack] = useState("");
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [preview, setPreview] = useState(false);
   const onPushStacks = (stacksForm: any) => {
     if (stacksForm.key === "Enter" && stacksForm.target.value) {
       const [stack, color] = stacksForm.target.value.split("/");
@@ -68,6 +69,7 @@ const Upload: NextPage = () => {
   const onDeleteStack = ({ target: { src } }: any) => {
     setStackNames((prev) => prev.filter((i) => i !== src));
   };
+  const toggleConfirm = () => setIsConfirm((prev) => !prev);
   useEffect(() => {
     if (!ok) {
       router.push("/403");
@@ -76,6 +78,13 @@ const Upload: NextPage = () => {
   useEffect(() => {
     setFocus("thumbnail");
   }, []);
+  const handleResize = () => {
+    setPreview(window.innerWidth >= 1280 ? true : false);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     if (data && data.ok) {
       router.push(`/portfolio`);
@@ -83,77 +92,86 @@ const Upload: NextPage = () => {
   }, [data]);
   return (
     <Layout title="Work" backUrl="back">
-      <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
-        <div className="flex flex-row justify-between">
-          <Input
-            register={register("thumbnail")}
-            label="Thumbnail"
-            name="thumbnail"
-            type="text"
-          />
-          <Input
-            register={register("github")}
-            label="Github"
-            name="github"
-            type="text"
-          />
-        </div>
-        <div className="flex flex-row justify-between">
-          <Input
-            register={register("startDate")}
-            label="Development Start"
-            name="startDate"
-            type="text"
-          />
-          <span className="translate-y-5 text-4xl"> - </span>
-          <Input
-            register={register("endDate")}
-            label="Development End"
-            name="endDate"
-            type="text"
-          />
-        </div>
-        <div className="flex flex-row justify-between">
-          <Input
-            register={register("deploy")}
-            label="Deploy Url"
-            name="deploy"
-            type="text"
-          />
-          <Input
-            register={register("deployIcon")}
-            label="Deploy Icon"
-            name="deployIcon"
-            type="text"
-          />
-        </div>
-        <Input
-          register={register("title")}
-          label="Title"
-          name="title"
-          type="text"
-        />
-        <div className="relative flex flex-row items-start  rounded-md shadow-sm">
-          <div className="flex flex-col">
-            <label
-              htmlFor="stacks"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Stack Icon
-            </label>
-            <input
-              className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
-              {...register("stacks")}
-              id="stacks"
-              onKeyDown={onPushStacks}
+      <form
+        className="space-y-4 p-4 xl:w-[80%] xl:pt-8"
+        onSubmit={handleSubmit(onValid)}
+      >
+        <div className="xl:flex xl:w-full xl:flex-row xl:justify-center xl:space-x-5">
+          <div className="flex flex-row justify-between xl:order-1 xl:w-fit xl:space-x-5">
+            <Input
+              register={register("thumbnail")}
+              label="Thumbnail"
+              name="thumbnail"
+              type="text"
+            />
+            <Input
+              register={register("github")}
+              label="Github"
+              name="github"
+              type="text"
             />
           </div>
-          <div className="mx-3 flex w-1/2 flex-row flex-wrap justify-items-start">
-            {stackNames.map((stack, i) => (
-              <div className="mr-1 py-1" key={i} onClick={onDeleteStack}>
-                <img src={stack} alt={whichStack} />
-              </div>
-            ))}
+          <div className="flex flex-row justify-between xl:order-3 xl:w-fit xl:space-x-5">
+            <Input
+              register={register("startDate")}
+              label="Development Start"
+              name="startDate"
+              type="text"
+            />
+            <span className="translate-y-5 text-4xl"> - </span>
+            <Input
+              register={register("endDate")}
+              label="Development End"
+              name="endDate"
+              type="text"
+            />
+          </div>
+          <div className="flex flex-row justify-between xl:order-2 xl:justify-start  xl:space-x-5">
+            <Input
+              register={register("deploy")}
+              label="Deploy Url"
+              name="deploy"
+              type="text"
+            />
+            <Input
+              register={register("deployIcon")}
+              label="Deploy Icon"
+              name="deployIcon"
+              type="text"
+            />
+          </div>
+        </div>
+        <div className="flex-row space-x-5 xl:flex">
+          <div className="xl:w-1/2">
+            <Input
+              register={register("title")}
+              label="Title"
+              name="title"
+              type="text"
+            />
+          </div>
+          <div className="relative flex flex-row items-start  rounded-md shadow-sm">
+            <div className="flex flex-col">
+              <label
+                htmlFor="stacks"
+                className="mb-1 block text-sm font-medium text-gray-700"
+              >
+                Stack Icon
+              </label>
+              <input
+                className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+                {...register("stacks")}
+                id="stacks"
+                onKeyDown={onPushStacks}
+              />
+            </div>
+            <div className="mx-3 flex w-1/2 flex-row flex-wrap justify-items-start">
+              {stackNames.map((stack, i) => (
+                <div className="mr-1 py-1" key={i} onClick={onDeleteStack}>
+                  <img src={stack} alt={whichStack} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className="h-[500px] rounded-md bg-slate-400">
@@ -161,14 +179,14 @@ const Upload: NextPage = () => {
             {...register("content")}
             value={md}
             onChange={setMd}
-            preview="edit"
+            preview={preview ? "live" : "edit"}
             height={500}
             minHeight={500}
             maxHeight={500}
             visiableDragbar={false}
           />
         </div>
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 xl:justify-end">
           <div>
             <input
               {...register("confirm")}
@@ -177,10 +195,11 @@ const Upload: NextPage = () => {
               className="peer hidden"
             />
             <label
+              onClick={toggleConfirm}
               htmlFor="confirm"
               className="flex w-full cursor-pointer items-center justify-center space-x-1 rounded-lg border-2 border-amber-500 bg-amber-500 p-3 text-white hover:border-amber-600 hover:bg-amber-600 peer-checked:text-white"
             >
-              {watch("confirm") ? (
+              {isConfirm ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-white"
@@ -212,7 +231,7 @@ const Upload: NextPage = () => {
               <div className="w-full font-semibold">Confirm</div>
             </label>
           </div>
-          <Button text="Upload My Portfolio" />
+          <Button text="Upload My Portfolio" className="xl:w-60" />
         </div>
       </form>
     </Layout>

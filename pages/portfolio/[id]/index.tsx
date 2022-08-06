@@ -9,6 +9,7 @@ import FloatingButton from "@components/floating-btn";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useAdmin from "@libs/client/useAdmin";
+import Button from "@components/button-component";
 
 interface BadgeWithPf extends MyPortfolio {
   stackBadge: StackBadge[];
@@ -42,15 +43,25 @@ const PortfolioDetail: NextPage = () => {
   }, [data]);
   return (
     <Layout title="Portfolio" backUrl="/portfolio">
-      <div className="space-y-2 px-3">
+      <div className="flex-col items-center justify-center space-y-2 px-3 md:my-5 md:flex">
         {data && data?.portfolio ? (
-          <div>
-            <h1 className="border-b-2 border-dotted pt-1 pb-5 text-center text-5xl font-bold">
-              {data?.portfolio.title}
-            </h1>
+          <div className="xl:w-2/3">
+            <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted xl:relative">
+              <h1 className="pt-1 pb-5 text-center text-5xl font-bold">
+                {data?.portfolio.title}
+              </h1>
+              {ok && (
+                <Link href={`/portfolio/${router.query.id}/revised`}>
+                  <Button
+                    text="Revised"
+                    className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
+                  />
+                </Link>
+              )}
+            </div>
             <div className="py-5">
-              <div className="flex flex-row justify-center">
-                <div className="w- flex flex-col items-center space-y-1">
+              <div className="flex flex-row justify-center md:justify-between">
+                <div className="flex w-40 flex-col items-center space-y-1 md:w-[20%]">
                   <span className="font-semibold">Stack</span>
                   <div className="mx-auto w-36">
                     <div className="flex flex-row flex-wrap justify-start">
@@ -69,7 +80,7 @@ const PortfolioDetail: NextPage = () => {
                   <Link href={data?.portfolio.github}>
                     <a
                       target="_blank"
-                      className="flex flex-col items-center space-y-1"
+                      className="flex flex-1 flex-col items-center space-y-1"
                     >
                       <span className="font-semibold">Github</span>
                       <svg
@@ -83,7 +94,10 @@ const PortfolioDetail: NextPage = () => {
                     </a>
                   </Link>
                   <Link href={data?.portfolio.deploy}>
-                    <a target="_blank" className="flex flex-col items-center">
+                    <a
+                      target="_blank"
+                      className="flex flex-1 flex-col items-center"
+                    >
                       <span className="font-semibold">Deploy</span>
                       <div
                         className="h-8 w-8 py-1.5"
@@ -94,7 +108,7 @@ const PortfolioDetail: NextPage = () => {
                     </a>
                   </Link>
                 </div>
-                <div className="flex w-1/3 flex-col items-center">
+                <div className="flex w-1/3 flex-col items-center md:w-[20%]">
                   <div className="font-semibold">Develop Date</div>
                   <div className="w-28 text-center">
                     <div className="text-sm">

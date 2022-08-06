@@ -4,9 +4,9 @@ import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
-    <Layout title="HOME">
+    <Layout title="HOME" isFooter>
       <div className="mx-3 flex flex-col space-y-3">
-        <div className="space-y-5 divide-y-2">
+        <div className="my-5 space-y-5 divide-y-2">
           <div>
             <h1 className="text-2xl font-bold">Introduce</h1>
             <div className="flex flex-col flex-wrap space-y-2">
@@ -213,7 +213,7 @@ const Home: NextPage = () => {
             <img src="https://ghchart.rshah.org/339933/real-bird" />
             <span>🌱 Github Progress</span>
           </div>
-          <div className="flex flex-col flex-wrap space-y-3">
+          <div className="flex flex-col flex-wrap space-y-3" id="about">
             <h1 className="text-2xl font-bold">About me</h1>
             <div className="flex flex-col space-y-4">
               <div className="space-y-3">

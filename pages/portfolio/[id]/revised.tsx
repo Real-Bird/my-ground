@@ -100,6 +100,14 @@ const Revised: NextPage = () => {
       setMd(data?.portfolio.content);
     }
   }, [data]);
+  const [preview, setPreview] = useState(false);
+  const handleResize = () => {
+    setPreview(window.innerWidth >= 1280 ? true : false);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     if (revisedData && revisedData.ok) {
       router.push(`/portfolio/${router.query.id}`);
@@ -107,80 +115,89 @@ const Revised: NextPage = () => {
   }, [revisedData]);
   return (
     <Layout title="Revised" backUrl="back">
-      <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
-        <div className="flex flex-row justify-between">
-          <Input
-            register={register("thumbnail")}
-            label="Thumbnail"
-            name="thumbnail"
-            type="text"
-          />
-          <Input
-            register={register("github")}
-            label="Github"
-            name="github"
-            type="text"
-          />
-        </div>
-        <div className="flex flex-row justify-between">
-          <Input
-            register={register("startDate")}
-            label="Development Start"
-            name="startDate"
-            type="text"
-          />
-          <span className="translate-y-5 text-4xl"> - </span>
-          <Input
-            register={register("endDate")}
-            label="Development End"
-            name="endDate"
-            type="text"
-          />
-        </div>
-        <div className="flex flex-row justify-between">
-          <Input
-            register={register("deploy")}
-            label="Deploy Url"
-            name="deploy"
-            type="text"
-          />
-          <Input
-            register={register("deployIcon")}
-            label="Deploy Icon"
-            name="deployIcon"
-            type="text"
-          />
-        </div>
-        <Input
-          register={register("title")}
-          label="Title"
-          name="title"
-          type="text"
-        />
-        <div className="relative flex flex-row items-start  rounded-md shadow-sm">
-          <div className="flex flex-col">
-            <label
-              htmlFor="stacks"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Stack Icon
-            </label>
-            <input
-              className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
-              {...register("stacks")}
-              id="stacks"
-              onKeyDown={onPushStacks}
+      <form
+        className="space-y-4 p-4 xl:w-[80%] xl:pt-8"
+        onSubmit={handleSubmit(onValid)}
+      >
+        <div className="xl:flex xl:w-full xl:flex-row xl:justify-center xl:space-x-5">
+          <div className="flex flex-row justify-between xl:order-1 xl:w-fit xl:space-x-5">
+            <Input
+              register={register("thumbnail")}
+              label="Thumbnail"
+              name="thumbnail"
+              type="text"
+            />
+            <Input
+              register={register("github")}
+              label="Github"
+              name="github"
+              type="text"
             />
           </div>
-          <div className="mx-3 flex w-1/2 flex-row flex-wrap justify-items-start">
-            {whichStack.map((stack, i) => (
-              <div className="mr-1 py-1" key={i} onClick={onDeleteStack}>
-                <img
-                  src={`https://img.shields.io/badge/${stack[0]}-${stack[1]}?style=flat&logo=${stack[0]}&logoColor=white`}
-                  alt={stack[0]}
-                />
-              </div>
-            ))}
+          <div className="flex flex-row justify-between xl:order-3 xl:w-fit  xl:space-x-5">
+            <Input
+              register={register("startDate")}
+              label="Development Start"
+              name="startDate"
+              type="text"
+            />
+            <span className="translate-y-5 text-4xl"> - </span>
+            <Input
+              register={register("endDate")}
+              label="Development End"
+              name="endDate"
+              type="text"
+            />
+          </div>
+          <div className="flex flex-row justify-between xl:order-2 xl:justify-start  xl:space-x-5">
+            <Input
+              register={register("deploy")}
+              label="Deploy Url"
+              name="deploy"
+              type="text"
+            />
+            <Input
+              register={register("deployIcon")}
+              label="Deploy Icon"
+              name="deployIcon"
+              type="text"
+            />
+          </div>
+        </div>
+        <div className="flex-row space-x-5 xl:flex">
+          <div className="xl:w-1/2">
+            <Input
+              register={register("title")}
+              label="Title"
+              name="title"
+              type="text"
+            />
+          </div>
+          <div className="relative flex flex-row items-start  rounded-md shadow-sm">
+            <div className="flex flex-col">
+              <label
+                htmlFor="stacks"
+                className="mb-1 block text-sm font-medium text-gray-700"
+              >
+                Stack Icon
+              </label>
+              <input
+                className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+                {...register("stacks")}
+                id="stacks"
+                onKeyDown={onPushStacks}
+              />
+            </div>
+            <div className="mx-3 flex w-1/2 flex-row flex-wrap justify-items-start">
+              {whichStack.map((stack, i) => (
+                <div className="mr-1 py-1" key={i} onClick={onDeleteStack}>
+                  <img
+                    src={`https://img.shields.io/badge/${stack[0]}-${stack[1]}?style=flat&logo=${stack[0]}&logoColor=white`}
+                    alt={stack[0]}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className="h-[500px] rounded-md bg-slate-400">
@@ -189,7 +206,7 @@ const Revised: NextPage = () => {
             value={md}
             onChange={setMd}
             autoFocus
-            preview="edit"
+            preview={preview ? "live" : "edit"}
             height={500}
             minHeight={500}
             maxHeight={500}
