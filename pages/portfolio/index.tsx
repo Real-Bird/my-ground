@@ -18,8 +18,8 @@ const Portfolio: NextPage = () => {
   const { data } = useSWR<PortfolioProps>("/api/portfolio");
   return (
     <Layout title="PORTFOLIO" isFooter>
-      <div className="mx-3 flex flex-col space-y-3 md:my-5">
-        <div className="flex w-full flex-row items-center justify-center">
+      <div className="mx-3 flex flex-col space-y-3 xl:my-5 xl:items-center">
+        <div className="flex w-full flex-row items-center justify-center xl:relative xl:w-[80%]">
           <h1 className="text-center text-xl text-red-600 md:py-5 md:text-2xl md:font-bold">
             My Portfolio List
           </h1>
@@ -27,7 +27,7 @@ const Portfolio: NextPage = () => {
             <Link href={"/portfolio/upload"}>
               <Button
                 text="Upload"
-                className="hidden xl:absolute xl:right-16 xl:block xl:h-12 xl:w-24"
+                className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
               />
             </Link>
           )}

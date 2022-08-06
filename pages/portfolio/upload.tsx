@@ -12,6 +12,7 @@ import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
 import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface UploadFormResponse {
   thumbnail: string;
@@ -52,7 +53,7 @@ const Upload: NextPage = () => {
   const [stackNames, setStackNames] = useState([]);
   const [whichStack, setWhichStack] = useState("");
   const [isConfirm, setIsConfirm] = useState(false);
-  const [preview, setPreview] = useState(false);
+  const preview = useWindowSize();
   const onPushStacks = (stacksForm: any) => {
     if (stacksForm.key === "Enter" && stacksForm.target.value) {
       const [stack, color] = stacksForm.target.value.split("/");
@@ -77,13 +78,6 @@ const Upload: NextPage = () => {
   }, []);
   useEffect(() => {
     setFocus("thumbnail");
-  }, []);
-  const handleResize = () => {
-    setPreview(window.innerWidth >= 1280 ? true : false);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
   useEffect(() => {
     if (data && data.ok) {

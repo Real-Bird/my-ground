@@ -84,7 +84,10 @@ export default function Layout({
         ) : null}
         <Link href={"/"}>
           <a className="absolute left-1/4 hidden xl:inline-block">
-            <img src="myground.logo.png" className="h-12 w-12" />
+            <img
+              src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
+              className="h-12 w-12"
+            />
           </a>
         </Link>
         <span className="xl:hidden">{title}</span>
@@ -96,7 +99,7 @@ export default function Layout({
           onClick={toggleDropdown}
         >
           <img
-            src="https://bit.ly/3Q5gYKG"
+            src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
             alt="profile"
             className="h-10 w-10 rounded-full bg-gray-500"
           />
@@ -122,7 +125,7 @@ export default function Layout({
       ) : null}
       <div
         id="child"
-        className="mt-12 mb-16 h-[86vh] w-full max-w-xl overflow-y-scroll pb-10 pt-3 xl:mt-12 xl:flex xl:h-full xl:max-w-full xl:justify-center xl:py-0 xl:pb-5"
+        className="mt-12 mb-16 h-[86vh] w-full max-w-xl overflow-y-scroll pb-10 pt-3 xl:mt-12 xl:flex xl:h-full xl:max-w-full xl:justify-center xl:pb-5"
       >
         {children}
       </div>

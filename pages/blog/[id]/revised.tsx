@@ -14,7 +14,7 @@ import Button from "@components/button-component";
 import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
 import { CategoricalResponse } from "pages/blog/upload";
-import { NextResponse } from "next/server";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface BlogRevisedFormResponse {
   category: string;
@@ -51,10 +51,8 @@ const BlogRevised: NextPage = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm<BlogRevisedFormResponse>({ mode: "onChange" });
   const [keyword, setKeyword] = useState<string>("");
   const [viewKeyword, setViewKeyword] = useState<boolean>(false);
@@ -73,6 +71,7 @@ const BlogRevised: NextPage = () => {
     setValue("category", textContent);
     setViewKeyword(false);
   };
+  const preview = useWindowSize();
   useEffect(() => {
     if (data && data.ok) {
       setValue("category", data?.post.category.category);
@@ -92,7 +91,10 @@ const BlogRevised: NextPage = () => {
   }, []);
   return (
     <Layout title="Revised" backUrl="back">
-      <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
+      <form
+        className="space-y-4 p-4 xl:w-[80%]"
+        onSubmit={handleSubmit(onValid)}
+      >
         <div className="relative">
           <Input
             register={register("category", {
@@ -137,7 +139,7 @@ const BlogRevised: NextPage = () => {
             value={md}
             onChange={setMd}
             autoFocus
-            preview="edit"
+            preview={preview ? "live" : "edit"}
             height={500}
             minHeight={500}
             maxHeight={500}

@@ -12,6 +12,7 @@ import useMutation from "@libs/client/useMutation";
 import Button from "@components/button-component";
 import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface UploadFormResponse {
   category: string;
@@ -60,6 +61,7 @@ const Upload: NextPage = () => {
     setValue("category", textContent);
     setViewKeyword(false);
   };
+  const preview = useWindowSize();
   useEffect(() => {
     if (uploadData && uploadData.ok) {
       router.push(`/blog`);
@@ -72,7 +74,10 @@ const Upload: NextPage = () => {
   }, []);
   return (
     <Layout title="Post" backUrl="back">
-      <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
+      <form
+        className="space-y-4 p-4 xl:w-[80%]"
+        onSubmit={handleSubmit(onValid)}
+      >
         <div className="relative">
           <Input
             register={register("category", {
@@ -116,7 +121,7 @@ const Upload: NextPage = () => {
             value={md}
             onChange={setMd}
             autoFocus
-            preview="edit"
+            preview={preview ? "live" : "edit"}
             height={500}
             minHeight={500}
             maxHeight={500}

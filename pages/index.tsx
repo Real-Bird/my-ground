@@ -20,7 +20,7 @@ const Home: NextPage = () => {
                     src="https://raw.githubusercontent.com/Real-Bird/pb/master/%EC%A6%9D%EB%AA%85.jpg"
                     className="w-54 h-48 bg-slate-500"
                   />
-                  <Link href="https://real-bird.github.io/RB_todo/resume.pdf">
+                  <Link href="/resume">
                     <a target={"_blank"}>
                       <div className="flex flex-row">
                         <svg

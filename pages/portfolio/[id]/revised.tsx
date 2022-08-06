@@ -12,6 +12,7 @@ import Button from "@components/button-component";
 import useSWR from "swr";
 import { MyPortfolio, StackBadge } from "@prisma/client";
 import useAdmin from "@libs/client/useAdmin";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface PfwithStack extends MyPortfolio {
   stackBadge: StackBadge[];
@@ -65,6 +66,7 @@ const Revised: NextPage = () => {
     revised({ ...validForm });
   };
   const [whichStack, setWhichStack] = useState([]);
+  const preview = useWindowSize();
   const onPushStacks = (stacksForm: any) => {
     if (stacksForm.key === "Enter" && stacksForm.target.value) {
       const [stack, color] = stacksForm.target.value.split("/");
@@ -100,14 +102,6 @@ const Revised: NextPage = () => {
       setMd(data?.portfolio.content);
     }
   }, [data]);
-  const [preview, setPreview] = useState(false);
-  const handleResize = () => {
-    setPreview(window.innerWidth >= 1280 ? true : false);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   useEffect(() => {
     if (revisedData && revisedData.ok) {
       router.push(`/portfolio/${router.query.id}`);

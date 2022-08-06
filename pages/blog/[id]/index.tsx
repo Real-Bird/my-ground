@@ -9,6 +9,8 @@ import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
 import { Suspense, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Button from "@components/button-component";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -40,10 +42,18 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   }, []);
   return (
     <Layout title="POST" backUrl="/blog">
-      <div className="space-y-2 px-3">
-        <Suspense fallback={<div className="w-full bg-slate-300" />}>
-          <h1 className="py-1 text-center text-5xl font-bold">{post?.title}</h1>
-        </Suspense>
+      <div className="space-y-2 px-3 xl:py-4">
+        <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted xl:relative">
+          <h1 className="py-5 text-center text-5xl font-bold">{post?.title}</h1>
+          {ok && (
+            <Link href={`/blog/${router.query.id}/revised`}>
+              <Button
+                text="Revised"
+                className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
+              />
+            </Link>
+          )}
+        </div>
         <div className="flex flex-col items-end py-1">
           <div className="text-sm">
             <div className="flex flex-row">

@@ -43,7 +43,7 @@ const PortfolioDetail: NextPage = () => {
   }, [data]);
   return (
     <Layout title="Portfolio" backUrl="/portfolio">
-      <div className="flex-col items-center justify-center space-y-2 px-3 md:my-5 md:flex">
+      <div className="flex-col items-center justify-center space-y-2 px-3 xl:my-5 xl:flex">
         {data && data?.portfolio ? (
           <div className="xl:w-2/3">
             <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted xl:relative">

@@ -7,8 +7,10 @@ import useSWR from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
 import FloatingButton from "@components/floating-btn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "@mui/material";
+import Link from "next/link";
+import Button from "@components/button-component";
 
 interface PostResponse {
   ok: boolean;
@@ -30,6 +32,14 @@ const PostDetail: NextPage = () => {
   const { data } = useSWR<PostResponse>(
     router.query.id ? `/api/contact/${router.query.id}` : null
   );
+  const [preview, setPreview] = useState(false);
+  const handleResize = () => {
+    setPreview(window.innerWidth >= 1280 ? true : false);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     if (data && !data.ok) {
       router.push("/404");
@@ -37,16 +47,24 @@ const PostDetail: NextPage = () => {
   }, [data]);
   return (
     <Layout title="POST" backUrl="/contact">
-      <div className="space-y-2 px-3">
+      <div className="space-y-2 px-3 xl:w-[80%] xl:py-4">
         {data && data.post ? (
           <>
-            <h1 className="py-1 text-center text-5xl font-bold">
-              {data?.post.title}
-            </h1>
+            <div className="flex w-full flex-row items-center justify-center xl:relative">
+              <h1 className="py-1 text-center text-5xl font-bold">
+                {data?.post.title}
+              </h1>
+              <Link href={`/contact/${router.query.id}/revised`}>
+                <Button
+                  text="Revised"
+                  className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
+                />
+              </Link>
+            </div>
             <div className="flex flex-col items-end py-1 px-1">
-              <div className="text-sm">
+              <div className="text-sm xl:text-[1rem]">
                 <div>작성자: {data?.post.name}</div>
-                <div className="flex flex-col">
+                <div className="flex flex-col xl:text-[1rem]">
                   <span>
                     작성일: <RegDate regDate={data?.post.created} y m d />
                   </span>
@@ -62,8 +80,19 @@ const PostDetail: NextPage = () => {
           </>
         ) : (
           <div className="flex flex-col items-center">
-            <Skeleton variant="text" animation="wave" height={60} width={320} />
-            <div className="mr-3 flex w-full flex-col items-end py-3">
+            <Skeleton
+              variant="text"
+              animation="wave"
+              height={60}
+              width={preview ? 980 : 320}
+            />
+            <div className="mr-3 flex w-full flex-col items-end py-3 pr-4">
+              <Skeleton
+                variant="text"
+                animation="wave"
+                height={20}
+                width={120}
+              />
               <Skeleton
                 variant="text"
                 animation="wave"
@@ -80,7 +109,7 @@ const PostDetail: NextPage = () => {
             <Skeleton
               variant="rectangular"
               className="min-h-[68vh] rounded-md p-3"
-              width={440}
+              width={preview ? 980 : 440}
               animation="wave"
             />
           </div>

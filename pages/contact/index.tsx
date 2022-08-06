@@ -1,3 +1,4 @@
+import Button from "@components/button-component";
 import FloatingButton from "@components/floating-btn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
@@ -24,13 +25,31 @@ const Contact: NextPage = () => {
   const { token, ok: tokenOk } = useToken();
   const { data } = useSWR<ContactResponse>("/api/contact");
   return (
-    <Layout title="CONTACT">
-      <div className="flex flex-col space-y-3 px-3">
+    <Layout title="CONTACT" isFooter>
+      <div className="flex flex-col space-y-3 px-3 xl:w-[80%]  xl:py-5">
+        <div className="flex w-full flex-row items-center justify-center xl:relative">
+          <h1 className="text-center text-xl text-red-600 xl:py-5 xl:text-2xl xl:font-bold">
+            My Blog List
+          </h1>
+          {ok && (
+            <Link href={"/contact/upload"}>
+              <Button
+                text="Upload"
+                className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
+              />
+            </Link>
+          )}
+        </div>
+        <div className="flex flex-row items-center justify-between divide-x-2 font-bold xl:text-xl xl:font-bold">
+          <span className="w-20 text-center xl:w-64 xl:pt-3">작성자</span>
+          <span className="w-3/5 text-center xl:pt-3">제 목</span>
+          <span className="w-20 text-center xl:w-64 xl:pt-3">작성일</span>
+        </div>
         <div className="flex w-full flex-row items-center border-2">
-          <div className="w-24 border-r-2 text-center font-bold md:w-28">
+          <div className="w-24 border-r-2 text-center font-bold xl:w-[232px] xl:text-xl">
             공지사항
           </div>
-          <div className="flex flex-1 flex-col items-center justify-center space-y-1">
+          <div className="flex flex-1 flex-col items-center justify-center space-y-1 xl:text-xl">
             <div className="flex-1 text-center">
               <Link href={"/notice/01-information"}>
                 <a
@@ -54,11 +73,6 @@ const Contact: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row items-center justify-between divide-x-2 font-bold">
-          <span className="w-20 text-center">작성자</span>
-          <span className="w-3/5 text-center">제 목</span>
-          <span className="w-20 text-center">작성일</span>
-        </div>
         {data
           ? data?.posts.map((post) => (
               <div
@@ -74,8 +88,8 @@ const Contact: NextPage = () => {
                   "flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
                 )}
               >
-                <div className="relative flex w-20 flex-row items-center text-center text-sm">
-                  <div className="absolute -right-2.5 md:-right-5">
+                <div className="relative w-20 text-center text-sm xl:w-[246px] xl:text-xl">
+                  <div className="absolute -right-2.5 sm:-right-5 xl:right-5">
                     {post.isSecret ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -109,11 +123,11 @@ const Contact: NextPage = () => {
                   <div>{post.name}</div>
                 </div>
                 <Link href={`/contact/${post.id}`}>
-                  <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl">
+                  <a className="flex w-3/5 cursor-pointer items-start justify-start pl-2 text-xl font-bold">
                     {post.title}
                   </a>
                 </Link>
-                <div className="w-20 text-center text-sm">
+                <div className="w-20 text-center text-sm xl:w-64 xl:text-xl">
                   <RegDate regDate={post.created} y m d />
                 </div>
               </div>

@@ -46,7 +46,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         </div>
         <header className="fixed top-0 z-[98] hidden h-12 w-full max-w-xl items-center justify-center border-b  bg-white px-10 text-lg font-medium text-gray-800 md:h-16 md:max-w-full xl:flex">
           <div className="absolute left-1/4 hidden md:inline-block">
-            <img src="myground.logo.png" className="h-12 w-12" />
+            <img
+              src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
+              className="h-12 w-12"
+            />
           </div>
           <div className="absolute right-64 hidden xl:block">
             <FullNavBar />

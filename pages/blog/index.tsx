@@ -8,6 +8,7 @@ import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
+import Button from "@components/button-component";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -24,12 +25,25 @@ interface PostsResponse {
 const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
   return (
-    <Layout title="BLOG">
-      <div className="mx-3 flex flex-col space-y-3 divide-y-2 text-center">
-        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 text-xl font-bold">
-          <div className="w-20">카테고리</div>
-          <div className="flex-1 text-center">제 목</div>
-          <div className="w-24">작성일</div>
+    <Layout title="BLOG" isFooter>
+      <div className="mx-3 flex flex-col space-y-3 divide-y-2 text-center xl:my-5 xl:w-[80%]">
+        <div className="flex w-full flex-row items-center justify-center xl:relative">
+          <h1 className="text-center text-xl text-red-600 xl:py-5 xl:text-2xl xl:font-bold">
+            My Blog List
+          </h1>
+          {ok && (
+            <Link href={"/blog/upload"}>
+              <Button
+                text="Upload"
+                className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
+              />
+            </Link>
+          )}
+        </div>
+        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 xl:text-xl xl:font-bold">
+          <div className="w-20 xl:w-64 xl:pt-3">카테고리</div>
+          <div className="flex-1 text-center xl:pt-3">제 목</div>
+          <div className="w-24 xl:w-64 xl:pt-3">작성일</div>
         </div>
         {posts
           ? posts?.map((post) => (
@@ -37,11 +51,15 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                 key={post.id}
                 className="flex flex-row items-center justify-between space-x-2 divide-x-2 pt-2"
               >
-                <div className="w-20 text-sm">{post.category.category}</div>
+                <div className="w-20 text-sm xl:w-64 xl:text-xl">
+                  {post.category.category}
+                </div>
                 <Link href={`/blog/${post.id}`}>
-                  <a className="flex-1 font-semibold">{post.title}</a>
+                  <a className="flex-1 font-semibold xl:text-2xl">
+                    {post.title}
+                  </a>
                 </Link>
-                <div className="w-24 text-sm">
+                <div className="w-24 text-sm xl:w-64 xl:text-xl">
                   <RegDate regDate={post.created} y m d />
                 </div>
               </div>

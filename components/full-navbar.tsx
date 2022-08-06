@@ -32,7 +32,7 @@ export default function FullNavBar() {
         <Link href={"/portfolio"}>
           <a
             className={cls(
-              router.pathname === "/portfolio"
+              router.pathname.includes("/portfolio")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -44,7 +44,7 @@ export default function FullNavBar() {
         <Link href={"/blog"}>
           <a
             className={cls(
-              router.pathname === "/blog"
+              router.pathname.includes("/blog")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -56,7 +56,7 @@ export default function FullNavBar() {
         <Link href={"/contact"}>
           <a
             className={cls(
-              router.pathname === "/contact"
+              router.pathname.includes("/contact")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -68,7 +68,7 @@ export default function FullNavBar() {
         <Link href={"/notice"}>
           <a
             className={cls(
-              router.pathname === "/notice"
+              router.pathname.includes("/notice")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
