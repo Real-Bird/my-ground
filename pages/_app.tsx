@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </header>
         {loading ? (
           <div className="absolute top-[15%] mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
-            <title>LOADING || JS's Ground</title>
+            <title>LOADING || JS&apos;s Ground</title>
             <svg
               width="135"
               height="135"
