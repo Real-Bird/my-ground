@@ -125,7 +125,7 @@ export default function Layout({
       ) : null}
       <div
         id="child"
-        className="mt-12 mb-16 h-[86vh] w-full max-w-xl overflow-y-scroll pb-10 pt-3 xl:mt-12 xl:flex xl:h-full xl:max-w-full xl:justify-center xl:pb-5"
+        className="mt-12 mb-16 h-[86vh] w-full max-w-xl overflow-y-scroll pb-8 pt-3 xl:mt-12 xl:flex xl:h-full xl:max-w-full xl:justify-center xl:pb-5"
       >
         {children}
       </div>

@@ -18,7 +18,7 @@ const Portfolio: NextPage = () => {
   const { data } = useSWR<PortfolioProps>("/api/portfolio");
   return (
     <Layout title="PORTFOLIO" isFooter>
-      <div className="mx-3 flex flex-col space-y-3 xl:my-5 xl:items-center">
+      <div className="mx-3 flex w-11/12 flex-col space-y-3 xl:my-5 xl:items-center">
         <div className="flex w-full flex-row items-center justify-center xl:relative xl:w-[80%]">
           <h1 className="text-center text-xl text-red-600 md:py-5 md:text-2xl md:font-bold">
             My Portfolio List
@@ -33,7 +33,7 @@ const Portfolio: NextPage = () => {
           )}
         </div>
         {data ? (
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
+          <div className="grid grid-cols-2 gap-2 xl:grid-cols-4 xl:gap-4">
             {data?.portfolio?.map((pf) => (
               <Link href={`/portfolio/${pf.id}`} key={pf.id}>
                 <a className="flex aspect-video w-full flex-col items-center rounded-md shadow-md">
@@ -49,8 +49,8 @@ const Portfolio: NextPage = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-2">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+          <div className="grid grid-cols-2 gap-2 xl:w-full xl:grid-cols-4 xl:gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
                 className="flex aspect-video w-full flex-col items-center rounded-md shadow-md"
@@ -58,10 +58,9 @@ const Portfolio: NextPage = () => {
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
-                  height={128}
-                  className="h-32 w-full rounded-md"
+                  className="h-32 w-full rounded-md xl:h-48"
                 />
-                <Skeleton variant="text" className="h-8 w-3/4" />
+                <Skeleton variant="text" className="h-8 w-3/4 xl:h-12" />
               </div>
             ))}
           </div>
