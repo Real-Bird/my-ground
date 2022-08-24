@@ -89,9 +89,9 @@ const Upload: NextPage = () => {
             name="category"
             type="text"
           />
-          <div className="absolute z-10 w-full">
+          <datalist className="absolute z-10 w-full" id="category">
             {data?.categories.map((category) => (
-              <div
+              <option
                 key={category.id}
                 className={cls(
                   keyword && viewKeyword && category.category.includes(keyword)
@@ -102,9 +102,9 @@ const Upload: NextPage = () => {
                 onClick={toggleKeyword}
               >
                 {category.category.includes(keyword) && category.category}
-              </div>
+              </option>
             ))}
-          </div>
+          </datalist>
         </div>
         <Input
           register={register("title", {

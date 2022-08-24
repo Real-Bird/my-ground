@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Router } from "next/router";
 import useTimer from "@libs/client/useTimer";
 import FullNavBar from "@components/full-navbar";
-import Link from "next/link";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -49,6 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <img
               src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
               className="h-12 w-12"
+              alt="logo"
             />
           </div>
           <div className="absolute right-64 hidden xl:block">

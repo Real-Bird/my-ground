@@ -87,6 +87,7 @@ export default function Layout({
             <img
               src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
               className="h-12 w-12"
+              alt="logo"
             />
           </a>
         </Link>

@@ -14,9 +14,9 @@ interface Post {
 const Notices: NextPage<{ posts: Post[] }> = ({ posts }) => {
   return (
     <Layout title="NOTICES" isFooter>
-      <div className="divide-y-2">
+      <div className="w-3/4 divide-y-2 text-center">
         {posts?.map((item, idx) => (
-          <div key={idx} className="mb-5 mt-2 px-10 pt-5">
+          <div key={idx} className="mx-10 mb-5 mt-2 px-10 pt-5">
             <Link href={`/notice/${item.slug}`}>
               <a>
                 <span className="text-xl font-semibold text-red-500">

@@ -106,9 +106,9 @@ const BlogRevised: NextPage = () => {
             name="category"
             type="text"
           />
-          <div className="absolute z-10 w-full">
+          <datalist className="absolute z-10 w-full" id="category">
             {categoriesData?.categories.map((category) => (
-              <div
+              <option
                 key={category.id}
                 className={cls(
                   keyword && viewKeyword && category.category.includes(keyword)
@@ -119,9 +119,9 @@ const BlogRevised: NextPage = () => {
                 onClick={toggleKeyword}
               >
                 {category.category.includes(keyword) && category.category}
-              </div>
+              </option>
             ))}
-          </div>
+          </datalist>
         </div>
         <Input
           register={register("title", {

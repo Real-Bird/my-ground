@@ -21,8 +21,8 @@ const NoticeDetail: NextPage<{ post: string; data: any }> = ({
 }) => {
   return (
     <Layout title="NOTICE" canGoBack backUrl="/notice">
-      <div className="mx-3 space-y-2">
-        <h1 className="text-center text-3xl font-bold">{data.title}</h1>
+      <div className="m-5 w-[80%] space-y-2">
+        <h1 className="py-5 text-center text-3xl font-bold">{data.title}</h1>
         <div className="min-h-[68vh] w-full rounded-md bg-slate-300 p-3">
           <MarkdownViewer source={post} />
         </div>

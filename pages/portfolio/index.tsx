@@ -33,13 +33,14 @@ const Portfolio: NextPage = () => {
           )}
         </div>
         {data ? (
-          <div className="grid grid-cols-2 gap-2 xl:grid-cols-4 xl:gap-4">
+          <div className="grid w-full grid-cols-2 gap-2 xl:grid-cols-4 xl:gap-4">
             {data?.portfolio?.map((pf) => (
               <Link href={`/portfolio/${pf.id}`} key={pf.id}>
                 <a className="flex aspect-video w-full flex-col items-center rounded-md shadow-md">
                   <img
                     src={pf.thumbnail}
-                    className="h-32 w-full rounded-md md:h-48"
+                    className="h-32 w-full rounded-md bg-slate-400 md:h-48"
+                    alt={pf.thumbnail}
                   />
                   <div className="py-1 text-center text-xl font-bold">
                     {pf.title}
