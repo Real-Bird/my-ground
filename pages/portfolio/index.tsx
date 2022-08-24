@@ -59,9 +59,14 @@ const Portfolio: NextPage = () => {
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
+                  height="80%"
                   className="h-32 w-full rounded-md xl:h-48"
                 />
-                <Skeleton variant="text" className="h-8 w-3/4 xl:h-12" />
+                <Skeleton
+                  variant="text"
+                  height="15%"
+                  className="h-8 w-3/4 xl:h-12"
+                />
               </div>
             ))}
           </div>
