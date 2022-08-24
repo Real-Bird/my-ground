@@ -24,4 +24,4 @@ category: main
 
 Email : **kjy_815@naver.com**
 
-오픈카톡 : <https://open.kakao.com/o/s8qJRhte>
+오픈카톡 : <https://open.kakao.com/me/real_bird>
