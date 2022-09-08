@@ -12,7 +12,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col flex-wrap space-y-2">
               <h2 className="text-xl font-medium">
                 <div>안녕하세요!🙋‍♂️</div>
-                <div>프론트엔드 개발자를 꿈꾸는 김진영의 놀이터입니다.</div>
+                <div>프론트엔드 개발자를 꿈꾸는 김진영입니다.</div>
               </h2>
               <div className="flex flex-row">
                 <div className="flex h-fit w-60 flex-col items-center space-y-3">
@@ -82,29 +82,22 @@ const Home: NextPage = () => {
                 </div>
                 <div className="space-y-1 px-2">
                   <p className="pb-1 text-sm">
-                    <i>국비지원 ICT 교육</i>으로 코딩 공부를 시작했습니다.
+                    <span className="italic">국비지원 ICT 교육</span>으로 코딩을
+                    시작했습니다.
                   </p>
                   <p className="pb-1 text-sm">
-                    <b>Python</b>으로 코딩에 재미를 붙였고, <b>React</b>를
-                    익히면서{" "}
-                    <big>
-                      <b>Front-End Develoer</b>
-                    </big>
-                    를 꿈꾸게 되었습니다.
+                    <span className="font-bold">명약관화(明若觀火)</span>한 변수
+                    명명을 지향합니다.
                   </p>
                   <p className="pb-1 text-sm">
-                    하루하루 작성한 코드를 <b>Github</b>에 커밋하여 잔디밭을
-                    가꾸는 중입니다.
+                    라이브러리나 프레임워크의 원리 파악을 우선합니다.
                   </p>
                   <p className="pb-1 text-sm">
-                    기술과 관련해 새로 배운 지식은 <b>Velog</b>에 기록합니다.
-                  </p>
-                  <p className="pb-1 text-sm">
-                    <b>Naver Blog</b>는 자기관리와 서평 저장소입니다.
-                  </p>
-                  <p className="pb-1 text-sm">
-                    프론트엔드 개발자로서 손색 없는 그날까지 개발 공부를
-                    계속하겠습니다.
+                    언젠가는{" "}
+                    <span className="rounded-sm bg-amber-500 px-1.5 font-extrabold italic underline">
+                      코드만 봐도 고수 냄새가 나는 개발자
+                    </span>
+                    가 될 겁니다&hellip;
                   </p>
                 </div>
               </div>
@@ -135,14 +128,19 @@ const Home: NextPage = () => {
                 </div>
                 <div className="flex flex-row flex-wrap justify-start py-1">
                   <img
-                    src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"
-                    className="px-1 pt-1"
-                    alt="html5"
-                  />
-                  <img
                     src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white"
                     className="px-1 pt-1"
                     alt="javascript"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white"
+                    className="px-1 pt-1"
+                    alt="javascript"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"
+                    className="px-1 pt-1"
+                    alt="html5"
                   />
                   <img
                     src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"
@@ -153,11 +151,6 @@ const Home: NextPage = () => {
                     src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"
                     className="px-1 pt-1"
                     alt="react"
-                  />
-                  <img
-                    src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white"
-                    className="px-1 pt-1"
-                    alt="nextjs"
                   />
                   <img
                     src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat&logo=Tailwind%20CSS&logoColor=white"
@@ -188,19 +181,9 @@ const Home: NextPage = () => {
                 </div>
                 <div className="flex flex-row flex-wrap justify-start py-1">
                   <img
-                    src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"
-                    alt="Python"
+                    src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white"
                     className="px-1 pt-1"
-                  />
-                  <img
-                    src="https://img.shields.io/badge/Django-092E20?style=flat&logo=Django&logoColor=white"
-                    alt="Django"
-                    className="px-1 pt-1"
-                  />
-                  <img
-                    src="https://img.shields.io/badge/FireBase-FFCA28?style=flat&logo=FireBase&logoColor=white"
-                    alt="FireBase"
-                    className="px-1 pt-1"
+                    alt="nextjs"
                   />
                   <img
                     src="https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=Prisma&logoColor=white"
@@ -210,6 +193,44 @@ const Home: NextPage = () => {
                   <img
                     src="https://img.shields.io/badge/PlanetScale-000000?style=flat&logo=PlanetScale&logoColor=white"
                     alt="PlanetScale"
+                    className="px-1 pt-1"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"
+                    alt="Python"
+                    className="px-1 pt-1"
+                  />
+                </div>
+              </div>
+              <div className="py-1">
+                <div className="flex flex-row space-x-2 font-medium">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="h-6 w-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
+                      />
+                    </svg>
+                  </span>
+                  <div>Knowledge</div>
+                </div>
+                <div className="flex flex-row flex-wrap justify-start py-1">
+                  <img
+                    src="https://img.shields.io/badge/Django-092E20?style=flat&logo=Django&logoColor=white"
+                    alt="Django"
+                    className="px-1 pt-1"
+                  />
+                  <img
+                    src="https://img.shields.io/badge/FireBase-FFCA28?style=flat&logo=FireBase&logoColor=white"
+                    alt="FireBase"
                     className="px-1 pt-1"
                   />
                 </div>
@@ -297,8 +318,7 @@ const Home: NextPage = () => {
                       2021.04 ~ 2021.10
                     </div>
                     <div className="text-sm">
-                      혁신성장 청년인재 양성교육
-                      <span className="font-bold">빅데이터 과정</span> 수료
+                      혁신성장 청년인재 양성교육 빅데이터 과정 수료
                     </div>
                   </div>
                 </div>
