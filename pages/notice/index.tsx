@@ -14,21 +14,20 @@ interface Post {
 const Notices: NextPage<{ posts: Post[] }> = ({ posts }) => {
   return (
     <Layout title="NOTICES" isFooter>
-      <div className="w-3/4 divide-y-2 text-center">
+      <div className="w-3/4 divide-y-2">
         {posts?.map((item, idx) => (
-          <div key={idx} className="mx-10 mb-5 mt-2 px-10 pt-5">
+          <div
+            key={idx}
+            className="mx-10 mb-5 mt-2 flex items-center justify-between px-10 pt-5"
+          >
             <Link href={`/notice/${item.slug}`}>
-              <a>
-                <span className="text-xl font-semibold text-red-500">
-                  {item.title}
-                </span>
-                <div>
-                  <span>
-                    {item.date} / {item.category}
-                  </span>
-                </div>
+              <a className="flex-1 text-center text-xl font-semibold text-red-500">
+                {item.title}
               </a>
             </Link>
+            <div className="w-1/4">
+              {item.date} / {item.category}
+            </div>
           </div>
         ))}
       </div>

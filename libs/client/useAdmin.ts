@@ -9,6 +9,8 @@ interface ProfileResponse {
 }
 
 export default function useAdmin() {
-  const { data, error } = useSWR<ProfileResponse>("/api/admin");
+  const { data, error } = useSWR<ProfileResponse>("/api/admin", {
+    refreshInterval: 1000,
+  });
   return { admin: data?.admin, isLoading: !data && !error, ok: data?.ok };
 }

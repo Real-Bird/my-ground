@@ -42,15 +42,14 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   }, []);
   return (
     <Layout title="POST" backUrl="/blog">
-      <div className="w-[80%] space-y-2 px-3 xl:py-4">
-        <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted xl:relative">
+      <div className="w-[80%] space-y-2 px-3 lg:py-4">
+        <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted lg:relative">
           <h1 className="py-5 text-center text-5xl font-bold">{post?.title}</h1>
           {ok && (
             <Link href={`/blog/${router.query.id}/revised`}>
-              <Button
-                text="Revised"
-                className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
-              />
+              <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
+                <Button text="Revised" />
+              </a>
             </Link>
           )}
         </div>

@@ -43,19 +43,18 @@ const PortfolioDetail: NextPage = () => {
   }, [data]);
   return (
     <Layout title="Portfolio" backUrl="/portfolio">
-      <div className="flex-col items-center justify-center space-y-2 px-3 xl:my-5 xl:flex">
+      <div className="w-full flex-col items-center justify-center space-y-2 px-3 lg:my-5 lg:flex">
         {data && data?.portfolio ? (
-          <div className="xl:w-2/3">
-            <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted xl:relative">
+          <div className="lg:w-2/3">
+            <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted lg:relative">
               <h1 className="pt-1 pb-5 text-center text-5xl font-bold">
                 {data?.portfolio.title}
               </h1>
               {ok && (
                 <Link href={`/portfolio/${router.query.id}/revised`}>
-                  <Button
-                    text="Revised"
-                    className="hidden xl:absolute xl:right-0 xl:block xl:h-12 xl:w-24"
-                  />
+                  <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
+                    <Button text="Revised" />
+                  </a>
                 </Link>
               )}
             </div>
@@ -64,16 +63,17 @@ const PortfolioDetail: NextPage = () => {
                 <div className="flex w-40 flex-col items-center space-y-1 md:w-[20%]">
                   <span className="font-semibold">Stack</span>
                   <div className="mx-auto w-36">
-                    <div className="flex flex-row flex-wrap justify-start">
+                    <ul className="flex flex-row flex-wrap justify-start">
                       {data?.portfolio.stackBadge.map((stack) => (
-                        <img
-                          key={stack.id}
-                          src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
-                          alt={stack.stackName}
-                          className="m-0.5"
-                        />
+                        <li key={stack.id}>
+                          <img
+                            src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
+                            alt={stack.stackName}
+                            className="m-0.5"
+                          />
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 </div>
                 <div className="flex w-1/3 flex-row justify-evenly space-x-5">

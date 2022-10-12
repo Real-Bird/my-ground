@@ -17,7 +17,7 @@ export default function FloatingButton({
     <Link href={href}>
       <a
         className={cls(
-          "fixed bottom-24 right-5 flex aspect-square w-14 cursor-pointer items-center justify-center rounded-full border-0 border-transparent bg-amber-500 text-white shadow-xl transition-colors hover:bg-amber-600 sm:right-[8%] md:hidden"
+          "fixed bottom-24 right-5 flex aspect-square w-14 cursor-pointer items-center justify-center rounded-full border-0 border-transparent bg-amber-500 text-white shadow-xl transition-colors hover:bg-amber-600 sm:right-[8%] lg:hidden"
         )}
         title={type}
       >

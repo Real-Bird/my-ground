@@ -1,7 +1,7 @@
 import Layout from "@components/layout";
 import { readdirSync } from "fs";
 import matter from "gray-matter";
-import { GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
 
@@ -31,7 +31,7 @@ const NoticeDetail: NextPage<{ post: string; data: any }> = ({
   );
 };
 
-export function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = () => {
   const files = readdirSync("./notice").map((file) => {
     const [name, extension] = file.split(".");
     return { params: { slug: name } };
@@ -40,7 +40,7 @@ export function getStaticPaths() {
     paths: files,
     fallback: false,
   };
-}
+};
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { content, data } = matter.read(`./notice/${ctx.params?.slug}.md`);

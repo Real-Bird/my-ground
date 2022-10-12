@@ -4,16 +4,21 @@ import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function FullNavBar() {
-  const { ok } = useAdmin();
+  const { admin, ok } = useAdmin();
   const router = useRouter();
+  const [isLogged, setIsLogged] = useState<boolean>();
   const [logout, { data, loading }] =
     useMutation<LogoutResponse>("/api/logout");
   const onLogout = () => {
     if (loading) return;
     logout({});
   };
+  useEffect(() => {
+    setIsLogged(ok ? true : false);
+  }, [ok]);
   return (
     <header>
       <nav className="flex flex-row divide-x-4">
@@ -77,7 +82,7 @@ export default function FullNavBar() {
             공지사항
           </a>
         </Link>
-        {ok ? (
+        {isLogged ? (
           <div
             onClick={onLogout}
             className="cursor-pointer px-2 text-center text-gray-500"

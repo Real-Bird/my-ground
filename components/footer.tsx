@@ -19,7 +19,7 @@ export default function Footer() {
       ref={footerTag}
       className={cls(
         isSleep ? "opacity-0" : "opacity-1",
-        "fixed bottom-0 hidden max-h-40 min-h-[5rem] w-full items-center justify-center bg-amber-500 transition-opacity duration-500 xl:flex"
+        "fixed bottom-0 hidden max-h-40 min-h-[5rem] w-full items-center justify-center bg-amber-500 transition-opacity duration-500 lg:flex"
       )}
       onScroll={onScroll}
     >

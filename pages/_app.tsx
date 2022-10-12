@@ -10,11 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const start = () => {
-      console.log("start");
       setLoading(true);
     };
     const end = () => {
-      console.log("finished");
       setLoading(false);
     };
     Router.events.on("routeChangeStart", start);
@@ -26,10 +24,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       Router.events.off("routeChangeError", end);
     };
   }, []);
-  const {
-    date: { year, month, day },
-    timer: { amPm, hour, minute, second },
-  } = useTimer();
   return (
     <SWRConfig
       value={{
@@ -37,24 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <div className="flex w-full flex-col items-center justify-center">
-        <div className="fixed right-16 top-1 z-[100] h-10 w-24 rounded-md bg-amber-400 text-center xl:h-14 xl:w-36">
-          <div className="text-sm xl:text-xl">
-            <div>{`${year}.${month}.${day}`}</div>
-            <div>{`${amPm} ${hour}:${minute}:${second}`}</div>
-          </div>
-        </div>
-        <header className="fixed top-0 z-[98] hidden h-12 w-full max-w-xl items-center justify-center border-b  bg-white px-10 text-lg font-medium text-gray-800 md:h-16 md:max-w-full xl:flex">
-          <div className="absolute left-1/4 hidden md:inline-block">
-            <img
-              src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
-              className="h-12 w-12"
-              alt="logo"
-            />
-          </div>
-          <div className="absolute right-64 hidden xl:block">
-            <FullNavBar />
-          </div>
-        </header>
         {loading ? (
           <div className="absolute top-[15%] mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
             <title>LOADING || JS&apos;s Ground</title>

@@ -48,7 +48,7 @@ async function handler(
           name: "김진영",
         },
       });
-      return res.json({
+      res.json({
         ok: true,
         admin,
       });

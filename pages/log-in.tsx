@@ -1,11 +1,9 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
-import { cls } from "@libs/client/utils";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { User } from "@prisma/client";
 import Button from "@components/button-component";
 import useAdmin from "@libs/client/useAdmin";
@@ -24,7 +22,7 @@ interface MutationResult {
 }
 
 const Login: NextPage = () => {
-  const { admin } = useAdmin();
+  const { admin, ok } = useAdmin();
   const [login, { loading, data }] = useMutation<MutationResult>("/api/admin");
   const {
     register,
@@ -39,14 +37,14 @@ const Login: NextPage = () => {
   };
   const router = useRouter();
   useEffect(() => {
-    if (data?.ok || admin) {
+    if (data?.ok || ok) {
       router.push("/");
       reset();
     }
     if (!data?.ok) {
       setError("phone", { message: data?.error });
     }
-  }, [data, router, admin]);
+  }, [data, router, ok]);
   return (
     <Layout title="Log in">
       <div className="mt-16 flex flex-col space-y-3 px-4">
