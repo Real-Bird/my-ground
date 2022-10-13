@@ -26,7 +26,7 @@ const Contact: NextPage = () => {
   const { data } = useSWR<ContactResponse>("/api/contact");
   return (
     <Layout title="CONTACT" isFooter>
-      <div className="flex w-full flex-col space-y-3 px-3 lg:w-[80%] lg:py-5">
+      <div className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             Posts List
@@ -39,10 +39,10 @@ const Contact: NextPage = () => {
             </Link>
           )}
         </div>
-        <div className="flex flex-row items-center justify-between divide-x-2 border-2 font-bold lg:text-xl lg:font-bold">
-          <span className="w-20 text-center lg:w-64 lg:py-2">작성자</span>
-          <span className="w-3/5 text-center lg:py-2">제 목</span>
-          <span className="w-20 text-center lg:w-64 lg:py-2">작성일</span>
+        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 border-2 lg:text-xl lg:font-bold">
+          <div className="w-24 lg:w-52 lg:py-2">작성자</div>
+          <div className="w-3/5 lg:py-2">제 목</div>
+          <div className="w-24 lg:w-52 lg:py-2">작성일</div>
         </div>
         <ul className="divide-y-2 border-2">
           {data
@@ -60,8 +60,8 @@ const Contact: NextPage = () => {
                     "flex w-full flex-row items-center justify-between space-x-1 divide-x-2"
                   )}
                 >
-                  <div className="relative flex w-20 flex-col items-center justify-center py-2 text-center text-sm lg:w-64 lg:text-xl">
-                    <div className="absolute -right-3 lg:right-5">
+                  <div className="flex w-24 items-center justify-center py-2 pl-1 lg:w-52">
+                    <div className="flex w-full items-center justify-start text-sm lg:w-44 lg:text-xl">
                       {post.isSecret ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -91,15 +91,17 @@ const Contact: NextPage = () => {
                           />
                         </svg>
                       )}
+                      <span className="w-5/6">{post.name}</span>
                     </div>
-                    <div>{post.name}</div>
                   </div>
                   <Link href={`/contact/${post.id}`}>
-                    <a className="flex w-3/5 cursor-pointer items-start justify-start py-2 pl-2 font-bold lg:text-xl">
-                      {post.title}
+                    <a className="flex w-3/5 cursor-pointer items-center justify-center py-2 text-sm font-bold lg:text-xl">
+                      {post.title.length > 15
+                        ? `${post.title.slice(0, 15)}...`
+                        : post.title}
                     </a>
                   </Link>
-                  <div className="w-20 py-2 text-center text-sm lg:w-64 lg:text-xl">
+                  <div className="w-24 py-2 text-center text-sm lg:w-52 lg:text-xl">
                     <RegDate regDate={post.created} y m d />
                   </div>
                 </li>
@@ -107,32 +109,23 @@ const Contact: NextPage = () => {
             : [...Array.from(Array(10).keys())].map((i) => (
                 <li
                   key={i}
-                  className="flex w-full flex-row items-center justify-between space-x-3 divide-x-2"
+                  className="flex flex-row items-center justify-between space-x-6 divide-x-2 px-2"
                 >
-                  <div className="flex w-20 items-center justify-center">
-                    <Skeleton
-                      variant="text"
-                      animation="wave"
-                      height={40}
-                      width={60}
-                    />
-                  </div>
-                  <div className="flex w-3/5 items-center justify-center pl-2">
-                    <Skeleton
-                      variant="text"
-                      animation="wave"
-                      height={40}
-                      width={270}
-                    />
-                  </div>
-                  <div className="flex w-20 items-center justify-center">
-                    <Skeleton
-                      variant="text"
-                      animation="wave"
-                      height={40}
-                      width={60}
-                    />
-                  </div>
+                  <Skeleton
+                    variant="text"
+                    animation="wave"
+                    className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
+                  />
+                  <Skeleton
+                    variant="text"
+                    animation="wave"
+                    className="h-8 flex-[0.8] py-2 font-semibold lg:h-11"
+                  />
+                  <Skeleton
+                    variant="text"
+                    animation="wave"
+                    className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
+                  />
                 </li>
               ))}
         </ul>

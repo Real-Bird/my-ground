@@ -22,7 +22,7 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
     <Layout title="BLOG" isFooter>
       <div className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
-          <h1 className="text-center text-xl text-red-600 lg:py-5 lg:text-2xl lg:font-bold">
+          <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             My Blog List
           </h1>
           {ok && (
@@ -35,7 +35,7 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
         </div>
         <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 border-2 lg:text-xl lg:font-bold">
           <div className="w-20 lg:w-64 lg:py-3">카테고리</div>
-          <div className="flex-1 text-center lg:py-3">제 목</div>
+          <div className="w-3/5 text-center lg:py-3">제 목</div>
           <div className="w-24 lg:w-64 lg:py-3">작성일</div>
         </div>
         <ul className="divide-y-2 border-2">
@@ -45,13 +45,15 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                   key={post.id}
                   className="flex flex-row items-center justify-between space-x-2 divide-x-2"
                 >
-                  <div className="w-20 py-2 text-sm lg:w-64 lg:text-xl">
+                  <span className="w-20 py-2 text-sm lg:w-64 lg:text-xl">
                     {post.category.category}
-                  </div>
+                  </span>
                   <Link href={`/blog/${post.id}`}>
-                    <div className="flex-1 cursor-pointer py-2 font-semibold lg:text-xl">
-                      {post.title}
-                    </div>
+                    <a className="w-3/5 cursor-pointer py-2 text-sm font-semibold lg:text-xl">
+                      {post.title.length > 15
+                        ? `${post.title.slice(0, 15)}...`
+                        : post.title}
+                    </a>
                   </Link>
                   <div className="w-24 py-2 text-sm lg:w-64 lg:text-xl">
                     <RegDate regDate={post.created} y m d />

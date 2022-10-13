@@ -7,17 +7,19 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function FullNavBar() {
-  const { admin, ok } = useAdmin();
+  const { admin, ok, mutate: adminMutate } = useAdmin();
   const router = useRouter();
   const [isLogged, setIsLogged] = useState<boolean>();
   const [logout, { data, loading }] =
     useMutation<LogoutResponse>("/api/logout");
-  const onLogout = () => {
+  const onLogout = async () => {
     if (loading) return;
-    logout({});
+    logout(null);
+    await adminMutate(null, false);
+    setIsLogged(false);
   };
   useEffect(() => {
-    setIsLogged(ok ? true : false);
+    setIsLogged(ok);
   }, [ok]);
   return (
     <header>
