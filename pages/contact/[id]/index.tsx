@@ -18,7 +18,7 @@ interface PostResponse {
 }
 
 const MarkdownViewer = dynamic(
-  () =>
+  async () =>
     import("@uiw/react-md-editor").then((mod) => {
       return mod.default.Markdown;
     }),
