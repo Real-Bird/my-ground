@@ -18,9 +18,9 @@ interface CategoryWithBlog extends MyBlog {
   };
 }
 
-const MarkdownViewer = dynamic(
-  async () =>
-    import("@uiw/react-md-editor").then((mod) => {
+const MarkdownViewer: any = dynamic(
+  () =>
+    import("@uiw/react-md-editor").then((mod: any) => {
       return mod.default.Markdown;
     }),
   {
