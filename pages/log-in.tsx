@@ -5,7 +5,7 @@ import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
 import { User } from "@prisma/client";
-import Button from "@components/button-component";
+import Button from "@components/buttonComponent";
 import useAdmin from "@libs/client/useAdmin";
 import Link from "next/link";
 import Layout from "@components/layout";

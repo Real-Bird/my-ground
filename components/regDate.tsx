@@ -1,5 +1,3 @@
-import { cls } from "@libs/client/utils";
-
 interface regDateProps {
   regDate: Date;
   y?: boolean;

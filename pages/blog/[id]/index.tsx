@@ -4,27 +4,23 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
-import FloatingButton from "@components/floating-btn";
+import FloatingButton from "@components/floatingBtn";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Button from "@components/button-component";
+import Button from "@components/buttonComponent";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
     category: string;
   };
 }
-interface PostResponse {
-  ok: boolean;
-  post: MyBlog;
-}
 
-const MarkdownViewer: any = dynamic(
+const MarkdownViewer = dynamic(
   () =>
-    import("@uiw/react-md-editor").then((mod: any) => {
+    import("@uiw/react-md-editor").then((mod) => {
       return mod.default.Markdown;
     }),
   {

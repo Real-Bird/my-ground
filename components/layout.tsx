@@ -3,7 +3,7 @@ import Menu from "@components/menu";
 import useAdmin from "@libs/client/useAdmin";
 import useMutation from "@libs/client/useMutation";
 import Footer from "@components/footer";
-import MobileNavigation from "@components/mobile-navbar";
+import MobileNavigation from "@components/mobileNavbar";
 import Header from "@components/header";
 
 interface LayoutProps {

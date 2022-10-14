@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import { MyGroundPost } from "@prisma/client";
-import Button from "@components/button-component";
+import Button from "@components/buttonComponent";
 import { cls } from "@libs/client/utils";
 import useWindowSize from "@libs/client/useWindowSize";
 import Link from "next/link";

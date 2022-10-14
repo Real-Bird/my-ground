@@ -5,11 +5,11 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
-import FloatingButton from "@components/floating-btn";
+import FloatingButton from "@components/floatingBtn";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useAdmin from "@libs/client/useAdmin";
-import Button from "@components/button-component";
+import Button from "@components/buttonComponent";
 
 interface BadgeWithPf extends MyPortfolio {
   stackBadge: StackBadge[];

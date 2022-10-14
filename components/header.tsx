@@ -1,4 +1,4 @@
-import FullNavBar from "@components/full-navbar";
+import FullNavBar from "@components/fullNavbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

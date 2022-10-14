@@ -1,4 +1,4 @@
-import FloatingButton from "@components/floating-btn";
+import FloatingButton from "@components/floatingBtn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
@@ -8,7 +8,7 @@ import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
-import Button from "@components/button-component";
+import Button from "@components/buttonComponent";
 
 interface CategoryWithBlog extends MyBlog {
   category: {

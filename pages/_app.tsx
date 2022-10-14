@@ -3,8 +3,6 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
 import { Router } from "next/router";
-import useTimer from "@libs/client/useTimer";
-import FullNavBar from "@components/full-navbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);

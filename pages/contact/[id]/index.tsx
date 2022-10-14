@@ -6,20 +6,20 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
-import FloatingButton from "@components/floating-btn";
+import FloatingButton from "@components/floatingBtn";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@mui/material";
 import Link from "next/link";
-import Button from "@components/button-component";
+import Button from "@components/buttonComponent";
 
 interface PostResponse {
   ok: boolean;
   post: MyGroundPost;
 }
 
-const MarkdownViewer: any = dynamic(
+const MarkdownViewer = dynamic(
   () =>
-    import("@uiw/react-md-editor").then((mod: any) => {
+    import("@uiw/react-md-editor").then((mod) => {
       return mod.default.Markdown;
     }),
   {

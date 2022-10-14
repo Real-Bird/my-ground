@@ -1,18 +1,14 @@
-import Button from "@components/button-component";
-import FloatingButton from "@components/floating-btn";
+import Button from "@components/buttonComponent";
+import FloatingButton from "@components/floatingBtn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
-import useTimer from "@libs/client/useTimer";
 import useToken from "@libs/client/useToken";
 import { cls } from "@libs/client/utils";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
-import { readdirSync, readFileSync } from "fs";
-import matter from "gray-matter";
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useEffect } from "react";
 import useSWR from "swr";
 
 interface ContactResponse {
