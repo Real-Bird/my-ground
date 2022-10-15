@@ -7,11 +7,11 @@ import Input from "@components/input";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/buttonComponent";
 import Link from "next/link";
 import { cls } from "@libs/client/utils";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface UploadFormResponse {
   name: string;
@@ -40,14 +40,7 @@ const Upload: NextPage = () => {
     validForm.content = md;
     upload({ ...validForm });
   };
-  const [preview, setPreview] = useState(false);
-  const handleResize = () => {
-    setPreview(window.innerWidth >= 1280 ? true : false);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const preview = useWindowSize();
   useEffect(() => {
     if (data && data.ok) {
       router.push(`/contact`);
