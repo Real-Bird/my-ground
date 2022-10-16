@@ -11,7 +11,6 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      session: { user },
       body: { phone, email },
     } = req;
     const isUser = await client.user.findUnique({

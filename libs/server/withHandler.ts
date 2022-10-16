@@ -31,9 +31,9 @@ export default function withHandler({
         .json({ ok: false, error: "로그인 후 이용해주세요." });
     }
     try {
-      await handler(req, res);
+      res.setHeader("Cache-Control", "max-age=3600, stale-while-revalidate=30");
+      handler(req, res);
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ error });
     }
   };

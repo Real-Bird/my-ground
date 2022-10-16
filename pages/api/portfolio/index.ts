@@ -8,7 +8,6 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
-    // await new Promise((resolve) => setTimeout(resolve, 10000));
     const portfolio = await client.myPortfolio.findMany({
       select: {
         id: true,

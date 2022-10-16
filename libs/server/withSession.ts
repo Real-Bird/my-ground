@@ -13,6 +13,9 @@ declare module "iron-session" {
 const cookieOptions = {
   cookieName: "myGroundSession",
   password: process.env.SESSION_PWD!,
+  cookieOptions: {
+    maxAge: 1_209_600,
+  },
 };
 
 export function withApiSession(fn: any) {
