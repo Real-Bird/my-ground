@@ -54,7 +54,7 @@ async function handler(
     }
   }
   if (req.method === "GET") {
-    if (req.session.user?.admin) {
+    try {
       const admin = await client.user.findUnique({
         where: {
           id: req.session.user?.id,
@@ -68,7 +68,7 @@ async function handler(
         ok: true,
         admin,
       });
-    } else {
+    } catch {
       res.json({
         ok: false,
       });

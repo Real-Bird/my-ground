@@ -7,6 +7,7 @@ import Link from "next/link";
 import useSWR from "swr";
 import { Skeleton } from "@mui/material";
 import Button from "@components/buttonComponent";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface PortfolioProps {
   ok: boolean;
@@ -16,6 +17,7 @@ interface PortfolioProps {
 const Portfolio: NextPage = () => {
   const { admin, ok } = useAdmin();
   const { data } = useSWR<PortfolioProps>("/api/portfolio");
+  const isSize = useWindowSize(1024);
   return (
     <Layout title="PORTFOLIO" isFooter>
       <div className="mx-3 flex w-11/12 flex-col space-y-3 lg:my-5 lg:items-center">
@@ -60,12 +62,12 @@ const Portfolio: NextPage = () => {
                 <Skeleton
                   animation="wave"
                   variant="rectangular"
-                  height="80%"
+                  height={isSize ? "12rem" : "8rem"}
                   className="h-32 w-full rounded-md lg:h-48"
                 />
                 <Skeleton
                   variant="text"
-                  height="15%"
+                  height={isSize ? "3rem" : "2rem"}
                   className="h-8 w-3/4 lg:h-12"
                 />
               </li>

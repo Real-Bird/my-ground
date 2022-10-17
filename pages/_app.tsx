@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
 import { Router } from "next/router";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div className="flex w-full flex-col items-center justify-center">
         {loading ? (
           <div className="absolute top-[15%] mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
-            <title>LOADING || JS&apos;s Ground</title>
+            <Head>
+              <title>LOADING || JS&apos;s Ground</title>
+            </Head>
             <svg
               width="135"
               height="135"
