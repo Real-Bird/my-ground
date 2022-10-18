@@ -9,6 +9,7 @@ import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
 import Button from "@components/buttonComponent";
+import useWindowSize from "@libs/client/useWindowSize";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -18,9 +19,10 @@ interface CategoryWithBlog extends MyBlog {
 
 const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
+  const isSize = useWindowSize(1024);
   return (
     <Layout title="BLOG" isFooter>
-      <div className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
+      <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             My Blog List
@@ -50,9 +52,7 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                   </span>
                   <Link href={`/blog/${post.id}`}>
                     <a className="w-3/5 cursor-pointer py-2 text-sm font-semibold lg:text-xl">
-                      {post.title.length > 15
-                        ? `${post.title.slice(0, 15)}...`
-                        : post.title}
+                      {isSize ? post.title : `${post.title.slice(0, 15)}...`}
                     </a>
                   </Link>
                   <div className="w-24 py-2 text-sm lg:w-64 lg:text-xl">
@@ -80,7 +80,7 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                 </li>
               ))}
         </ul>
-      </div>
+      </section>
       {ok && (
         <FloatingButton href="/blog/upload" type="Portfolio Upload">
           <svg

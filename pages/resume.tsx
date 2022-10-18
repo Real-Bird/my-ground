@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "@components/layout";
 
-const NotFound: NextPage = () => {
+const Resume: NextPage = () => {
   return (
     <Layout title="RESUME">
       <div className="w-full">
@@ -14,4 +14,4 @@ const NotFound: NextPage = () => {
   );
 };
 
-export default NotFound;
+export default Resume;

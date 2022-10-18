@@ -4,6 +4,7 @@ import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
 import useToken from "@libs/client/useToken";
+import useWindowSize from "@libs/client/useWindowSize";
 import { cls } from "@libs/client/utils";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
@@ -20,9 +21,10 @@ const Contact: NextPage = () => {
   const { admin, ok } = useAdmin();
   const { token, ok: tokenOk } = useToken();
   const { data } = useSWR<ContactResponse>("/api/contact");
+  const isSize = useWindowSize(1024);
   return (
     <Layout title="CONTACT" isFooter>
-      <div className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
+      <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             Posts List
@@ -92,9 +94,7 @@ const Contact: NextPage = () => {
                   </div>
                   <Link href={`/contact/${post.id}`}>
                     <a className="flex w-3/5 cursor-pointer items-center justify-center py-2 text-sm font-bold lg:text-xl">
-                      {post.title.length > 15
-                        ? `${post.title.slice(0, 15)}...`
-                        : post.title}
+                      {isSize ? post.title : `${post.title.slice(0, 15)}...`}
                     </a>
                   </Link>
                   <div className="w-24 py-2 text-center text-sm lg:w-52 lg:text-xl">
@@ -140,7 +140,7 @@ const Contact: NextPage = () => {
             />
           </svg>
         </FloatingButton>
-      </div>
+      </section>
     </Layout>
   );
 };
