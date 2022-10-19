@@ -10,8 +10,7 @@ async function handler(
 ) {
   if (req.method === "GET") {
     const {
-      query: { id },
-      session: { user },
+      query: { id, valid },
     } = req;
     const post = await client.myGroundPost.findUnique({
       where: {
@@ -27,18 +26,9 @@ async function handler(
         updated: true,
       },
     });
-    const compareToken = await client.myGroundPost.findUnique({
-      where: {
-        id: +id,
-      },
-      select: {
-        token: true,
-      },
-    });
     if (!post) return res.json({ ok: false, post: null });
-    if (post.isSecret && !user?.admin && compareToken.token !== user?.token) {
+    if (post.isSecret && !valid)
       return res.json({ ok: false, message: "비밀글입니다." });
-    }
     res.json({
       ok: true,
       post,

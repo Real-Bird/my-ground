@@ -1,21 +1,16 @@
 import Layout from "@components/layout";
 import { MyGroundPost } from "@prisma/client";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import { SWRConfig } from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
 import FloatingButton from "@components/floatingBtn";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import Link from "next/link";
 import Button from "@components/buttonComponent";
-
-interface PostResponse {
-  ok: boolean;
-  post: MyGroundPost;
-}
 
 const MarkdownViewer: any = dynamic(
   () =>
@@ -27,32 +22,21 @@ const MarkdownViewer: any = dynamic(
   }
 );
 
-const PostDetail: NextPage = () => {
+const PostDetail: NextPage<{ post: MyGroundPost }> = ({ post }) => {
   const router = useRouter();
-  const { data } = useSWR<PostResponse>(
-    router.query.id ? `/api/contact/${router.query.id}` : null
-  );
-  const [preview, setPreview] = useState(false);
-  const handleResize = () => {
-    setPreview(window.innerWidth >= 1280 ? true : false);
-  };
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  useEffect(() => {
-    if (data && !data.ok) {
+    if (!post) {
       router.push("/404");
     }
-  }, [data]);
+  }, [post]);
   return (
     <Layout title="POST" backUrl="/contact">
-      <div className="w-full space-y-2 px-3 lg:w-[80%] lg:py-4">
-        {data && data.post ? (
+      <div className="w-full space-y-2 px-3 lg:w-4/5 lg:py-4">
+        {post ? (
           <>
             <div className="flex w-full flex-row items-center justify-center lg:relative">
-              <h1 className="py-1 text-center text-5xl font-bold">
-                {data?.post.title}
+              <h1 className="w-4/5 break-all py-1 text-center text-5xl font-bold">
+                {post?.title}
               </h1>
               <Link href={`/contact/${router.query.id}/revised`}>
                 <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
@@ -62,19 +46,19 @@ const PostDetail: NextPage = () => {
             </div>
             <div className="flex flex-col items-end py-1 px-1">
               <div className="text-sm lg:text-[1rem]">
-                <div>작성자: {data?.post.name}</div>
+                <div>작성자: {post?.name}</div>
                 <div className="flex flex-col lg:text-[1rem]">
                   <span>
-                    작성일: <RegDate regDate={data?.post.created} y m d />
+                    작성일: <RegDate regDate={post?.created} y m d />
                   </span>
                   <span>
-                    수정일: <RegDate regDate={data?.post.updated} y m d />
+                    수정일: <RegDate regDate={post?.updated} y m d />
                   </span>
                 </div>
               </div>
             </div>
             <div className="min-h-[68vh] rounded-md bg-slate-300 p-4">
-              <MarkdownViewer source={data?.post.content} />
+              <MarkdownViewer source={post?.content} />
             </div>
           </>
         ) : (
@@ -131,4 +115,49 @@ const PostDetail: NextPage = () => {
   );
 };
 
-export default PostDetail;
+const Page: NextPage<{ post: MyGroundPost; id: number }> = ({ post, id }) => {
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          [`/api/contact/${id}`]: {
+            ok: true,
+            post,
+          },
+        },
+      }}
+    >
+      <PostDetail post={post} />
+    </SWRConfig>
+  );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const {
+    query: { id, valid },
+  } = ctx;
+  const post = await client.myGroundPost.findUnique({
+    where: {
+      id: +id,
+    },
+    select: {
+      id: true,
+      name: true,
+      title: true,
+      content: true,
+      isSecret: true,
+      created: true,
+      updated: true,
+    },
+  });
+  if (!post) return { props: {} };
+  if (post.isSecret && !Boolean(valid)) return { props: {} };
+  return {
+    props: {
+      post: JSON.parse(JSON.stringify(post)),
+      postId: JSON.parse(JSON.stringify(id)),
+    },
+  };
+};
+
+export default Page;

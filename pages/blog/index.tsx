@@ -17,13 +17,13 @@ interface CategoryWithBlog extends MyBlog {
   };
 }
 
-const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
+const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
   const isSize = useWindowSize(1024);
   return (
     <Layout title="BLOG" isFooter>
       <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
-        <div className="flex w-full flex-row items-center justify-center lg:relative">
+        <div className="-z-10 flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             My Blog List
           </h1>
@@ -52,7 +52,9 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                   </span>
                   <Link href={`/blog/${post.id}`}>
                     <a className="w-3/5 cursor-pointer py-2 text-sm font-semibold lg:text-xl">
-                      {isSize ? post.title : `${post.title.slice(0, 15)}...`}
+                      {isSize || post.title.length <= 15
+                        ? post.title
+                        : `${post.title.slice(0, 15)}...`}
                     </a>
                   </Link>
                   <div className="w-24 py-2 text-sm lg:w-64 lg:text-xl">
@@ -60,7 +62,7 @@ const Home: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                   </div>
                 </li>
               ))
-            : [...Array.from(Array(10).keys())].map((i) => (
+            : [...Array.from(Array(30).keys())].map((i) => (
                 <li
                   key={i}
                   className="flex flex-row items-center justify-between space-x-6 divide-x-2 px-2"
@@ -114,7 +116,7 @@ const Page: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
         },
       }}
     >
-      <Home posts={posts} />
+      <Blog posts={posts} />
     </SWRConfig>
   );
 };

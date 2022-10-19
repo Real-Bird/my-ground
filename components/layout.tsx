@@ -44,7 +44,7 @@ export default function Layout({
       className="flex w-full flex-col items-center justify-center"
     >
       <Head>
-        <title>{`${title} || JS's Ground`}</title>
+        <title>{`${title} || RB's Ground`}</title>
       </Head>
       <Header
         backUrl={backUrl}

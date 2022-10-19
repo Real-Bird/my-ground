@@ -2,63 +2,52 @@ import Button from "@components/buttonComponent";
 import FloatingButton from "@components/floatingBtn";
 import Layout from "@components/layout";
 import RegDate from "@components/regDate";
-import useAdmin from "@libs/client/useAdmin";
-import useToken from "@libs/client/useToken";
+import SecretModal from "@components/screteModal";
 import useWindowSize from "@libs/client/useWindowSize";
-import { cls } from "@libs/client/utils";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
-import useSWR from "swr";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { SWRConfig } from "swr";
 
-interface ContactResponse {
-  ok: boolean;
-  posts: MyGroundPost[];
-}
-
-const Contact: NextPage = () => {
-  const { admin, ok } = useAdmin();
-  const { token, ok: tokenOk } = useToken();
-  const { data } = useSWR<ContactResponse>("/api/contact");
+const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
+  const [openSecretModal, setOpenSecretModal] = useState(false);
+  const [postId, setPostId] = useState<number>();
   const isSize = useWindowSize(1024);
+  const router = useRouter();
+  const onTitleClick = (isSecret: boolean, postId: number) => {
+    if (!isSecret) return router.push(`/contact/${postId}`);
+    setPostId(postId);
+    setOpenSecretModal(true);
+  };
   return (
     <Layout title="CONTACT" isFooter>
       <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
-        <div className="flex w-full flex-row items-center justify-center lg:relative">
+        <div className="-z-10 flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             Posts List
           </h1>
-          {ok && (
-            <Link href={"/contact/upload"}>
-              <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
-                <Button text="Upload" />
-              </a>
-            </Link>
-          )}
+          <Link href={"/contact/upload"}>
+            <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
+              <Button text="Upload" />
+            </a>
+          </Link>
         </div>
-        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 border-2 lg:text-xl lg:font-bold">
-          <div className="w-24 lg:w-52 lg:py-2">작성자</div>
-          <div className="w-3/5 lg:py-2">제 목</div>
-          <div className="w-24 lg:w-52 lg:py-2">작성일</div>
+        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 border-2 font-bold leading-[2.75rem] lg:text-xl">
+          <div className="h-11 w-24 lg:w-52 lg:py-2">작성자</div>
+          <div className="h-11 w-3/5 lg:py-2">제 목</div>
+          <div className="h-11 w-24 lg:w-52 lg:py-2">작성일</div>
         </div>
         <ul className="divide-y-2 border-2">
-          {data
-            ? data?.posts.map((post) => (
+          {posts
+            ? posts.map((post) => (
                 <li
                   key={post.id}
-                  className={cls(
-                    ok
-                      ? "block"
-                      : !post.isSecret
-                      ? "block"
-                      : post.token === token
-                      ? "block"
-                      : "hidden",
-                    "flex w-full flex-row items-center justify-between space-x-1 divide-x-2"
-                  )}
+                  className="flex w-full flex-row items-center justify-between space-x-1 divide-x-2"
                 >
-                  <div className="flex w-24 items-center justify-center py-2 pl-1 lg:w-52">
+                  <div className="flex h-11 w-24 items-center justify-center py-2 pl-1 lg:w-52">
                     <div className="flex w-full items-center justify-start text-sm lg:w-44 lg:text-xl">
                       {post.isSecret ? (
                         <svg
@@ -92,12 +81,15 @@ const Contact: NextPage = () => {
                       <span className="w-5/6">{post.name}</span>
                     </div>
                   </div>
-                  <Link href={`/contact/${post.id}`}>
-                    <a className="flex w-3/5 cursor-pointer items-center justify-center py-2 text-sm font-bold lg:text-xl">
-                      {isSize ? post.title : `${post.title.slice(0, 15)}...`}
-                    </a>
-                  </Link>
-                  <div className="w-24 py-2 text-center text-sm lg:w-52 lg:text-xl">
+                  <div
+                    className="h-11 w-3/5 cursor-pointer py-2 text-sm font-bold lg:text-xl"
+                    onClick={() => onTitleClick(post.isSecret, post.id)}
+                  >
+                    {isSize || post.title.length <= 15
+                      ? post.title
+                      : `${post.title.slice(0, 15)}...`}
+                  </div>
+                  <div className="h-11 w-24 py-2 text-sm lg:w-52 lg:text-xl">
                     <RegDate regDate={post.created} y m d />
                   </div>
                 </li>
@@ -110,21 +102,31 @@ const Contact: NextPage = () => {
                   <Skeleton
                     variant="text"
                     animation="wave"
+                    width={isSize ? "14rem" : "4rem"}
+                    height={"2.75rem"}
                     className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
                   />
                   <Skeleton
                     variant="text"
                     animation="wave"
+                    height={"2.75rem"}
                     className="h-8 flex-[0.8] py-2 font-semibold lg:h-11"
                   />
                   <Skeleton
                     variant="text"
                     animation="wave"
-                    className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
+                    height={"2.75rem"}
+                    className="w-16 py-2 text-sm lg:w-56"
                   />
                 </li>
               ))}
         </ul>
+        {openSecretModal && (
+          <SecretModal
+            setOpenSecretModal={setOpenSecretModal}
+            postId={postId}
+          />
+        )}
         <FloatingButton href="/contact/upload" type="Upload">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -145,4 +147,48 @@ const Contact: NextPage = () => {
   );
 };
 
-export default Contact;
+const Page: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          "/api/contact": {
+            ok: true,
+            posts,
+          },
+        },
+      }}
+    >
+      <Contact posts={posts} />
+    </SWRConfig>
+  );
+};
+
+export async function getServerSideProps() {
+  const posts = await client.myGroundPost.findMany({
+    select: {
+      id: true,
+      name: true,
+      title: true,
+      created: true,
+      updated: true,
+      isSecret: true,
+      token: true,
+    },
+    orderBy: {
+      created: "desc",
+    },
+  });
+  posts.map((p) => {
+    if (p.isSecret) {
+      p.title = "비밀글입니다.";
+    }
+  });
+  return {
+    props: {
+      posts: JSON.parse(JSON.stringify(posts)),
+    },
+  };
+}
+
+export default Page;
