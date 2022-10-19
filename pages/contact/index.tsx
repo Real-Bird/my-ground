@@ -4,6 +4,7 @@ import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import SecretModal from "@components/screteModal";
 import useWindowSize from "@libs/client/useWindowSize";
+import client from "@libs/server/client";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
 import type { NextPage } from "next";

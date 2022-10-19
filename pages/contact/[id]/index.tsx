@@ -1,6 +1,7 @@
 import Layout from "@components/layout";
 import { MyGroundPost } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
+import client from "@libs/server/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
