@@ -46,9 +46,6 @@ async function handler(
   }
   if (req.method === "GET") {
     // await new Promise((resolve) => setTimeout(resolve, 10000));
-    const {
-      session: { user },
-    } = req;
     const posts = await client.myGroundPost.findMany({
       select: {
         id: true,
@@ -64,9 +61,8 @@ async function handler(
       },
     });
     posts.map((p) => {
-      if (p.isSecret && !user?.admin && user?.token !== p.token) {
-        p.name = "XXXXX";
-        p.title = "XXXXX";
+      if (p.isSecret) {
+        p.title = "비밀글입니다.";
       }
     });
     res.setHeader(

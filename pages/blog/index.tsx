@@ -24,7 +24,6 @@ interface BlogPropsWithSSR {
 const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
   const { data: blogData } = useSWR<BlogPropsWithSSR>("/api/blog");
-  console.log(blogData);
   return (
     <Layout title="BLOG" isFooter>
       <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">

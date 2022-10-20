@@ -24,7 +24,6 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   const isSize = useWindowSize(1024);
   const router = useRouter();
   const { data: contactPosts } = useSWR<PostsPropsWithSSR>("/api/contact");
-  console.log(contactPosts);
   const onTitleClick = (isSecret: boolean, postId: number) => {
     if (!isSecret) return router.push(`/contact/${postId}`);
     setPostId(postId);
