@@ -9,7 +9,6 @@ import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
 import Button from "@components/buttonComponent";
-import useWindowSize from "@libs/client/useWindowSize";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -19,11 +18,10 @@ interface CategoryWithBlog extends MyBlog {
 
 const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
-  const isSize = useWindowSize(1024);
   return (
     <Layout title="BLOG" isFooter>
       <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
-        <div className="-z-10 flex w-full flex-row items-center justify-center lg:relative">
+        <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             My Blog List
           </h1>
@@ -51,10 +49,8 @@ const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
                     {post.category.category}
                   </span>
                   <Link href={`/blog/${post.id}`}>
-                    <a className="w-3/5 cursor-pointer py-2 text-sm font-semibold lg:text-xl">
-                      {isSize || post.title.length <= 15
-                        ? post.title
-                        : `${post.title.slice(0, 15)}...`}
+                    <a className="w-3/5 cursor-pointer overflow-x-clip text-ellipsis whitespace-pre py-2 text-sm font-semibold lg:text-xl">
+                      {post.title}
                     </a>
                   </Link>
                   <div className="w-24 py-2 text-sm lg:w-64 lg:text-xl">

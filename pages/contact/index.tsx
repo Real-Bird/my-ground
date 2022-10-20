@@ -7,11 +7,11 @@ import useWindowSize from "@libs/client/useWindowSize";
 import client from "@libs/server/client";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { SWRConfig } from "swr";
+import { SWRConfig, unstable_serialize } from "swr";
 
 const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   const [openSecretModal, setOpenSecretModal] = useState(false);
@@ -25,8 +25,8 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   };
   return (
     <Layout title="CONTACT" isFooter>
-      <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
-        <div className="-z-10 flex w-full flex-row items-center justify-center lg:relative">
+      <section className="mx-2 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
+        <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             Posts List
           </h1>
@@ -83,12 +83,10 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
                     </div>
                   </div>
                   <div
-                    className="h-11 w-3/5 cursor-pointer py-2 text-sm font-bold lg:text-xl"
+                    className="h-11 w-3/5 cursor-pointer overflow-x-clip text-ellipsis whitespace-pre py-2 text-sm font-bold lg:text-xl"
                     onClick={() => onTitleClick(post.isSecret, post.id)}
                   >
-                    {isSize || post.title.length <= 15
-                      ? post.title
-                      : `${post.title.slice(0, 15)}...`}
+                    {post.title}
                   </div>
                   <div className="h-11 w-24 py-2 text-sm lg:w-52 lg:text-xl">
                     <RegDate regDate={post.created} y m d />
@@ -165,7 +163,7 @@ const Page: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const posts = await client.myGroundPost.findMany({
     select: {
       id: true,
@@ -185,11 +183,15 @@ export async function getServerSideProps() {
       p.title = "비밀글입니다.";
     }
   });
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=29"
+  );
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
     },
   };
-}
+};
 
 export default Page;

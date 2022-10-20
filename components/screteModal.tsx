@@ -49,7 +49,7 @@ const SecretModal = ({
   }, [data]);
   return (
     <div
-      className="fixed left-0 top-0 flex h-[100vh] w-[100vw] flex-col items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm"
+      className="fixed left-0 top-0 z-20 flex h-[100vh] w-[100vw] flex-col items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm"
       style={{ margin: 0 }}
     >
       <div

@@ -35,7 +35,9 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 const Upload: NextPage = () => {
   const router = useRouter();
   const { data } = useSWR<RevisedResponse>(
-    router.query.id ? `/api/contact/${router.query.id}` : null
+    router.query.id
+      ? `/api/contact/${router.query.id}?valid=${router.query.valid}`
+      : null
   );
   const [revised, { data: revisedData, loading: revisedLoading }] = useMutation(
     router.query.id ? `/api/contact/${router.query.id}` : null
@@ -75,11 +77,11 @@ const Upload: NextPage = () => {
   }, [revisedData, router]);
   return (
     <Layout title="Revised" backUrl="back">
-      <div className="xl:w-[80%] xl:py-5">
+      <div className="lg:w-4/5 lg:py-5">
         <div className="mx-auto w-fit border-2 text-center">
           <Link href="/notice/02-Markdown-tutorial">
             <a
-              className="px-3 font-bold text-red-500 xl:text-xl"
+              className="px-3 font-bold text-red-500 lg:text-xl"
               target={"_blank"}
             >
               ❗ 마크다운 게시글 작성법 ❗
@@ -87,9 +89,9 @@ const Upload: NextPage = () => {
           </Link>
         </div>
         <form className="space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
-          <div className="xl:flex xl:flex-col-reverse">
-            <div className="flex flex-row justify-between xl:justify-end xl:space-x-5 xl:py-3">
-              <div className="hidden w-1/2 text-left xl:block">
+          <div className="lg:flex lg:flex-col-reverse">
+            <div className="flex flex-row justify-between lg:justify-end lg:space-x-5 lg:py-3">
+              <div className="hidden w-1/2 text-left lg:block">
                 <p>
                   <span className="text-red-500">✔</span> 게시글을 작성하면
                   토큰이 생성됩니다.

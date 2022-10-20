@@ -69,6 +69,10 @@ async function handler(
         p.title = "XXXXX";
       }
     });
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=3600, stale-while-revalidate=29"
+    );
     res.json({
       ok: true,
       posts,

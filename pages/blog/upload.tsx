@@ -74,10 +74,7 @@ const Upload: NextPage = () => {
   }, []);
   return (
     <Layout title="Post" backUrl="back">
-      <form
-        className="space-y-4 p-4 xl:w-[80%]"
-        onSubmit={handleSubmit(onValid)}
-      >
+      <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <Input
             register={register("category", {
@@ -89,9 +86,9 @@ const Upload: NextPage = () => {
             name="category"
             type="text"
           />
-          <datalist className="absolute z-10 w-full" id="category">
+          <ul className="absolute z-10 w-full" id="category">
             {data?.categories.map((category) => (
-              <option
+              <li
                 key={category.id}
                 className={cls(
                   keyword && viewKeyword && category.category.includes(keyword)
@@ -102,9 +99,9 @@ const Upload: NextPage = () => {
                 onClick={toggleKeyword}
               >
                 {category.category.includes(keyword) && category.category}
-              </option>
+              </li>
             ))}
-          </datalist>
+          </ul>
         </div>
         <Input
           register={register("title", {

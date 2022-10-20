@@ -10,8 +10,7 @@ import RegDate from "@components/regDate";
 import FloatingButton from "@components/floatingBtn";
 import { useEffect } from "react";
 import { Skeleton } from "@mui/material";
-import Link from "next/link";
-import Button from "@components/buttonComponent";
+import PostNavBtn from "@components/postNavBtn";
 
 const MarkdownViewer: any = dynamic(
   () =>
@@ -36,25 +35,33 @@ const PostDetail: NextPage<{ post: MyGroundPost }> = ({ post }) => {
         {post ? (
           <>
             <div className="flex w-full flex-row items-center justify-center lg:relative">
-              <h1 className="w-4/5 break-all py-1 text-center text-5xl font-bold">
+              <h1 className="w-9/12 break-all py-1 text-center text-5xl font-bold">
                 {post?.title}
               </h1>
-              <Link href={`/contact/${router.query.id}/revised`}>
-                <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
-                  <Button text="Revised" />
-                </a>
-              </Link>
             </div>
-            <div className="flex flex-col items-end py-1 px-1">
-              <div className="text-sm lg:text-[1rem]">
-                <div>작성자: {post?.name}</div>
-                <div className="flex flex-col lg:text-[1rem]">
-                  <span>
-                    작성일: <RegDate regDate={post?.created} y m d />
-                  </span>
-                  <span>
-                    수정일: <RegDate regDate={post?.updated} y m d />
-                  </span>
+            <div className="flex w-full items-end justify-between">
+              <div className="flex space-x-2">
+                <PostNavBtn link="/contact" text="목록" />
+                <PostNavBtn
+                  link={
+                    post?.isSecret
+                      ? `/contact/${router.query.id}/revised?valid=true`
+                      : `/contact/${router.query.id}/revised`
+                  }
+                  text="수정"
+                />
+              </div>
+              <div className="flex flex-col items-end py-1 px-1">
+                <div className="text-sm lg:text-[1rem]">
+                  <div>작성자: {post?.name}</div>
+                  <div className="flex flex-col lg:text-[1rem]">
+                    <span>
+                      작성일: <RegDate regDate={post?.created} y m d />
+                    </span>
+                    <span>
+                      수정일: <RegDate regDate={post?.updated} y m d />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
