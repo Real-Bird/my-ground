@@ -11,13 +11,20 @@ import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { SWRConfig, unstable_serialize } from "swr";
+import useSWR, { SWRConfig } from "swr";
+
+interface PostsPropsWithSSR {
+  ok: boolean;
+  posts: MyGroundPost[];
+}
 
 const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   const [openSecretModal, setOpenSecretModal] = useState(false);
   const [postId, setPostId] = useState<number>();
   const isSize = useWindowSize(1024);
   const router = useRouter();
+  const { data: contactPosts } = useSWR<PostsPropsWithSSR>("/api/contact");
+  console.log(contactPosts);
   const onTitleClick = (isSecret: boolean, postId: number) => {
     if (!isSecret) return router.push(`/contact/${postId}`);
     setPostId(postId);
@@ -42,8 +49,8 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
           <div className="h-11 w-24 lg:w-52 lg:py-2">작성일</div>
         </div>
         <ul className="divide-y-2 border-2">
-          {posts
-            ? posts.map((post) => (
+          {contactPosts
+            ? contactPosts?.posts.map((post) => (
                 <li
                   key={post.id}
                   className="flex w-full flex-row items-center justify-between space-x-1 divide-x-2"

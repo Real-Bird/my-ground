@@ -43,7 +43,9 @@ const BlogRevised: NextPage = () => {
   const { data } = useSWR<RevisedResponse>(
     router.query.id ? `/api/blog/${router.query.id}` : null
   );
-  const { data: categoriesData } = useSWR<CategoricalResponse>("/api/blog");
+  const { data: categoriesData } = useSWR<CategoricalResponse>(
+    "/api/blog/categories"
+  );
   const [revised, { data: revisedData, loading: revisedLoading }] = useMutation(
     router.query.id ? `/api/blog/${router.query.id}` : null
   );
@@ -81,6 +83,7 @@ const BlogRevised: NextPage = () => {
   }, [data]);
   useEffect(() => {
     if (revisedData && revisedData.ok) {
+      data;
       router.push(`/blog/${router.query.id}`);
     }
   }, [revisedData, router]);
@@ -91,10 +94,7 @@ const BlogRevised: NextPage = () => {
   }, []);
   return (
     <Layout title="Revised" backUrl="back">
-      <form
-        className="space-y-4 p-4 xl:w-[80%]"
-        onSubmit={handleSubmit(onValid)}
-      >
+      <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <Input
             register={register("category", {

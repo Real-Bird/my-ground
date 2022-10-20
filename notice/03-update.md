@@ -8,7 +8,7 @@ category: main
 
 ### **22.10.20**
 
-![퍼포먼스 비교](/notice/asset/img/perfomance.jpg "퍼포먼스 비교")
+![퍼포먼스 비교](https://raw.githubusercontent.com/Real-Bird/pb/master/portfolio_zip/myground/11-perfomance.jpg "퍼포먼스 비교")
 
 - `블로그`, `게시판`을 `SSR(Server Side Rendering)`으로 수정했습니다.
   - `게시판`의 퍼포먼스가 `8%` 상승했습니다.

@@ -3,8 +3,8 @@ import Layout from "@components/layout";
 import RegDate from "@components/regDate";
 import useAdmin from "@libs/client/useAdmin";
 import { MyBlog } from "@prisma/client";
-import type { NextPage } from "next";
-import { SWRConfig } from "swr";
+import type { GetServerSideProps, NextPage } from "next";
+import useSWR, { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
@@ -16,8 +16,15 @@ interface CategoryWithBlog extends MyBlog {
   };
 }
 
+interface BlogPropsWithSSR {
+  ok: boolean;
+  posts: CategoryWithBlog[];
+}
+
 const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
+  const { data: blogData } = useSWR<BlogPropsWithSSR>("/api/blog");
+  console.log(blogData);
   return (
     <Layout title="BLOG" isFooter>
       <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
@@ -39,8 +46,8 @@ const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
           <div className="w-24 lg:w-64 lg:py-3">작성일</div>
         </div>
         <ul className="divide-y-2 border-2">
-          {posts
-            ? posts?.map((post) => (
+          {blogData
+            ? blogData?.posts.map((post) => (
                 <li
                   key={post.id}
                   className="flex flex-row items-center justify-between space-x-2 divide-x-2"
@@ -117,24 +124,24 @@ const Page: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const posts = await client.myBlog.findMany({
     include: {
-      category: {
-        select: {
-          category: true,
-        },
-      },
+      category: true,
     },
     orderBy: {
       created: "desc",
     },
   });
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=29"
+  );
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
     },
   };
-}
+};
 
 export default Page;

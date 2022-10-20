@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
-import * as argon2 from "argon2";
 
 async function handler(
   req: NextApiRequest,
@@ -31,7 +30,6 @@ async function handler(
           },
         },
       });
-      console.log(1, post);
       res.json({
         ok: true,
         post,
@@ -48,7 +46,6 @@ async function handler(
           },
         },
       });
-      console.log(2, post);
       res.json({
         ok: true,
         post,
@@ -56,20 +53,28 @@ async function handler(
     }
   }
   if (req.method === "GET") {
-    const categories = await client.category.findMany({
-      select: {
-        id: true,
+    // const categories = await client.category.findMany({
+    //   select: {
+    //     id: true,
+    //     category: true,
+    //   },
+    // });
+    // const posts = await client.myBlog.findMany({
+    //   orderBy: {
+    //     created: "desc",
+    //   },
+    // });
+    const posts = await client.myBlog.findMany({
+      include: {
         category: true,
       },
-    });
-    const posts = await client.myBlog.findMany({
       orderBy: {
         created: "desc",
       },
     });
     res.json({
       ok: true,
-      categories,
+      // categories,
       posts,
     });
   }

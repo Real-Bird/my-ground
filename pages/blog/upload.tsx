@@ -36,7 +36,9 @@ const Upload: NextPage = () => {
   const { admin, ok } = useAdmin();
   const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
-  const { data } = useSWR<CategoricalResponse>("/api/blog");
+  const { data: categoriesData } = useSWR<CategoricalResponse>(
+    "/api/blog/categories"
+  );
   const [upload, { data: uploadData, loading: uploadLoading }] =
     useMutation("/api/blog");
   const {
@@ -87,7 +89,7 @@ const Upload: NextPage = () => {
             type="text"
           />
           <ul className="absolute z-10 w-full" id="category">
-            {data?.categories.map((category) => (
+            {categoriesData?.categories.map((category) => (
               <li
                 key={category.id}
                 className={cls(

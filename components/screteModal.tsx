@@ -97,7 +97,7 @@ const SecretModal = ({
               잘못된 비밀번호입니다.
             </div>
           </div>
-          <Button text={loading ? "Validating..." : "Go To Post!"} />
+          <Button text={loading ? "Verifying..." : "Go To Post!"} />
         </form>
       </div>
     </div>
