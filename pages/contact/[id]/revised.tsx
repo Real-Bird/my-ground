@@ -70,7 +70,7 @@ const Upload: NextPage = () => {
   }, [data]);
   useEffect(() => {
     if (revisedData && revisedData.ok) {
-      router.push(`/contact/${router.query.id}`);
+      router.push(`/contact/${router.query.id}?valid=${router.query.valid}`);
     } else if (revisedData && !revisedData.ok) {
       setError("password", { message: revisedData?.error });
     }

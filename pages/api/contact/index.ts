@@ -14,21 +14,6 @@ async function handler(
       body: { name, password, content, title, secret },
     } = req;
     const pwdHash = await argon2.hash(password);
-    let token;
-    if (!req.session.user) {
-      token = crypto
-        .createHash("sha256")
-        .update(`${name}${password}${title}`)
-        .digest("hex");
-      req.session.user = {
-        id: Math.floor(Math.random() * 154846),
-        admin: false,
-        token,
-      };
-      await req.session.save();
-    } else {
-      token = req.session.user?.token;
-    }
     const post = await client.myGroundPost.create({
       data: {
         name,
@@ -36,7 +21,6 @@ async function handler(
         title,
         content,
         isSecret: secret,
-        token,
       },
     });
     res.json({
@@ -54,16 +38,10 @@ async function handler(
         created: true,
         updated: true,
         isSecret: true,
-        token: true,
       },
       orderBy: {
         created: "desc",
       },
-    });
-    posts.map((p) => {
-      if (p.isSecret) {
-        p.title = "비밀글입니다.";
-      }
     });
     res.setHeader(
       "Cache-Control",

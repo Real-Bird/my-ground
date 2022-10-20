@@ -178,16 +178,10 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
       created: true,
       updated: true,
       isSecret: true,
-      token: true,
     },
     orderBy: {
       created: "desc",
     },
-  });
-  posts.map((p) => {
-    if (p.isSecret) {
-      p.title = "비밀글입니다.";
-    }
   });
   res.setHeader(
     "Cache-Control",
