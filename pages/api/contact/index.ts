@@ -43,10 +43,6 @@ async function handler(
         created: "desc",
       },
     });
-    res.setHeader(
-      "Cache-Control",
-      "public, s-maxage=3600, stale-while-revalidate=29"
-    );
     res.json({
       ok: true,
       posts,

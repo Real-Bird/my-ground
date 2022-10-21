@@ -187,10 +187,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
       created: "desc",
     },
   });
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=29"
-  );
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),

@@ -53,17 +53,6 @@ async function handler(
     }
   }
   if (req.method === "GET") {
-    // const categories = await client.category.findMany({
-    //   select: {
-    //     id: true,
-    //     category: true,
-    //   },
-    // });
-    // const posts = await client.myBlog.findMany({
-    //   orderBy: {
-    //     created: "desc",
-    //   },
-    // });
     const posts = await client.myBlog.findMany({
       include: {
         category: true,
@@ -74,7 +63,6 @@ async function handler(
     });
     res.json({
       ok: true,
-      // categories,
       posts,
     });
   }
