@@ -60,11 +60,6 @@ async function handler(
         created: "desc",
       },
     });
-    posts.map((p) => {
-      if (p.isSecret) {
-        p.title = "비밀글입니다.";
-      }
-    });
     res.setHeader(
       "Cache-Control",
       "public, s-maxage=3600, stale-while-revalidate=29"
