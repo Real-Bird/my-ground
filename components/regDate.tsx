@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 interface regDateProps {
   regDate: Date;
   y?: boolean;
@@ -19,7 +21,13 @@ export default function RegDate({
   sec,
   ...rest
 }: regDateProps) {
-  const date = new Date(regDate);
+  const [date, setDate] = useState(null);
+  useEffect(() => {
+    if (regDate && window) {
+      const date = new Date(regDate);
+      setDate(date);
+    }
+  }, [regDate]);
   return (
     <>
       {y && m && d ? (

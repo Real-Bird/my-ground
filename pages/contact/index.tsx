@@ -1,26 +1,22 @@
 import Button from "@components/buttonComponent";
 import FloatingButton from "@components/floatingBtn";
 import Layout from "@components/layout";
+import RegDate from "@components/regDate";
 import SecretModal from "@components/screteModal";
 import useWindowSize from "@libs/client/useWindowSize";
 import client from "@libs/server/client";
 import { Skeleton } from "@mui/material";
 import { MyGroundPost } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import useSWR, { SWRConfig } from "swr";
 
 interface PostsPropsWithSSR {
   ok: boolean;
   posts: MyGroundPost[];
 }
-
-const RegDate = dynamic(() => import("@components/regDate"), {
-  suspense: true,
-});
 
 const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   const [openSecretModal, setOpenSecretModal] = useState(false);
@@ -99,9 +95,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
                     {post.title}
                   </div>
                   <div className="h-11 w-24 py-2 text-sm lg:w-52 lg:text-xl">
-                    <Suspense fallback={"Loading..."}>
-                      <RegDate regDate={post.created} y m d />
-                    </Suspense>
+                    <RegDate regDate={post.created} y m d />
                   </div>
                 </li>
               ))
