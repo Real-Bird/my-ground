@@ -25,7 +25,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
 const Upload: NextPage = () => {
-  const [md, setMd] = useState<string | undefined>("# Hello World");
+  const [md, setMd] = useState<string | undefined>();
   const router = useRouter();
   const [upload, { data, loading }] = useMutation("/api/contact");
   const {
