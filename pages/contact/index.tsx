@@ -1,7 +1,6 @@
 import Button from "@components/buttonComponent";
 import FloatingButton from "@components/floatingBtn";
 import Layout from "@components/layout";
-import RegDate from "@components/regDate";
 import SecretModal from "@components/screteModal";
 import useWindowSize from "@libs/client/useWindowSize";
 import client from "@libs/server/client";
@@ -12,6 +11,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useSWR, { SWRConfig } from "swr";
+import dynamic from "next/dynamic";
+
+const RegDate = dynamic(() => import("@components/regDate"), {
+  suspense: true,
+});
 
 interface PostsPropsWithSSR {
   ok: boolean;

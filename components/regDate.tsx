@@ -21,7 +21,7 @@ export default function RegDate({
   sec,
   ...rest
 }: regDateProps) {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<Date>();
   useEffect(() => {
     if (regDate && window) {
       const date = new Date(regDate);
@@ -30,18 +30,22 @@ export default function RegDate({
   }, [regDate]);
   return (
     <>
-      {y && m && d ? (
-        <span {...rest}>{`${date.getFullYear()}-${(
-          "0" +
-          (date.getMonth() + 1)
-        ).slice(-2)}-${("0" + date.getDate()).slice(-2)}`}</span>
+      {date ? (
+        y && m && d ? (
+          <span {...rest}>{`${date?.getFullYear()}-${(
+            "0" +
+            (date?.getMonth() + 1)
+          ).slice(-2)}-${("0" + date?.getDate()).slice(-2)}`}</span>
+        ) : (
+          <span {...rest}>{`${date?.getFullYear()}-${(
+            "0" +
+            (date?.getMonth() + 1)
+          ).slice(-2)}-${("0" + date?.getDate()).slice(
+            -2
+          )} ${date?.getHours()}:${date?.getMinutes()}:${date?.getSeconds()}`}</span>
+        )
       ) : (
-        <span {...rest}>{`${date.getFullYear()}-${(
-          "0" +
-          (date.getMonth() + 1)
-        ).slice(-2)}-${("0" + date.getDate()).slice(
-          -2
-        )} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</span>
+        "Loading..."
       )}
     </>
   );
