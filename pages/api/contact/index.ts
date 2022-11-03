@@ -45,7 +45,6 @@ async function handler(
     });
   }
   if (req.method === "GET") {
-    // await new Promise((resolve) => setTimeout(resolve, 10000));
     const posts = await client.myGroundPost.findMany({
       select: {
         id: true,
@@ -60,10 +59,6 @@ async function handler(
         created: "desc",
       },
     });
-    res.setHeader(
-      "Cache-Control",
-      "public, s-maxage=3600, stale-while-revalidate=29"
-    );
     res.json({
       ok: true,
       posts,

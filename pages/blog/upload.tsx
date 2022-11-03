@@ -18,6 +18,7 @@ interface UploadFormResponse {
   category: string;
   title: string;
   content: string;
+  summary: string;
 }
 
 export interface CategoricalResponse {
@@ -113,6 +114,19 @@ const Upload: NextPage = () => {
           name="title"
           type="text"
           error={errors.title?.message}
+        />
+        <Input
+          register={register("summary", {
+            required: "Plz, Write the summary.",
+            maxLength: {
+              value: 150,
+              message: "Allow max length 150",
+            },
+          })}
+          label="Summary"
+          name="summary"
+          type="text"
+          error={errors.summary?.message}
         />
         <div className="h-[500px] rounded-md bg-slate-400">
           <MDEditor

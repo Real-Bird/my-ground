@@ -261,6 +261,7 @@ model MyBlog {
   id         Int       @id @default(autoincrement())
   title      String
   content    String    @db.LongText
+  summary    String?
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int?
   created    DateTime  @default(now())

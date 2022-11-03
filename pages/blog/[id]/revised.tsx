@@ -20,6 +20,7 @@ interface BlogRevisedFormResponse {
   category: string;
   title: string;
   content: string;
+  summary: string;
 }
 
 interface CategoryWithBlog extends MyBlog {
@@ -78,6 +79,7 @@ const BlogRevised: NextPage = () => {
     if (data && data.ok) {
       setValue("category", data?.post.category.category);
       setValue("title", data?.post.title);
+      setValue("summary", data?.post.summary);
       setMd(data?.post.content);
     }
   }, [data]);
@@ -132,6 +134,19 @@ const BlogRevised: NextPage = () => {
           name="title"
           type="text"
           error={errors.title?.message}
+        />
+        <Input
+          register={register("summary", {
+            required: "Plz, Write the summary.",
+            maxLength: {
+              value: 150,
+              message: "Allow max length 150",
+            },
+          })}
+          label="Summary"
+          name="summary"
+          type="text"
+          error={errors.summary?.message}
         />
         <div className="h-[500px] rounded-md bg-slate-400">
           <MDEditor

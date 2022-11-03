@@ -9,6 +9,7 @@ import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
 import Button from "@components/buttonComponent";
+import BlogPost from "@components/blogPost";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -39,30 +40,14 @@ const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
             </Link>
           )}
         </div>
-        <div className="flex flex-row items-center justify-between space-x-2 divide-x-2 border-2 lg:text-xl lg:font-bold">
-          <div className="w-20 lg:w-64 lg:py-3">카테고리</div>
-          <div className="w-3/5 text-center lg:py-3">제 목</div>
-          <div className="w-24 lg:w-64 lg:py-3">작성일</div>
-        </div>
-        <ul className="divide-y-2 border-2">
+        <ul className="space-y-2">
           {blogData
             ? blogData?.posts.map((post) => (
-                <li
+                <BlogPost
                   key={post.id}
-                  className="flex flex-row items-center justify-between space-x-2 divide-x-2"
-                >
-                  <span className="w-20 py-2 text-sm lg:w-64 lg:text-xl">
-                    {post.category.category}
-                  </span>
-                  <Link href={`/blog/${post.id}`}>
-                    <a className="w-3/5 cursor-pointer overflow-x-clip text-ellipsis whitespace-pre py-2 text-sm font-semibold lg:text-xl">
-                      {post.title}
-                    </a>
-                  </Link>
-                  <div className="w-24 py-2 text-sm lg:w-64 lg:text-xl">
-                    <RegDate regDate={post.created} y m d />
-                  </div>
-                </li>
+                  post={post}
+                  category={post.category.category}
+                />
               ))
             : [...Array.from(Array(30).keys())].map((i) => (
                 <li
@@ -123,7 +108,7 @@ const Page: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await client.myBlog.findMany({
     include: {
       category: true,
@@ -132,10 +117,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
       created: "desc",
     },
   });
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=29"
-  );
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
