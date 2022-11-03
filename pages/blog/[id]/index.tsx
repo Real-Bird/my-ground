@@ -1,6 +1,11 @@
 import Layout from "@components/layout";
 import { MyBlog } from "@prisma/client";
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  NextPage,
+} from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
 import RegDate from "@components/regDate";
@@ -11,11 +16,18 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Button from "@components/buttonComponent";
+import useSWR, { SWRConfig } from "swr";
+import PostNavBtn from "@components/postNavBtn";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
     category: string;
   };
+}
+
+interface BlogDetailResponse {
+  ok: boolean;
+  post: CategoryWithBlog;
 }
 
 const MarkdownViewer: any = dynamic(
@@ -38,27 +50,29 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   }, []);
   return (
     <Layout title="POST" backUrl="/blog">
-      <div className="w-[80%] space-y-2 px-3 lg:py-4">
-        <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted lg:relative">
-          <h1 className="py-5 text-center text-5xl font-bold">{post?.title}</h1>
-          {ok && (
-            <Link href={`/blog/${router.query.id}/revised`}>
-              <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
-                <Button text="Revised" />
-              </a>
-            </Link>
-          )}
+      <div className="w-4/5 space-y-2 px-3 lg:py-4">
+        <div className="flex w-full flex-row items-center justify-center lg:relative">
+          <h1 className="w-full border-b-2 border-dotted py-5 text-center text-5xl font-bold">
+            {post?.title}
+          </h1>
         </div>
-        <div className="flex flex-col items-end py-1">
-          <div className="text-sm">
-            <div className="flex flex-row">
-              <div className="w-16 text-end">카테고리</div>
-              <div className="flex-1">: {post?.category.category}</div>
-            </div>
-            <div className="flex flex-row">
-              <div className="word-spacing w-16 text-right">작 성 일</div>
-              <div className="flex-1">
-                : <RegDate regDate={post?.updated} y m d />
+        <div className="flex w-full items-end justify-between">
+          <div className="flex space-x-2">
+            <PostNavBtn link="/blog" text="목록" />
+            {ok && (
+              <PostNavBtn
+                link={`/blog/${router.query.id}/revised`}
+                text="수정"
+              />
+            )}
+          </div>
+          <div className="flex flex-col items-end py-1 px-1">
+            <div className="text-sm">
+              <div className="lg:text-[1rem]">
+                카테고리: {post?.category?.category}
+              </div>
+              <div className="lg:text-[1rem]">
+                작성일: <RegDate regDate={post?.updated} y m d />
               </div>
             </div>
           </div>
@@ -88,17 +102,50 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = (ctx) => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
+const Page: NextPage<{ post: CategoryWithBlog; id: number }> = ({
+  post,
+  id,
+}) => {
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          [`/api/contact/${id}`]: {
+            ok: true,
+            post,
+          },
+        },
+      }}
+    >
+      <BlogDetail post={post} />
+    </SWRConfig>
+  );
 };
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  // const {
+  //   query: { id, valid },
+  // } = ctx;
+  // const post = await client.myGroundPost.findUnique({
+  //   where: {
+  //     id: +id,
+  //   },
+  //   select: {
+  //     id: true,
+  //     name: true,
+  //     title: true,
+  //     content: true,
+  //     isSecret: true,
+  //     created: true,
+  //     updated: true,
+  //   },
+  // });
+  const {
+    query: { id },
+  } = ctx;
   const post = await client.myBlog.findUnique({
     where: {
-      id: +ctx?.params?.id,
+      id: +id,
     },
     include: {
       category: {
@@ -108,11 +155,13 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       },
     },
   });
+  if (!post) return { props: {} };
   return {
     props: {
       post: JSON.parse(JSON.stringify(post)),
+      postId: JSON.parse(JSON.stringify(id)),
     },
   };
 };
 
-export default BlogDetail;
+export default Page;

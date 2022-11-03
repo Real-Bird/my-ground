@@ -29,7 +29,6 @@ async function handler(
     });
   }
   if (req.method === "GET") {
-    // await new Promise((resolve) => setTimeout(resolve, 10000));
     const posts = await client.myGroundPost.findMany({
       select: {
         id: true,

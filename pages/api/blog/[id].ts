@@ -36,7 +36,7 @@ async function handler(
   if (req.method === "POST") {
     const {
       query: { id },
-      body: { title, content, category },
+      body: { title, content, category, summary },
     } = req;
     const existCategory = await client.category.findFirst({
       where: {
@@ -54,6 +54,7 @@ async function handler(
         data: {
           title,
           content,
+          summary,
           category: {
             create: {
               category,
@@ -78,6 +79,7 @@ async function handler(
           },
           title,
           content,
+          summary,
         },
       });
       res.json({
