@@ -1,6 +1,5 @@
-import FloatingButton from "@components/floatingBtn";
-import Layout from "@components/layout";
-import RegDate from "@components/regDate";
+import FloatingButton from "@components/common/floatingBtn";
+import Layout from "@components/common/layout";
 import useAdmin from "@libs/client/useAdmin";
 import { MyBlog } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
@@ -8,8 +7,8 @@ import useSWR, { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
 import { Skeleton } from "@mui/material";
-import Button from "@components/buttonComponent";
-import BlogPost from "@components/blogPost";
+import Button from "@components/common/buttonComponent";
+import BlogPost from "@components/blog/blogPost";
 
 interface CategoryWithBlog extends MyBlog {
   category: {

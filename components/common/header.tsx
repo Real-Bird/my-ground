@@ -1,5 +1,4 @@
-import FullNavBar from "@components/fullNavbar";
-import useAdmin from "@libs/client/useAdmin";
+import FullNavBar from "@components/common/fullNavbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

@@ -1,12 +1,12 @@
-import FloatingButton from "@components/floatingBtn";
-import Layout from "@components/layout";
+import FloatingButton from "@components/common/floatingBtn";
+import Layout from "@components/common/layout";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio } from "@prisma/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import useSWR from "swr";
 import { Skeleton } from "@mui/material";
-import Button from "@components/buttonComponent";
+import Button from "@components/common/buttonComponent";
 import useWindowSize from "@libs/client/useWindowSize";
 
 interface PortfolioProps {

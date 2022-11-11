@@ -1,4 +1,4 @@
-import RegDate from "@components/regDate";
+import RegDate from "@components/common/regDate";
 import { MyBlog } from "@prisma/client";
 import Link from "next/link";
 

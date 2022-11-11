@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
-import Layout from "@components/layout";
+import Layout from "@components/common/layout";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import Input from "@components/input";
+import Input from "@components/common/input";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import useMutation from "@libs/client/useMutation";
-import Button from "@components/buttonComponent";
+import Button from "@components/common/buttonComponent";
 import useAdmin from "@libs/client/useAdmin";
 import useWindowSize from "@libs/client/useWindowSize";
 

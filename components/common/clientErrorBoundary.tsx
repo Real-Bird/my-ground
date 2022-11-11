@@ -1,5 +1,5 @@
-import Layout from "@components/layout";
-import Button from "@components/buttonComponent";
+import Layout from "@components/common/layout";
+import Button from "@components/common/buttonComponent";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

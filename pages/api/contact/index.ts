@@ -3,7 +3,7 @@ import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import * as argon2 from "argon2";
 import { withApiSession } from "@libs/server/withSession";
-import crypto from "crypto";
+import { randomChroma, randomColor } from "@libs/client/utils";
 
 async function handler(
   req: NextApiRequest,
@@ -11,16 +11,19 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      body: { name, password, content, title, secret },
+      body: { name, password, content, title },
     } = req;
     const pwdHash = await argon2.hash(password);
+    const randomColorName = randomColor();
+    const randomChromaName = randomChroma();
+    const randomColorChroma = `${randomColorName}/${randomChromaName}`;
     const post = await client.myGroundPost.create({
       data: {
         name,
         password: pwdHash,
         title,
         content,
-        isSecret: secret,
+        token: randomColorChroma,
       },
     });
     res.json({
@@ -30,14 +33,6 @@ async function handler(
   }
   if (req.method === "GET") {
     const posts = await client.myGroundPost.findMany({
-      select: {
-        id: true,
-        name: true,
-        title: true,
-        created: true,
-        updated: true,
-        isSecret: true,
-      },
       orderBy: {
         created: "desc",
       },

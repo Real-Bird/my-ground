@@ -1,33 +1,21 @@
-import Layout from "@components/layout";
+import Layout from "@components/common/layout";
 import { MyBlog } from "@prisma/client";
-import type {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  NextPage,
-} from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
-import RegDate from "@components/regDate";
-import FloatingButton from "@components/floatingBtn";
+import RegDate from "@components/common/regDate";
+import FloatingButton from "@components/common/floatingBtn";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import Button from "@components/buttonComponent";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 import PostNavBtn from "@components/postNavBtn";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
     category: string;
   };
-}
-
-interface BlogDetailResponse {
-  ok: boolean;
-  post: CategoryWithBlog;
 }
 
 const MarkdownViewer: any = dynamic(

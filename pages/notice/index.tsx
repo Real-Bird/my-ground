@@ -1,5 +1,5 @@
-import Layout from "@components/layout";
-import RegDate from "@components/regDate";
+import Layout from "@components/common/layout";
+import RegDate from "@components/common/regDate";
 import { readdirSync, readFileSync } from "fs";
 import matter from "gray-matter";
 import { NextPage } from "next";

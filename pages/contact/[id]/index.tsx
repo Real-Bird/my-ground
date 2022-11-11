@@ -1,4 +1,4 @@
-import Layout from "@components/layout";
+import Layout from "@components/common/layout";
 import { MyGroundPost } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import client from "@libs/server/client";
@@ -6,8 +6,8 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
-import RegDate from "@components/regDate";
-import FloatingButton from "@components/floatingBtn";
+import RegDate from "@components/common/regDate";
+import FloatingButton from "@components/common/floatingBtn";
 import { useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import PostNavBtn from "@components/postNavBtn";
@@ -159,7 +159,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   });
   if (!post) return { props: {} };
-  if (post.isSecret && !Boolean(valid)) return { props: {} };
   return {
     props: {
       post: JSON.parse(JSON.stringify(post)),

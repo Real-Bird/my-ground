@@ -9,6 +9,7 @@ interface InputProps {
   register: UseFormRegisterReturn;
   error?: string;
   value?: string;
+  placeholder?: string;
   isDisabled?: boolean;
 }
 
@@ -21,6 +22,7 @@ export default function Input({
   error,
   value,
   isDisabled,
+  placeholder,
 }: InputProps) {
   return (
     <div>
@@ -38,9 +40,10 @@ export default function Input({
             type={type}
             className={cls(
               isDisabled ? "bg-gray-300" : "",
-              "w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+              "w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500"
             )}
             value={value}
+            placeholder={placeholder}
           />
           <div className="text-red-500">{error}</div>
         </div>

@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import ClientErrorBoundary from "@components/clientErrorBoundary";
+import ClientErrorBoundary from "@components/common/clientErrorBoundary";
 
 const NotFound: NextPage = () => {
   return (

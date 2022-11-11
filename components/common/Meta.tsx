@@ -14,7 +14,7 @@ const Meta = () => {
       <meta property="og:type" content="website" />
       <meta property="og:description" content="Real-Bird의 블로그 사이트" />
       <meta property="og:url" content="https://real-bird.vercel.app/" />
-      <link rel="canonical" href="https://nextjs-blog-challenge.vercel.app/" />
+      <link rel="canonical" href="https://real-bird.vercel.app/" />
       <meta name="theme-color" content="#ee8f02" />
       <title>RB&apos;s Ground</title>
     </>

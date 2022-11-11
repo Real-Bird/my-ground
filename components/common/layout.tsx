@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Menu from "@components/menu";
 import useAdmin from "@libs/client/useAdmin";
-import useMutation from "@libs/client/useMutation";
-import Footer from "@components/footer";
-import MobileNavigation from "@components/mobileNavbar";
-import Header from "@components/header";
+import Footer from "@components/common/footer";
+import MobileNavigation from "@components/common/mobileNavbar";
+import Header from "@components/common/header";
 import Head from "next/head";
 import useWindowSize from "@libs/client/useWindowSize";
 
@@ -14,10 +13,6 @@ interface LayoutProps {
   backUrl?: string;
   isFooter?: boolean;
   [key: string]: any;
-}
-
-export interface LogoutResponse {
-  ok: boolean;
 }
 
 export default function Layout({
@@ -61,7 +56,7 @@ export default function Layout({
       )}
       <main
         id="child"
-        className="mt-12 mb-16 flex h-[86vh] w-full max-w-xl justify-center overflow-y-scroll pb-8 pt-3 lg:mt-12 lg:h-full lg:max-w-full lg:pb-5"
+        className="mt-12 mb-16 flex h-[86vh] w-full max-w-xl justify-center overflow-y-scroll pb-8 pt-3 lg:mt-12 lg:h-full lg:max-w-full lg:pb-5 "
       >
         {children}
       </main>

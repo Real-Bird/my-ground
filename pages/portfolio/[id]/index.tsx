@@ -1,15 +1,15 @@
-import Layout from "@components/layout";
+import Layout from "@components/common/layout";
 import { MyPortfolio, StackBadge } from "@prisma/client";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import "@uiw/react-markdown-preview/markdown.css";
-import FloatingButton from "@components/floatingBtn";
+import FloatingButton from "@components/common/floatingBtn";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useAdmin from "@libs/client/useAdmin";
-import Button from "@components/buttonComponent";
+import Button from "@components/common/buttonComponent";
 
 interface BadgeWithPf extends MyPortfolio {
   stackBadge: StackBadge[];

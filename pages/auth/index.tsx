@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Input from "@components/input";
+import Input from "@components/common/input";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
 import { User } from "@prisma/client";
-import Button from "@components/buttonComponent";
+import Button from "@components/common/buttonComponent";
 import useAdmin from "@libs/client/useAdmin";
 import Link from "next/link";
-import Layout, { type LogoutResponse } from "@components/layout";
+import Layout from "@components/common/layout";
 
 interface EnterForm {
   email?: string;
@@ -18,6 +18,10 @@ interface MutationResult {
   ok: boolean;
   admin: User;
   error: string;
+}
+
+interface LogoutResponse {
+  ok: boolean;
 }
 
 const Auth = () => {
