@@ -43,7 +43,6 @@ const PostViewer = ({ id, onCloseModal }: PostListItemProps) => {
             name={data?.post.name}
             content={data?.post.content}
             created={data?.post.created}
-            colorChroma={data?.post.token}
             isModal
           />
         ) : null}

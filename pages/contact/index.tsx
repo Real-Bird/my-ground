@@ -39,49 +39,21 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
           </div>
         </div>
         <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 xl:grid-cols-3">
-          {contactPosts
-            ? contactPosts?.posts.map((post) => (
-                <li
-                  key={post.id}
-                  className="flex h-64 w-full cursor-pointer flex-col items-start rounded-md border-2 shadow-lg lg:h-96 "
-                  title={post.title}
-                  onClick={() => onOpenModal(post.id)}
-                >
-                  <PostListItem
-                    title={post.title}
-                    name={post.name}
-                    content={post.content}
-                    created={post.created}
-                    colorChroma={post.token}
-                  />
-                </li>
-              ))
-            : [...Array.from(Array(10).keys())].map((i) => (
-                <li
-                  key={i}
-                  className="flex flex-row items-center justify-between space-x-6 divide-x-2 px-2"
-                >
-                  <Skeleton
-                    variant="text"
-                    animation="wave"
-                    width={isSize ? "14rem" : "4rem"}
-                    height={"2.75rem"}
-                    className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
-                  />
-                  <Skeleton
-                    variant="text"
-                    animation="wave"
-                    height={"2.75rem"}
-                    className="h-8 flex-[0.8] py-2 font-semibold lg:h-11"
-                  />
-                  <Skeleton
-                    variant="text"
-                    animation="wave"
-                    height={"2.75rem"}
-                    className="w-16 py-2 text-sm lg:w-56"
-                  />
-                </li>
-              ))}
+          {contactPosts?.posts.map((post) => (
+            <li
+              key={post.id}
+              className="flex h-64 w-full cursor-pointer flex-col items-start rounded-md border-2 shadow-lg lg:h-96 "
+              title={post.title}
+              onClick={() => onOpenModal(post.id)}
+            >
+              <PostListItem
+                title={post.title}
+                name={post.name}
+                content={post.content}
+                created={post.created}
+              />
+            </li>
+          ))}
         </ul>
         {showModal && <PostViewer id={postId} onCloseModal={onCloseModal} />}
         <FloatingButton href="/contact/upload" type="Upload">

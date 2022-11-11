@@ -11,7 +11,6 @@ interface PostListItemProps {
   name: string;
   created: Date;
   content: string;
-  colorChroma: string | null;
   isModal?: boolean;
 }
 const PostListItem = ({
@@ -19,19 +18,18 @@ const PostListItem = ({
   name,
   created,
   content,
-  colorChroma,
   isModal,
 }: PostListItemProps) => {
-  const [color, chroma] = colorChroma.split("/");
+  const random = Math.floor(Math.random() * 300);
   return (
     <>
       <div className="flex w-full items-center justify-start space-x-1 px-1 py-2 ">
         <div className={cls("w-16")}>
-          <div
+          <img
             className={cls(
-              `bg-${color}-${chroma}`,
-              "h-12 w-12 rounded-full bg-slate-300 bg-gradient-to-br bg-blend-overlay"
+              "h-12 w-12 rounded-full bg-gradient-to-br bg-blend-overlay"
             )}
+            src={`https://picsum.photos/200/300?random=${random}`}
           />
         </div>
         <div className="flex w-40 flex-col items-start justify-center lg:w-64">
