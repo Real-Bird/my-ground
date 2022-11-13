@@ -58,7 +58,7 @@ const ContactUpload = ({ mutate }: ContactUploadProps) => {
               required: "Plz, Write your password.",
             })}
             label="Password"
-            name="pwd"
+            name="password"
             type="password"
             error={errors.password?.message}
           />

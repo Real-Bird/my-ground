@@ -3,7 +3,7 @@ import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import * as argon2 from "argon2";
 import { withApiSession } from "@libs/server/withSession";
-import { randomChroma, randomColor } from "@libs/client/utils";
+import { randomColor } from "@libs/client/utils";
 
 async function handler(
   req: NextApiRequest,
@@ -14,16 +14,14 @@ async function handler(
       body: { name, password, content, title },
     } = req;
     const pwdHash = await argon2.hash(password);
-    const randomColorName = randomColor();
-    const randomChromaName = randomChroma();
-    const randomColorChroma = `${randomColorName}/${randomChromaName}`;
+    const randomColorCode = randomColor();
     const post = await client.myGroundPost.create({
       data: {
         name,
         password: pwdHash,
         title,
         content,
-        token: randomColorChroma,
+        token: randomColorCode,
       },
     });
     res.json({

@@ -1,22 +1,48 @@
+import ConfirmModal from "@components/common/confirmModal";
+import ContactRevised from "@components/contact/contactRevised";
 import PostListItem from "@components/contact/postListItem";
+import PostNavBtn from "@components/postNavBtn";
+import useMutation from "@libs/client/useMutation";
+import { cls } from "@libs/client/utils";
 import { MyGroundPost } from "@prisma/client";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 interface PostListItemProps {
   id: number;
   onCloseModal: () => void;
+  isOpen: boolean;
 }
 
-interface ModalPostResponse {
+export interface ModalPostResponse {
   ok: boolean;
   post: MyGroundPost;
 }
 
-const PostViewer = ({ id, onCloseModal }: PostListItemProps) => {
-  const { data } = useSWR<ModalPostResponse>(`/api/contact/${id}`);
+const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
+  const { data: postData, mutate: postMutate } = useSWR<ModalPostResponse>(
+    `/api/contact/${id}`
+  );
+  const [deletePost, { data: deletePostData, loading: deleteLoading }] =
+    useMutation(`/api/contact/delete?id=${id}`);
+  const [isEdit, setIsEdit] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
+  const onEdit = () => setIsEdit((prev) => !prev);
+  const onDelete = () => {
+    if (deleteLoading) return;
+    setConfirmModal(true);
+  };
+  const onDeleteConfirm = () => {
+    deletePost(null);
+    setConfirmModal(false);
+    onCloseModal();
+  };
   return (
     <div
-      className="fixed left-0 top-0 z-20 flex min-h-screen min-w-full flex-col items-center justify-center bg-slate-400 bg-opacity-60 backdrop-blur-sm"
+      className={cls(
+        isOpen ? "animate-scaleup" : "animate-scaledown",
+        "fixed left-0 top-0 z-20 flex min-h-screen min-w-full flex-col items-center justify-center bg-slate-400 bg-opacity-60 backdrop-blur-sm"
+      )}
       style={{ margin: 0 }}
     >
       <div className="relative my-5 h-[90vh] w-5/6 rounded-lg bg-white shadow-md">
@@ -37,15 +63,44 @@ const PostViewer = ({ id, onCloseModal }: PostListItemProps) => {
             />
           </svg>
         </div>
-        {data ? (
-          <PostListItem
-            title={data?.post.title}
-            name={data?.post.name}
-            content={data?.post.content}
-            created={data?.post.created}
-            isModal
+        {!!postData && isOpen && (
+          <>
+            {isEdit ? (
+              <ContactRevised
+                id={id}
+                title={postData?.post.title}
+                name={postData?.post.name}
+                content={postData?.post.content}
+                colorCode={postData?.post.token}
+                onEdit={onEdit}
+                mutate={postMutate}
+                onDelete={onDelete}
+              />
+            ) : (
+              <>
+                <PostListItem
+                  title={postData?.post.title}
+                  name={postData?.post.name}
+                  content={postData?.post.content}
+                  created={postData?.post.created}
+                  colorCode={postData?.post.token}
+                  isModal={isOpen}
+                />
+                <div className="flex items-center justify-end space-x-2 px-2 py-1">
+                  <PostNavBtn onClick={onEdit} text="수정" />
+                  <PostNavBtn onClick={onDelete} text="삭제" />
+                </div>
+              </>
+            )}
+          </>
+        )}
+        {confirmModal && (
+          <ConfirmModal
+            message="정말 삭제할까요?"
+            onConfirm={onDeleteConfirm}
+            type="삭제"
           />
-        ) : null}
+        )}
       </div>
     </div>
   );

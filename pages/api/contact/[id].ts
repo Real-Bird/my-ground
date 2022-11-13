@@ -3,6 +3,7 @@ import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
 import * as argon2 from "argon2";
 import { withApiSession } from "@libs/server/withSession";
+import { randomColor } from "@libs/client/utils";
 
 async function handler(
   req: NextApiRequest,
@@ -10,7 +11,7 @@ async function handler(
 ) {
   if (req.method === "GET") {
     const {
-      query: { id, valid },
+      query: { id },
     } = req;
     const post = await client.myGroundPost.findUnique({
       where: {
@@ -35,7 +36,7 @@ async function handler(
     });
     const isVerified = await argon2.verify(cryptoPwd.password, password);
     if (!isVerified)
-      return res.json({ ok: false, error: "Not Verified Password" });
+      return res.json({ ok: false, error: "비밀번호가 일치하지 않습니다." });
     const post = await client.myGroundPost.update({
       where: {
         id: +id,

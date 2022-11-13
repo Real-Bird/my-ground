@@ -1,15 +1,24 @@
 import RegDate from "@components/common/regDate";
+import { cls } from "@libs/client/utils";
 import { MyBlog } from "@prisma/client";
 import Link from "next/link";
 
 interface BlogPostProps {
   post: MyBlog;
   category: string;
+  idx: number;
+  length: number;
 }
 
-const BlogPost = ({ post, category }: BlogPostProps) => {
+const BlogPost = ({ post, category, idx, length }: BlogPostProps) => {
+  const ANIMATION_DELAY = `${0.2 * (idx % length)}s`;
   return (
-    <li className="flex animate-fade flex-col rounded-2xl border-2 px-5 shadow-md">
+    <li
+      className={cls(
+        "flex animate-fadein flex-col rounded-2xl border-2 px-5 opacity-0 shadow-md"
+      )}
+      style={{ animationDelay: ANIMATION_DELAY }}
+    >
       <Link href={`/blog/${post.id}`}>
         <a className="cursor-pointer">
           <div className="flex flex-col items-start">

@@ -40,33 +40,15 @@ const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
           )}
         </div>
         <ul className="space-y-2">
-          {blogData
-            ? blogData?.posts.map((post) => (
-                <BlogPost
-                  key={post.id}
-                  post={post}
-                  category={post.category.category}
-                />
-              ))
-            : [...Array.from(Array(30).keys())].map((i) => (
-                <li
-                  key={i}
-                  className="flex flex-row items-center justify-between space-x-6 divide-x-2 px-2"
-                >
-                  <Skeleton
-                    variant="text"
-                    className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
-                  />
-                  <Skeleton
-                    variant="text"
-                    className="h-8 flex-[0.8] py-2 font-semibold lg:h-11"
-                  />
-                  <Skeleton
-                    variant="text"
-                    className="h-8 w-16 py-2 text-sm lg:h-11 lg:w-56"
-                  />
-                </li>
-              ))}
+          {blogData?.posts.map((post, idx) => (
+            <BlogPost
+              key={post.id}
+              post={post}
+              category={post.category.category}
+              idx={idx}
+              length={blogData?.posts.length}
+            />
+          ))}
         </ul>
       </section>
       {ok && (

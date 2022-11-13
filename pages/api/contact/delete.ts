@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
-import * as argon2 from "argon2";
 import { withApiSession } from "@libs/server/withSession";
 
 async function handler(
@@ -11,18 +10,15 @@ async function handler(
   if (req.method === "POST") {
     const {
       query: { id },
-      body: { secret },
     } = req;
-    const cryptoPwd = await client.myGroundPost.findUnique({
+    const deletePost = await client.myGroundPost.delete({
       where: {
         id: +id,
       },
     });
-    const isVerified = await argon2.verify(cryptoPwd.password, secret);
-    if (!isVerified)
-      return res.json({ ok: false, error: "Not Verified Password" });
     res.json({
       ok: true,
+      deletePost,
     });
   }
 }
