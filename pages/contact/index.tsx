@@ -1,15 +1,12 @@
-import FloatingButton from "@components/common/floatingBtn";
 import Layout from "@components/common/layout";
-import useWindowSize from "@libs/client/useWindowSize";
 import client from "@libs/server/client";
 import { MyGroundPost } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import useSWR, { SWRConfig } from "swr";
 import PostListItem from "@components/contact/postListItem";
 import PostViewer from "@components/contact/postViewer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ContactUpload from "@components/contact/contactUpload";
-import ConfirmModal from "@components/common/confirmModal";
 
 export interface PostsPropsWithSSR {
   ok: boolean;
@@ -23,6 +20,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [postId, setPostId] = useState<number>();
   const onOpenModal = (postId: number) => {
+    if (showModal) return;
     setShowModal(true);
     setIsOpen(true);
     setPostId(postId);
@@ -52,7 +50,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
               style={{
                 animationDelay: `${0.2 * (idx % contactPosts?.posts.length)}s`,
               }}
-              className="flex h-64 w-full animate-fadein cursor-pointer flex-col items-start rounded-md border-2 shadow-lg lg:h-96 lg:animate-fadeside"
+              className="flex h-80 w-full animate-fadein cursor-pointer flex-col items-start rounded-md border-2 shadow-lg lg:h-96 lg:animate-fadeside"
               onClick={() => onOpenModal(post.id)}
             >
               <PostListItem

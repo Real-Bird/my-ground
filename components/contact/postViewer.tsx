@@ -37,6 +37,7 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
     setConfirmModal(false);
     onCloseModal();
   };
+  const onConfirmClose = () => setConfirmModal(false);
   return (
     <div
       className={cls(
@@ -45,9 +46,9 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
       )}
       style={{ margin: 0 }}
     >
-      <div className="relative my-5 h-[90vh] w-5/6 rounded-lg bg-white shadow-md">
+      <div className="relative my-5 h-[36rem] w-5/6 rounded-lg bg-white shadow-md lg:h-[90vh]">
         <div
-          className="absolute top-2 right-2 cursor-pointer text-amber-500 hover:text-amber-600"
+          className="absolute top-1 right-1 cursor-pointer text-amber-500 hover:text-amber-600"
           onClick={onCloseModal}
         >
           <svg
@@ -74,7 +75,6 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
                 colorCode={postData?.post.token}
                 onEdit={onEdit}
                 mutate={postMutate}
-                onDelete={onDelete}
               />
             ) : (
               <>
@@ -98,6 +98,7 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
           <ConfirmModal
             message="정말 삭제할까요?"
             onConfirm={onDeleteConfirm}
+            onClose={onConfirmClose}
             type="삭제"
           />
         )}

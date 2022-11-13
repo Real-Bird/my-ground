@@ -15,7 +15,6 @@ interface ContactRevisedProps {
   colorCode: string;
   mutate: KeyedMutator<ModalPostResponse>;
   onEdit: () => void;
-  onDelete: () => void;
 }
 
 interface RevisedFormResponse {
@@ -32,7 +31,6 @@ const ContactRevised = ({
   colorCode,
   onEdit,
   mutate,
-  onDelete,
 }: ContactRevisedProps) => {
   const [openErrorToast, setOpenErrorToast] = useState(false);
   const [upload, { data, loading }] = useMutation(`/api/contact/${id}`);
@@ -87,6 +85,7 @@ const ContactRevised = ({
     }
     if (data && !data.ok) {
       setError("password", { message: data.error });
+      console.log(data);
     }
   }, [data]);
   return (
@@ -99,7 +98,7 @@ const ContactRevised = ({
           />
         </div>
         <div className="flex h-20 w-4/6 flex-col items-start justify-center space-y-1">
-          <div className="box-border w-full">
+          <div className="box-border w-5/6">
             <input
               className="inline-block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent text-start text-sm font-bold  text-gray-900 placeholder-gray-400 placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500 lg:text-lg"
               {...register("title", {
@@ -111,8 +110,8 @@ const ContactRevised = ({
               type="text"
             />
           </div>
-          <div className="flex w-full items-center justify-start space-x-2">
-            <span className="text-sm">{name}</span>
+          <div className="flex w-5/6 items-center justify-start space-x-2">
+            <span className="w-20 text-sm">{name}</span>
             <div className="relative flex flex-col items-start rounded-md">
               <input
                 id="password"
@@ -131,7 +130,7 @@ const ContactRevised = ({
       </div>
       <textarea
         className={cls(
-          "-mb-1.5 h-[40rem] w-full resize-none appearance-none overflow-y-scroll whitespace-pre-wrap break-words rounded-xl border-2 border-gray-400 bg-gray-200 p-3 px-2 text-start placeholder-gray-400 placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+          "-mb-1.5 h-96 w-full resize-none appearance-none overflow-y-scroll whitespace-pre-wrap break-words rounded-xl border-2 border-gray-400 bg-gray-200 p-3 px-2 text-start placeholder-gray-400 placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500 lg:h-[40rem]"
         )}
         {...register("content", {
           required: "내용을 입력하세요.",
@@ -140,9 +139,8 @@ const ContactRevised = ({
         placeholder="내용을 입력하세요..."
       />
       <div className="flex items-center justify-end space-x-2 px-2 py-1">
-        <PostNavBtn text="확인" />
         <PostNavBtn onClick={onEdit} text="취소" />
-        <PostNavBtn onClick={onDelete} text="삭제" />
+        <PostNavBtn type={"submit"} text="확인" />
       </div>
       {errors && (
         <div className="fixed top-1 right-1 my-2 space-y-2">

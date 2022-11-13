@@ -6,7 +6,6 @@ interface InputProps {
   name: string;
   type: string;
   register: UseFormRegisterReturn;
-  error?: string;
   value?: string;
   isDisabled?: boolean;
   className?: string;
@@ -17,7 +16,6 @@ export default function FloatingInput({
   name,
   register,
   type,
-  error,
   value,
   isDisabled,
   className,
@@ -43,7 +41,6 @@ export default function FloatingInput({
         >
           {label}
         </label>
-        <div className="h-5 text-sm text-red-500">{error}</div>
       </div>
     </>
   );

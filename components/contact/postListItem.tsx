@@ -25,7 +25,7 @@ const PostListItem = ({
 }: PostListItemProps) => {
   return (
     <>
-      <div className="flex w-full items-center justify-start space-x-1 px-1 py-2 ">
+      <div className="flex w-full items-center justify-start space-x-1 px-1 py-2">
         <div className={cls("w-16")}>
           <div
             className={cls(`bg-zinc-300`, "h-12 w-12 rounded-full")}
@@ -45,7 +45,7 @@ const PostListItem = ({
             {title}
           </h3>
           <div className="flex items-center justify-start space-x-2">
-            <span className="text-sm">{name}</span>
+            <span className="w-20 text-sm">{name}</span>
             <RegDate
               className="rounded-md bg-orange-200 px-1 text-xs"
               regDate={created}
@@ -59,8 +59,8 @@ const PostListItem = ({
       <div
         className={cls(
           isModal
-            ? "h-[40rem] overflow-y-scroll break-words"
-            : "h-36 overflow-y-hidden truncate leading-7 line-clamp-5 lg:h-64 lg:line-clamp-[9] ",
+            ? "h-96 overflow-y-scroll break-words lg:h-[40rem]"
+            : "h-40 overflow-y-hidden truncate leading-7 line-clamp-5 lg:h-64 lg:line-clamp-[9] ",
           "w-full whitespace-pre-wrap rounded-xl bg-orange-200 p-3 px-2 text-start"
         )}
       >

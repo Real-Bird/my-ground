@@ -6,7 +6,6 @@ interface InputProps {
   name: string;
   type: string;
   register: UseFormRegisterReturn;
-  error?: string;
   value?: string;
   placeholder?: string;
   className?: string;
@@ -18,7 +17,6 @@ export default function BorderBottomInput({
   name,
   register,
   type,
-  error,
   value,
   placeholder,
   className,
@@ -48,7 +46,6 @@ export default function BorderBottomInput({
           placeholder={placeholder}
         />
       </div>
-      <div className="h-5 text-sm text-red-500">{error}</div>
     </div>
   );
 }
