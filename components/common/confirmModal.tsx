@@ -1,17 +1,20 @@
-import { useEffect } from "react";
+import { ConfirmForm } from "@components/contact/postViewer";
+import { ReactNode } from "react";
 
 interface ConfirmModalProps {
   message: string;
   type: string;
-  onConfirm: () => void;
+  kind?: "contact" | "blog" | "portfolio";
+  components?: ReactNode;
   onClose: () => void;
 }
 
 const ConfirmModal = ({
   message,
   type,
-  onConfirm,
   onClose,
+  kind,
+  components,
 }: ConfirmModalProps) => {
   return (
     <div
@@ -60,11 +63,11 @@ const ConfirmModal = ({
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
               {message}
             </h3>
+            {kind === "contact" && components}
             <button
               data-modal-toggle="popup-modal"
-              type="button"
+              type="submit"
               className="mr-2 inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800"
-              onClick={onConfirm}
             >
               {type}
             </button>

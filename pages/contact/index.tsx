@@ -50,7 +50,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
               style={{
                 animationDelay: `${0.2 * (idx % contactPosts?.posts.length)}s`,
               }}
-              className="flex h-80 w-full animate-fadein cursor-pointer flex-col items-start rounded-md border-2 shadow-lg lg:h-96 lg:animate-fadeside"
+              className="flex h-80 w-full animate-fadein cursor-pointer flex-col items-start rounded-md border-2 shadow-lg lg:h-[28rem] lg:animate-fadeside"
               onClick={() => onOpenModal(post.id)}
             >
               <PostListItem

@@ -60,7 +60,7 @@ const PostListItem = ({
         className={cls(
           isModal
             ? "h-96 overflow-y-scroll break-words lg:h-[40rem]"
-            : "h-40 overflow-y-hidden truncate leading-7 line-clamp-5 lg:h-64 lg:line-clamp-[9] ",
+            : "h-[9.5rem] overflow-y-hidden truncate leading-7 line-clamp-5 lg:h-[17rem] lg:line-clamp-[9] ",
           "w-full whitespace-pre-wrap rounded-xl bg-orange-200 p-3 px-2 text-start"
         )}
       >

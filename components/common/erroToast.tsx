@@ -1,5 +1,6 @@
 import { cls } from "@libs/client/utils";
 import { FieldError } from "react-hook-form";
+import { memo } from "react";
 
 interface ErrorToastProps {
   idx: number;
@@ -67,4 +68,4 @@ const ErrorToast = ({
   );
 };
 
-export default ErrorToast;
+export default memo(ErrorToast);

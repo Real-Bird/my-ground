@@ -1,11 +1,14 @@
 import ConfirmModal from "@components/common/confirmModal";
+import ErrorToast from "@components/common/erroToast";
+import FloatingInput from "@components/common/floatingInput";
 import ContactRevised from "@components/contact/contactRevised";
 import PostListItem from "@components/contact/postListItem";
 import PostNavBtn from "@components/postNavBtn";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { MyGroundPost } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { FieldError, useForm } from "react-hook-form";
 import useSWR from "swr";
 
 interface PostListItemProps {
@@ -14,17 +17,34 @@ interface PostListItemProps {
   isOpen: boolean;
 }
 
+interface PostDeleteResponse {
+  ok: boolean;
+}
+
 export interface ModalPostResponse {
   ok: boolean;
   post: MyGroundPost;
 }
 
+export interface ConfirmForm {
+  password: string;
+}
+
 const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
+  const [openErrorToast, setOpenErrorToast] = useState(false);
   const { data: postData, mutate: postMutate } = useSWR<ModalPostResponse>(
     `/api/contact/${id}`
   );
   const [deletePost, { data: deletePostData, loading: deleteLoading }] =
     useMutation(`/api/contact/delete?id=${id}`);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    reset,
+    setError,
+  } = useForm<ConfirmForm>();
   const [isEdit, setIsEdit] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const onEdit = () => setIsEdit((prev) => !prev);
@@ -32,12 +52,48 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
     if (deleteLoading) return;
     setConfirmModal(true);
   };
-  const onDeleteConfirm = () => {
-    deletePost(null);
-    setConfirmModal(false);
-    onCloseModal();
+  const onDeleteConfirm = ({ password }: ConfirmForm) => {
+    if (!password) return;
+    if (deleteLoading) return;
+    deletePost({ password });
   };
-  const onConfirmClose = () => setConfirmModal(false);
+  const onConfirmClose = () => {
+    reset();
+    setConfirmModal(false);
+  };
+  const onToastToggle = (error: FieldError) => {
+    if (!error) return;
+    const {
+      ref: { name },
+    } = error;
+    if (name === "password") {
+      clearErrors("password");
+    }
+  };
+  useEffect(() => {
+    let clearErrorsTimer_1: NodeJS.Timeout;
+    let clearErrorsTimer_2: NodeJS.Timeout;
+    if (errors) {
+      setOpenErrorToast(true);
+      if (openErrorToast) {
+        clearErrorsTimer_1 = setTimeout(() => setOpenErrorToast(false), 5000);
+        clearErrorsTimer_2 = setTimeout(() => clearErrors(), 6000);
+      }
+    }
+    return () => {
+      clearTimeout(clearErrorsTimer_1);
+      clearTimeout(clearErrorsTimer_2);
+    };
+  }, [errors.password]);
+  useEffect(() => {
+    if (deletePostData && deletePostData.ok) {
+      setConfirmModal(false);
+      onCloseModal();
+    }
+    if (deletePostData && !deletePostData.ok) {
+      setError("password", { message: deletePostData.error });
+    }
+  }, [deletePostData]);
   return (
     <div
       className={cls(
@@ -95,12 +151,40 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
           </>
         )}
         {confirmModal && (
-          <ConfirmModal
-            message="정말 삭제할까요?"
-            onConfirm={onDeleteConfirm}
-            onClose={onConfirmClose}
-            type="삭제"
-          />
+          <>
+            <form onSubmit={handleSubmit(onDeleteConfirm)}>
+              <ConfirmModal
+                message="정말 삭제할까요?"
+                onClose={onConfirmClose}
+                type="삭제"
+                kind="contact"
+                components={
+                  <FloatingInput
+                    register={register("password", {
+                      required: "비밀번호를 입력하세요.",
+                    })}
+                    label="Password"
+                    name="password"
+                    type="password"
+                  />
+                }
+              />
+            </form>
+            {errors && (
+              <div className="fixed top-1 right-1 z-50 my-2 space-y-2 ">
+                {[...Object.values(errors)].map((error, idx) => (
+                  <ErrorToast
+                    key={Date.now() + idx}
+                    idx={idx}
+                    errorsArr={[...Object.values(errors)]}
+                    onToastToggle={() => onToastToggle(error)}
+                    openErrorToast={openErrorToast}
+                    message={error.message}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
