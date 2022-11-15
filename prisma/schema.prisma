@@ -30,7 +30,6 @@ model User {
   receivedReviews Review[]     @relation(name: "receivedReviews")
   sale            Sale[]
   purchase        Purchase[]
-  record          Record[]
   stream          Stream[]
   message         Message[]
   sellerchat      SellerChat[]
@@ -61,7 +60,6 @@ model Products {
   fav            Fav[]
   sale           Sale[]
   purchase       Purchase[]
-  record         Record[]
   productReviews Review[]   @relation(name: "productReviews")
 
   @@index([userId])
@@ -199,17 +197,10 @@ model Message {
 }
 
 model Record {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
-  kind      Kind
-  created   DateTime @default(now())
-  updated   DateTime @updatedAt
-
-  @@index([userId])
-  @@index([productId])
+  id         Int      @id @default(autoincrement())
+  visitCount Int?
+  created    DateTime @default(now())
+  updated    DateTime @updatedAt
 }
 
 enum Kind {
