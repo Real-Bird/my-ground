@@ -150,32 +150,32 @@ const Home: NextPage = () => {
               <div className="flex flex-row flex-wrap justify-start py-1">
                 <img
                   src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="javascript"
                 />
                 <img
                   src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="javascript"
                 />
                 <img
                   src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="html5"
                 />
                 <img
                   src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="css3"
                 />
                 <img
                   src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="react"
                 />
                 <img
                   src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat&logo=Tailwind%20CSS&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="tailwind-css"
                 />
               </div>
@@ -203,23 +203,23 @@ const Home: NextPage = () => {
               <div className="flex flex-row flex-wrap justify-start py-1">
                 <img
                   src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                   alt="nextjs"
                 />
                 <img
                   src="https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=Prisma&logoColor=white"
                   alt="Prisma"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                 />
                 <img
                   src="https://img.shields.io/badge/PlanetScale-000000?style=flat&logo=PlanetScale&logoColor=white"
                   alt="PlanetScale"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                 />
                 <img
                   src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"
                   alt="Python"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                 />
               </div>
             </div>
@@ -247,12 +247,12 @@ const Home: NextPage = () => {
                 <img
                   src="https://img.shields.io/badge/Django-092E20?style=flat&logo=Django&logoColor=white"
                   alt="Django"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                 />
                 <img
                   src="https://img.shields.io/badge/FireBase-FFCA28?style=flat&logo=FireBase&logoColor=white"
                   alt="FireBase"
-                  className="px-1 pt-1"
+                  className="min-h-[28px] min-w-[64px] p-1"
                 />
               </div>
             </div>
@@ -330,17 +330,17 @@ const Home: NextPage = () => {
               <div className="flex flex-col space-y-2">
                 <div className="flex flex-row space-x-2">
                   <div className="w-32 rounded-md bg-gray-200 text-center text-sm text-red-500">
-                    2011.03 ~ 2014.02
-                  </div>
-                  <div className="text-sm">명지전문대학 문예창작과 졸업</div>
-                </div>
-                <div className="flex flex-row space-x-2">
-                  <div className="w-32 rounded-md bg-gray-200 text-center text-sm text-red-500">
                     2021.04 ~ 2021.10
                   </div>
                   <div className="text-sm">
                     혁신성장 청년인재 양성교육 빅데이터 과정 수료
                   </div>
+                </div>
+                <div className="flex flex-row space-x-2">
+                  <div className="w-32 rounded-md bg-gray-200 text-center text-sm text-red-500">
+                    2011.03 ~ 2014.02
+                  </div>
+                  <div className="text-sm">명지전문대학 문예창작과 졸업</div>
                 </div>
               </div>
             </div>

@@ -22,7 +22,6 @@ model User {
   updated         DateTime     @updatedAt
   tokens          Token[]
   products        Products[]
-  fav             Fav[]
   posts           Post[]
   answers         Answer[]
   wonderings      Wondering[]
@@ -57,7 +56,6 @@ model Products {
   isSell         Boolean    @default(false)
   created        DateTime   @default(now())
   updated        DateTime   @updatedAt
-  fav            Fav[]
   sale           Sale[]
   purchase       Purchase[]
   productReviews Review[]   @relation(name: "productReviews")
@@ -151,16 +149,11 @@ model Purchase {
 }
 
 model Fav {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
-  created   DateTime @default(now())
-  updated   DateTime @updatedAt
-
-  @@index([userId])
-  @@index([productId])
+  id      Int          @id @default(autoincrement())
+  post    MyGroundPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId  Int
+  created DateTime     @default(now())
+  updated DateTime     @updatedAt
 }
 
 model Stream {
@@ -246,6 +239,7 @@ model MyGroundPost {
   token    String?
   created  DateTime @default(now())
   updated  DateTime @updatedAt
+  fav      Fav[]
 }
 
 model MyBlog {

@@ -7,9 +7,6 @@ import LoadingSpinner from "@components/common/loadingSpinner";
 import { Analytics } from "@vercel/analytics/react";
 import useAdmin from "@libs/client/useAdmin";
 
-const PORTFOLIO = "/portfolio";
-const BLOG = "/blog";
-
 function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
   const { ok: authOk } = useAdmin();
