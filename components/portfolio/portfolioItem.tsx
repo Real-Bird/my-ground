@@ -2,12 +2,10 @@ import PostNavBtn from "@components/postNavBtn";
 import { BadgeWithPf } from "@containers/portfolioItemContainer";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import "@uiw/react-markdown-preview/markdown.css";
 
 const MarkdownViewer: any = dynamic(
-  () =>
-    import("@uiw/react-md-editor").then((mod) => {
-      return mod.default.Markdown;
-    }),
+  () => import("@uiw/react-markdown-preview"),
   {
     ssr: false,
   }

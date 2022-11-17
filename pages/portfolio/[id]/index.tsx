@@ -1,6 +1,5 @@
 import Layout from "@components/common/layout";
 import type { NextPage } from "next";
-import "@uiw/react-markdown-preview/markdown.css";
 import PortfolioItemContainer from "@containers/portfolioItemContainer";
 
 const PortfolioDetail: NextPage = () => {
