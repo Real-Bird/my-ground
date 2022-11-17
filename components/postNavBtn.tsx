@@ -11,14 +11,14 @@ export default function PostNavBtn({ link, text, ...rest }: PostNavBtnProps) {
     <>
       {link ? (
         <Link href={link}>
-          <a className="hidden rounded-md border border-transparent bg-amber-500 px-2 py-1 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 lg:block">
+          <a className="hidden h-9 rounded-md border border-transparent bg-amber-500 px-2 py-1 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 lg:block">
             {text}
           </a>
         </Link>
       ) : (
         <button
           {...rest}
-          className="rounded-md border border-transparent bg-amber-500 px-2 py-1 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 lg:block"
+          className="h-9 rounded-md border border-transparent bg-amber-500 px-2 py-1 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 lg:block"
         >
           {text}
         </button>
