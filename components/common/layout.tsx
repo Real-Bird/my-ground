@@ -47,16 +47,14 @@ export default function Layout({
         onToggleDropdown={toggleDropdown}
       />
       {isDropdown && (
-        <div className="absolute right-0 top-10 mt-2 w-48 origin-top-right rounded-md shadow-lg sm:right-[8%] md:right-[15%] lg:hidden">
-          <ul className="rounded-md bg-white py-1 ring-1 ring-black ring-opacity-5">
-            <Menu path="/auth" menu={isLogged ? "로그아웃" : "로그인"} />
-            <Menu path="/notice" menu="공지사항" />
-          </ul>
-        </div>
+        <ul className="absolute right-0 top-10 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 sm:right-[8%] md:right-[15%] lg:hidden">
+          <Menu path="/auth" menu={isLogged ? "로그아웃" : "로그인"} />
+          <Menu path="/notice" menu="공지사항" />
+        </ul>
       )}
       <main
         id="child"
-        className="mt-12 mb-16 flex h-[86vh] w-full max-w-xl justify-center overflow-y-scroll pb-8 pt-3 lg:mt-12 lg:h-full lg:max-w-full lg:pb-5 "
+        className="mb-16 mt-12 flex h-[86vh] w-full max-w-xl justify-center overflow-y-scroll pb-8 pt-3 lg:mt-12 lg:h-full lg:max-w-full lg:pb-5 "
       >
         {children}
       </main>

@@ -1,3 +1,4 @@
+import timeAgo from "@libs/client/timeAgo";
 import { useEffect, useState } from "react";
 
 interface regDateProps {
@@ -21,32 +22,14 @@ export default function RegDate({
   sec,
   ...rest
 }: regDateProps) {
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<string>();
   useEffect(() => {
     if (regDate && window) {
-      const date = new Date(regDate);
+      const date = timeAgo(regDate);
+      console.log(date);
       setDate(date);
     }
   }, [regDate]);
-  return (
-    <>
-      {date ? (
-        y && m && d ? (
-          <span {...rest}>{`${date?.getFullYear()}-${(
-            "0" +
-            (date?.getMonth() + 1)
-          ).slice(-2)}-${("0" + date?.getDate()).slice(-2)}`}</span>
-        ) : (
-          <span {...rest}>{`${date?.getFullYear()}-${(
-            "0" +
-            (date?.getMonth() + 1)
-          ).slice(-2)}-${("0" + date?.getDate()).slice(
-            -2
-          )} ${date?.getHours()}:${date?.getMinutes()}:${date?.getSeconds()}`}</span>
-        )
-      ) : (
-        "Loading..."
-      )}
-    </>
-  );
+
+  return <>{date ? <span {...rest}>{date}</span> : "Loading..."}</>;
 }

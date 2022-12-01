@@ -38,7 +38,7 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   }, []);
   return (
     <Layout title="POST" backUrl="/blog">
-      <div className="w-4/5 space-y-2 px-3 lg:py-4">
+      <div className="w-4/5 max-w-6xl space-y-2 px-3 lg:py-4">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="w-full border-b-2 border-dotted py-5 text-center text-5xl font-bold">
             {post?.title}

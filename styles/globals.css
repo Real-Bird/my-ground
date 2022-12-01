@@ -45,3 +45,10 @@ a {
 .letter-spacing-1\.5 {
   letter-spacing: 1.5px;
 }
+
+.wmde-markdown img {
+  width: 96%;
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 10px;
+}

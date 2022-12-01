@@ -19,10 +19,10 @@ const Introduce = ({ ok }: IntroduceProps) => {
             <div>프론트엔드 개발자를 꿈꾸는 김진영입니다.</div>
           </h2>
           <div className="flex flex-row">
-            <div className="flex h-fit w-60 flex-col items-center space-y-3">
+            <div className="flex h-fit w-48 flex-col items-center space-y-3">
               <img
                 src="https://raw.githubusercontent.com/Real-Bird/pb/master/%EC%A6%9D%EB%AA%85.jpg"
-                className="w-54 h-48 bg-slate-500"
+                className="h-40 w-32 bg-slate-500"
                 alt="portrait"
               />
               <Link href="/resume">
@@ -84,44 +84,39 @@ const Introduce = ({ ok }: IntroduceProps) => {
                 </Link>
               </div>
             </div>
-            <div className="space-y-1 px-2">
-              <p className="pb-1">
-                프론트엔드 개발자가 되기 위해{" "}
-                <span className="font-bold">3가지 역량</span>을 갖추었습니다.
-              </p>
-              <p className="pb-1">
-                첫째, ICT 교육에서{" "}
-                <span className="font-bold">프로그래밍 로직</span>을 익혔고,
-                수료 후{" "}
-                <span className="font-bold">정보처리산업기사 자격증</span>을
-                취득했습니다.
-              </p>
-              <p className="pb-1">
-                둘째, 웹 프론트엔드의 근간이 되는{" "}
-                <span className="font-bold">자바스크립트 지식을 탄탄</span>
-                하게 다졌습니다. 이를 바탕으로{" "}
-                <span className="font-bold">개인 블로그</span>와{" "}
-                <span className="font-bold">여러 프로젝트를 진행 및 배포</span>
-                했습니다.
-              </p>
-              <p className="pb-1">
-                마지막으로 <span className="font-bold">탁월한 문제해결력</span>
-                을 갖추었습니다. 팀 프로젝트에서 기능이 제대로 동작하지 않는
-                문제가 발생했을 때, <span className="font-bold">공식문서</span>
-                를 참고해 정상 동작하도록 구현했습니다.
-              </p>
-              <p className="pb-1">
-                이러한 역량을 바탕으로{" "}
-                <span className="rounded-sm bg-amber-500 px-1.5 font-extrabold italic underline">
-                  유지보수에 최적화된 코드를 작성
+            <ul className="space-y-1 px-1">
+              <li className="pb-1">
+                새로운 기술과 지식을 익히고 적용하기를 즐깁니다.
+              </li>
+              <li className="pb-1">
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  TypeScript
                 </span>
-                하고,{" "}
-                <span className="rounded-sm bg-amber-500 px-1.5 font-extrabold italic underline">
-                  사용자 친화적인 프로그램
+                와{" "}
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  React
+                </span>{" "}
+                위주의 개발을 선호합니다.
+              </li>
+              <li className="pb-1">
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  정보처리산업기사
+                </span>{" "}
+                자격증을 취득하여 부족한 CS 지식을 보충했습니다.
+              </li>
+              <li className="pb-1">
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  탁월한 문제해결력
                 </span>
-                을 만드는 개발자가 되겠습니다.
-              </p>
-            </div>
+                으로 문제를 포기하지 않고 끝까지 해결합니다.
+              </li>
+              <li className="pb-1">
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  향상심
+                </span>
+                으로 꾸준히 발전 하는 개발자가 되겠습니다.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
