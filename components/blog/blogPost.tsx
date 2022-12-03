@@ -7,11 +7,10 @@ interface BlogPostProps {
   post: MyBlog;
   category: string;
   idx: number;
-  length: number;
 }
 
-const BlogPost = ({ post, category, idx, length }: BlogPostProps) => {
-  const ANIMATION_DELAY = `${0.2 * (idx % length)}s`;
+const BlogPost = ({ post, category, idx }: BlogPostProps) => {
+  const ANIMATION_DELAY = `${0.2 * (idx % 10)}s`;
   return (
     <li
       className={cls(

@@ -32,6 +32,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
     }, 1000);
     setIsOpen(false);
   };
+
   return (
     <Layout title="CONTACT" isFooter>
       <section className="flex w-full flex-col space-y-3 px-2 text-center lg:my-5 lg:w-4/5 ">

@@ -55,6 +55,10 @@ async function handler(
     }
   }
   if (req.method === "GET") {
+    const limit = 10;
+    const {
+      query: { page },
+    } = req;
     const posts = await client.myBlog.findMany({
       include: {
         category: true,
@@ -62,10 +66,23 @@ async function handler(
       orderBy: {
         created: "desc",
       },
+      take: limit,
+      skip: (+page - 1) * limit,
+    });
+    const nextPosts = await client.myBlog.findMany({
+      include: {
+        category: true,
+      },
+      orderBy: {
+        created: "desc",
+      },
+      take: limit,
+      skip: (+page - 1 + 1) * limit,
     });
     res.json({
       ok: true,
       posts,
+      nextPosts,
     });
   }
 }

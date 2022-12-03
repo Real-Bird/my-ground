@@ -3,12 +3,12 @@ import Layout from "@components/common/layout";
 import useAdmin from "@libs/client/useAdmin";
 import { MyBlog } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
-import useSWR, { SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
-import { Skeleton } from "@mui/material";
 import Button from "@components/common/buttonComponent";
 import BlogPost from "@components/blog/blogPost";
+import useSWRInfinite from "swr/infinite";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -19,14 +19,33 @@ interface CategoryWithBlog extends MyBlog {
 interface BlogPropsWithSSR {
   ok: boolean;
   posts: CategoryWithBlog[];
+  nextPosts: CategoryWithBlog[];
+  page: number;
 }
 
-const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
+const getKey = (pageIndex: number, previousPageData: BlogPropsWithSSR) => {
+  if (pageIndex === 0) return `/api/blog?&page=1`;
+  if (pageIndex + 1 > +previousPageData.page) return null;
+  return `/api/blog?&page=${pageIndex + 1}`;
+};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const Blog: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
   const { admin, ok } = useAdmin();
-  const { data: blogData } = useSWR<BlogPropsWithSSR>("/api/blog");
+  const { data, setSize, size } = useSWRInfinite<BlogPropsWithSSR>(
+    getKey,
+    fetcher
+  );
+
+  const products = data ? data.map((item) => item.posts).flat() : [];
+  const nextData = data ? data.map((item) => item.nextPosts) : [];
+
+  const onNextBtn = () => {
+    setSize((prev) => prev + 1);
+  };
   return (
     <Layout title="BLOG" isFooter>
-      <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
+      <section className="mx-3 flex h-fit w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
             My Blog List
@@ -40,16 +59,22 @@ const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
           )}
         </div>
         <ul className="space-y-2">
-          {blogData?.posts.map((post, idx) => (
+          {products?.map((post, idx) => (
             <BlogPost
               key={post.id}
               post={post}
               category={post.category.category}
               idx={idx}
-              length={blogData?.posts.length}
             />
           ))}
         </ul>
+        {nextData[nextData.length - 1]?.length > 0 && (
+          <Button
+            className="animation-fadein"
+            onClick={onNextBtn}
+            text="더 보기"
+          />
+        )}
       </section>
       {ok && (
         <FloatingButton href="/blog/upload" type="Portfolio Upload">
@@ -72,12 +97,12 @@ const Blog: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
   );
 };
 
-const Page: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
+const Page: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
   return (
     <SWRConfig
       value={{
         fallback: {
-          "/api/blog": {
+          "/api/blog?page=1": {
             ok: true,
             posts,
           },
@@ -90,6 +115,9 @@ const Page: NextPage<{ posts: CategoryWithBlog[] }> = ({ posts }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const limit = 10;
+  const page = 1;
+
   const posts = await client.myBlog.findMany({
     include: {
       category: true,
@@ -97,6 +125,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     orderBy: {
       created: "desc",
     },
+    take: limit,
+    skip: (page - 1) * limit,
   });
   return {
     props: {

@@ -26,7 +26,6 @@ export default function RegDate({
   useEffect(() => {
     if (regDate && window) {
       const date = timeAgo(regDate);
-      console.log(date);
       setDate(date);
     }
   }, [regDate]);
