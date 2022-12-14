@@ -1,14 +1,8 @@
 import FloatingInput from "@components/common/floatingInput";
 import Input from "@components/common/input";
-import { StackBadge } from "pages/test-form";
-import {
-  type KeyboardEventHandler,
-  useState,
-  MouseEventHandler,
-  DetailedHTMLProps,
-  ImgHTMLAttributes,
-  MouseEvent,
-} from "react";
+import { StackBadge } from "pages/portfolio/upload";
+
+import { type KeyboardEventHandler, useState, MouseEventHandler } from "react";
 import { useForm } from "react-hook-form";
 
 interface OptionsData {
