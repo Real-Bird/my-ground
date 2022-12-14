@@ -16,7 +16,7 @@ export default function TextArea({
   ...rest
 }: TextAreaProps) {
   return (
-    <div>
+    <>
       {label ? (
         <label
           htmlFor={name}
@@ -33,6 +33,6 @@ export default function TextArea({
         {...rest}
         placeholder={placeholder}
       />
-    </div>
+    </>
   );
 }

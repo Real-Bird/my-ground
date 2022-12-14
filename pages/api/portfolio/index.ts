@@ -49,7 +49,7 @@ async function handler(
         deployIcon,
       },
     });
-    stacks.map(async (stack: string) => {
+    stacks.map(async (stack: { stack: string; color: string }) => {
       await client.stackBadge.create({
         data: {
           pf: {
@@ -57,13 +57,14 @@ async function handler(
               id: createPf.id,
             },
           },
-          stackName: stack[0],
-          stackColor: stack[1],
+          stackName: stack.stack,
+          stackColor: stack.color,
         },
       });
     });
     res.json({
       ok: true,
+      newPFId: createPf.id,
     });
   }
 }

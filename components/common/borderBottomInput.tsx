@@ -40,7 +40,7 @@ export default function BorderBottomInput({
           className={cls(
             className,
             isTitle && "text-xl lg:text-3xl",
-            "block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2 px-0 text-sm  text-gray-900 placeholder-gray-400 placeholder:text-xl placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-0"
+            "block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2 px-2 text-sm  text-gray-900 placeholder-gray-400 placeholder:text-xl placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-0"
           )}
           value={value}
           placeholder={placeholder}

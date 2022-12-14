@@ -83,9 +83,9 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
               </a>
             </Link>
           </div>
-          <div className="flex w-1/3 flex-col items-center md:w-[20%]">
+          <div className="flex w-1/3 flex-col items-center md:w-1/5">
             <div className="font-semibold">Develop Date</div>
-            <div className="w-28 text-center">
+            <div className="w-36 text-center">
               <div className="text-sm">
                 <span className="letter-spacing-1.5">Start</span>:{" "}
                 {portfolioData?.startDate}
