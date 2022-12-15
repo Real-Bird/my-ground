@@ -3,6 +3,7 @@
 개인 포트폴리오/블로그 사이트입니다.
 
 개발 기간 : 2022.07 ~ 
+지속해서 개선 중입니다.
 
 [RB's Ground](https://real-bird.vercel.app)
 
@@ -30,14 +31,21 @@ PC 버전과 Mobile 버전으로 화면을 구성했습니다.
 
 ![02-portfolio](https://user-images.githubusercontent.com/83404864/205244617-811b4da0-3bbc-4c9f-b006-1853ea54c8fd.jpg)
 
+**초기 UI**
 ![03-portfolio-upload](https://user-images.githubusercontent.com/83404864/205244882-226e3fc0-6bd1-4cad-97e7-98ed030ac215.jpg)
 
 ![03-portfolio-revised](https://user-images.githubusercontent.com/83404864/205244991-1a6aa442-04f1-47f2-bb9f-05fc53564eaf.jpg)
+
+**변경 UI**
+![03-portfolio-upload](https://user-images.githubusercontent.com/83404864/207894112-bc41cda9-54c1-4062-ba4c-6b4e3a3bd5b5.jpg)
+
+![03-portfolio-revised](https://user-images.githubusercontent.com/83404864/207894132-1bf76eea-7faf-4ee9-9df7-c0e44442bd7c.jpg)
 
 </details>
 
 - 포트폴리오를 기록한 화면입니다.
 - 데이터 양이 많지 않고, `SEO`를 고려할 필요가 없다고 판단하여 `CSR`로 렌더링했습니다.
+- 작성 페이지는 UI를 한 화면에서 확인할 수 있도록 멀티스텝 폼으로 개선했습니다.
 
 ### 1-3.Blog
 
