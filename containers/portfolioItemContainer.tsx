@@ -3,7 +3,6 @@ import PortfolioLoading from "@components/portfolio/portfoiloLoading";
 import PortfolioItem from "@components/portfolio/portfolioItem";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio, StackBadge } from "@prisma/client";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";

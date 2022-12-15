@@ -41,8 +41,9 @@ async function handler(
         deploy,
         deployIcon,
         title,
-        stacks,
+        stackBadge,
         content,
+        deleteBadge,
       },
       query: { id },
     } = req;
@@ -61,26 +62,42 @@ async function handler(
         deployIcon,
       },
     });
-    stacks.map(async (stack: string) => {
-      const existStack = await client.stackBadge.findFirst({
-        where: {
-          AND: [{ pfId: +id }, { stackName: stack[0] }],
-        },
+    if (deleteBadge) {
+      deleteBadge.map(async ({ id }: { id: number }) => {
+        await client.stackBadge.delete({
+          where: { id: +id },
+        });
       });
-      if (!existStack) {
-        await client.stackBadge.create({
-          data: {
-            pf: {
-              connect: {
-                id: +id,
-              },
-            },
-            stackName: stack[0],
-            stackColor: stack[1],
+    }
+
+    stackBadge.map(
+      async ({
+        stackName,
+        stackColor,
+      }: {
+        stackName: string;
+        stackColor: string;
+      }) => {
+        const existStack = await client.stackBadge.findFirst({
+          where: {
+            AND: [{ pfId: +id }, { stackName: stackName }],
           },
         });
+        if (!existStack) {
+          await client.stackBadge.create({
+            data: {
+              pf: {
+                connect: {
+                  id: +id,
+                },
+              },
+              stackName,
+              stackColor,
+            },
+          });
+        }
       }
-    });
+    );
     res.json({
       ok: true,
       updatePf,

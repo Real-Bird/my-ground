@@ -1,8 +1,12 @@
 import FloatingInput from "@components/common/floatingInput";
 import Input from "@components/common/input";
-import { StackBadge } from "pages/portfolio/upload";
-
-import { type KeyboardEventHandler, useState, MouseEventHandler } from "react";
+import { StackBadge } from "@prisma/client";
+import {
+  type KeyboardEventHandler,
+  useState,
+  MouseEventHandler,
+  useEffect,
+} from "react";
 import { useForm } from "react-hook-form";
 
 interface OptionsData {
@@ -12,7 +16,8 @@ interface OptionsData {
   github: string;
   deploy?: string;
   deployIcon?: string;
-  stacks: StackBadge[];
+  stackBadge: Pick<StackBadge, "stackName" | "stackColor">[];
+  deleteBadge?: Pick<StackBadge, "stackName" | "stackColor">[];
 }
 
 interface OptionsFormProps extends OptionsData {
@@ -24,25 +29,31 @@ const OptionsForm = ({
   deploy,
   endDate,
   github,
-  stacks,
+  stackBadge,
   startDate,
   updateFields,
   deployIcon,
+  deleteBadge = [],
 }: OptionsFormProps) => {
   const { register, setValue, getValues } = useForm<OptionsData>();
-  const [stackBadges, setStackBadges] = useState<StackBadge[]>([]);
+  const [stackBadges, setStackBadges] = useState<
+    Pick<StackBadge, "stackName" | "stackColor">[]
+  >([]);
   const onPushStacks: KeyboardEventHandler<HTMLInputElement> = (stacksForm) => {
     if (stacksForm.key !== "Enter" || !stacksForm.target.value) return;
     const [stack, color] = stacksForm.target.value.split("/");
-    if (stackBadges.find((e) => e.stack === stack)) {
-      setValue("stacks", []);
+    if (stackBadges.find((e) => e.stackName === stack)) {
+      setValue("stackBadge", []);
       return;
     }
-    setStackBadges((prev) => {
-      return [...prev, { stack, color }];
+    setStackBadges((prev) => [
+      ...prev,
+      { stackName: stack, stackColor: color },
+    ]);
+    updateFields({
+      stackBadge: [...stackBadge, { stackName: stack, stackColor: color }],
     });
-    updateFields({ stacks: [...stacks, { stack, color }] });
-    setValue("stacks", []);
+    setValue("stackBadge", []);
   };
   const onStackUpdate: KeyboardEventHandler<HTMLInputElement> = (
     stacksForm
@@ -51,20 +62,37 @@ const OptionsForm = ({
   };
   const onDeleteStack: MouseEventHandler<HTMLImageElement> = (e) => {
     const { id } = e.target as HTMLImageElement;
-    setStackBadges((prev) => prev.filter((i) => i.stack !== id));
-    updateFields({ stacks: stacks.filter((i) => i.stack !== id) });
+    setStackBadges((prev) => prev.filter((i) => i.stackName !== id));
+    updateFields({
+      stackBadge: stackBadges.filter((i) => i.stackName !== id),
+      deleteBadge: [
+        ...deleteBadge,
+        ...stackBadges.filter((i) => i.stackName === id),
+      ],
+    });
   };
+  const localeFormatter = new Intl.DateTimeFormat("fr-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const maxDateFormat = localeFormatter.format(new Date().getTime());
+  useEffect(() => {
+    if (stackBadge) {
+      setStackBadges(stackBadge);
+    }
+  }, [stackBadge, setValue]);
   return (
     <div className="flex h-full w-full flex-col items-center justify-center space-y-3 px-3 md:grid md:grid-cols-2 md:gap-5">
-      <div className="flex w-full flex-col justify-center md:space-y-6 lg:h-4/5">
-        <div className="h-64 w-full overflow-clip bg-teal-200">
-          {getValues("thumbnail") && (
+      <div className="flex w-full flex-col justify-center space-y-6 lg:h-4/5">
+        <div className="h-58 w-full overflow-clip bg-teal-200 md:h-64">
+          {thumbnail || getValues("thumbnail") ? (
             <img
-              src={getValues("thumbnail")}
+              src={thumbnail ? thumbnail : getValues("thumbnail")}
               alt="thumbnail"
               className="my-0 mx-auto"
             />
-          )}
+          ) : null}
         </div>
         <FloatingInput
           register={register("thumbnail", {
@@ -87,7 +115,7 @@ const OptionsForm = ({
           type="text"
         />
       </div>
-      <div className="space-y-4">
+      <div className="w-full space-y-4">
         <div className="grid grid-cols-2 gap-2">
           <Input
             register={register("startDate", {
@@ -98,6 +126,7 @@ const OptionsForm = ({
             label="Development Start"
             name="startDate"
             type="date"
+            max={maxDateFormat}
           />
           <Input
             register={register("endDate", {
@@ -108,6 +137,7 @@ const OptionsForm = ({
             label="Development End"
             name="endDate"
             type="date"
+            max={maxDateFormat}
           />
         </div>
         <Input
@@ -138,7 +168,7 @@ const OptionsForm = ({
             </label>
             <input
               className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
-              {...register("stacks", {
+              {...register("stackBadge", {
                 required: true,
               })}
               id="stacks"
@@ -152,9 +182,9 @@ const OptionsForm = ({
                 className="mr-1 py-1"
                 key={i}
                 onClick={onDeleteStack}
-                src={`https://img.shields.io/badge/${stack.stack}-${stack.color}?style=flat&logo=${stack.stack}&logoColor=white`}
-                alt={stack.stack}
-                id={stack.stack}
+                src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
+                alt={stack.stackName}
+                id={stack.stackName}
               />
             ))}
           </div>

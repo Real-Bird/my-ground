@@ -3,6 +3,7 @@ import { UploadFormResponse } from "@components/contact/contactUpload";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import "@uiw/react-md-editor/markdown-editor.css";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -18,14 +19,19 @@ interface ContentFormProps extends ContentData {
 }
 
 const ContentForm = ({ content, title, updateFields }: ContentFormProps) => {
-  const { register } = useForm<UploadFormResponse>({ mode: "onChange" });
+  const { register, setValue } = useForm<UploadFormResponse>({
+    mode: "onChange",
+  });
   const [height, setHeight] = useState(0);
   const mdeWrapper = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (mdeWrapper) {
       setHeight(mdeWrapper.current.clientHeight);
     }
-  }, []);
+    if (title) {
+      setValue("title", title);
+    }
+  }, [title, setValue]);
   return (
     <>
       <BorderBottomInput

@@ -30,7 +30,7 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
             <PostNavBtn link="/portfolio" text="목록" />
             {ok && (
               <PostNavBtn
-                link={`/portfolio/${portfolioData.id}/revised`}
+                link={`/portfolio/${portfolioData?.id}/revised`}
                 text="수정"
               />
             )}

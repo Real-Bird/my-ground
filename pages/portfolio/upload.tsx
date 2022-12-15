@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import useMutation from "@libs/client/useMutation";
@@ -11,7 +10,10 @@ import ContentForm from "@components/form/contentForm";
 import OptionsForm from "@components/form/optionsForm";
 import { useMultistepForm } from "@libs/client/useMultisteopForm";
 import { cls } from "@libs/client/utils";
+import FormWrapper from "@components/form/formWrapper";
 import Head from "next/head";
+import FormButton from "@components/common/formButton";
+import { StackBadge } from "@prisma/client";
 
 const MarkdownViewer: any = dynamic(
   () => import("@uiw/react-markdown-preview"),
@@ -20,12 +22,12 @@ const MarkdownViewer: any = dynamic(
   }
 );
 
-export type StackBadge = {
-  stack: string;
-  color: string;
-};
+// export type StackBadge = {
+//   stack: string;
+//   color: string;
+// };
 
-interface UploadFormResponse {
+export interface UploadFormResponse {
   thumbnail: string;
   title: string;
   startDate: string;
@@ -34,8 +36,7 @@ interface UploadFormResponse {
   deploy: string;
   content: string;
   deployIcon?: string;
-  stacks: StackBadge[];
-  confirm: boolean;
+  stackBadge: Pick<StackBadge, "stackName" | "stackColor">[];
 }
 
 interface UploadMutateResponse {
@@ -52,8 +53,7 @@ const INITIAL_DATA: UploadFormResponse = {
   deploy: "",
   content: "",
   deployIcon: "",
-  stacks: [],
-  confirm: false,
+  stackBadge: [],
 };
 
 const Upload: NextPage = () => {
@@ -64,7 +64,6 @@ const Upload: NextPage = () => {
       return { ...prev, ...fields };
     });
   }
-  const formRef = useRef<HTMLFormElement>();
   const router = useRouter();
   const [upload, { data: mutationData, loading }] =
     useMutation<UploadMutateResponse>(`/api/portfolio`);
@@ -77,12 +76,15 @@ const Upload: NextPage = () => {
   ]);
   const onValid = (validForm: UploadFormResponse) => {
     if (loading) return;
-    if (!isLastStep) return next();
+    if (!isLastStep) {
+      (document.activeElement as HTMLElement).blur();
+      return next();
+    }
     validForm = data;
     upload({ ...validForm });
   };
   const checkKeyDown = (e: KeyboardEvent) => {
-    if (e.code === "Enter") e.preventDefault();
+    if (e.code === "Enter" && isLastStep) e.preventDefault();
   };
   const onBackClick = () => {
     if (isLastStep) return back();
@@ -98,35 +100,26 @@ const Upload: NextPage = () => {
       <Head>
         <title>{`Work || RB's Ground`}</title>
       </Head>
-      <form
-        className={cls(
-          isLastStep ? "md:max-w-6xl" : "flex flex-col md:grid md:grid-cols-2",
-          "h-screen w-full"
-        )}
-        onSubmit={handleSubmit(onValid)}
-        onKeyDown={(e) => checkKeyDown(e)}
-        ref={formRef}
+      <FormWrapper
+        handleCheckKeyDown={checkKeyDown}
+        onSubmit={handleSubmit}
+        onValid={onValid}
+        isLastStep={isLastStep}
       >
         <div className="flex h-full w-full flex-col">
           <div className={cls("flex h-full w-full flex-col")}>{step}</div>
           <div className={cls("flex h-fit")}>
-            <button
-              type="button"
+            <FormButton
+              kind="button"
+              className="w-1/3 border border-transparent bg-transparent px-4 py-3 text-base font-medium text-amber-500 shadow-sm hover:bg-gray-50 hover:text-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
               onClick={onBackClick}
-              className={cls(
-                "w-1/3 border border-transparent bg-transparent px-4 py-3 text-base font-medium text-amber-500 shadow-sm hover:bg-gray-50 hover:text-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-              )}
-            >
-              ⬅
-            </button>
-            <button
-              type="submit"
-              className={cls(
-                "w-full rounded-none border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:bg-amber-600 focus:outline-none"
-              )}
-            >
-              {isLastStep ? "업로드" : "다음"}
-            </button>
+              text="⬅"
+            />
+            <FormButton
+              kind="submit"
+              className="w-full rounded-none border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:bg-amber-600 focus:outline-none"
+              text={isLastStep ? "업로드" : "다음"}
+            />
           </div>
         </div>
         {isFirstStep && (
@@ -134,7 +127,7 @@ const Upload: NextPage = () => {
             <MarkdownViewer source={data.content} />
           </div>
         )}
-      </form>
+      </FormWrapper>
     </>
   );
 };

@@ -33,7 +33,7 @@ async function handler(
         deploy,
         deployIcon,
         title,
-        stacks,
+        stackBadge,
         content,
       },
     } = req;
@@ -49,7 +49,7 @@ async function handler(
         deployIcon,
       },
     });
-    stacks.map(async (stack: { stack: string; color: string }) => {
+    stackBadge.map(async (stack: { stackName: string; stackColor: string }) => {
       await client.stackBadge.create({
         data: {
           pf: {
@@ -57,8 +57,8 @@ async function handler(
               id: createPf.id,
             },
           },
-          stackName: stack.stack,
-          stackColor: stack.color,
+          stackName: stack.stackName,
+          stackColor: stack.stackColor,
         },
       });
     });
