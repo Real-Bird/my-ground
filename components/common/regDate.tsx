@@ -1,12 +1,12 @@
 import timeAgo from "@libs/client/timeAgo";
 import { useEffect, useState } from "react";
 
-interface regDateProps {
+interface RegDateProps {
   regDate: Date;
   [key: string]: any;
 }
 
-const RegDate = ({ regDate, ...rest }: regDateProps) => {
+const RegDate = ({ regDate, ...rest }: RegDateProps) => {
   const [date, setDate] = useState<string>();
   useEffect(() => {
     if (regDate && window) {
