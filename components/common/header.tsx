@@ -1,9 +1,6 @@
 import { FullNavBar, Menu } from "@components/common";
-import useDebounce from "@libs/client/useDebounce";
-import useThrottle from "@libs/client/useThrottle";
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
-import { useState, useCallback, useLayoutEffect } from "react";
 
 interface HeaderProps {
   backUrl: string;

@@ -1,6 +1,5 @@
 import { TOCList } from "@containers/Common/TocContainer";
 import { cls } from "@libs/client/utils";
-import { MutableRefObject, useRef } from "react";
 
 interface TocProps {
   result: TOCList[];

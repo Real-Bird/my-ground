@@ -1,4 +1,4 @@
-import { Layout, Menu, MobileNavigation, Header } from "@components/common";
+import { Layout, MobileNavigation, Header } from "@components/common";
 import useAdmin from "@libs/client/useAdmin";
 import useDetectScroll from "@libs/client/useDetectScroll";
 import useWindowSize from "@libs/client/useWindowSize";

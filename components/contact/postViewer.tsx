@@ -19,10 +19,6 @@ interface PostListItemProps {
   isOpen: boolean;
 }
 
-interface PostDeleteResponse {
-  ok: boolean;
-}
-
 export interface ModalPostResponse {
   ok: boolean;
   post: MyGroundPost;
