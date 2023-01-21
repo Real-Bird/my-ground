@@ -8,9 +8,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
 import { LayoutContainer } from "@containers/Common";
-import { FloatingButton, PostNavBtn, RegDate } from "@components/common";
+import { FloatingButton, PostNavBtn } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
+import RegDate from "@components/common/RegDate";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -24,16 +25,6 @@ const MarkdownPreview = dynamic<MarkdownPreviewProps>(
     ssr: false,
   }
 );
-
-// const MarkdownViewer: any = dynamic(
-//   () =>
-//     import("@uiw/react-md-editor").then((mod: any) => {
-//       return mod.default.Markdown;
-//     }),
-//   {
-//     ssr: false,
-//   }
-// );
 
 const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   const { admin, ok } = useAdmin();
