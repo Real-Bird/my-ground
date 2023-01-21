@@ -1,14 +1,12 @@
 import { FloatingButton } from "@components/common";
-import PortfolioLoading from "@components/portfolio/PortfolioLoading";
-import Toc from "@components/portfolio/Toc";
-// import PortfolioItem from "@components/portfolio/portfolioItem";
+import PortfolioLoading from "@components/portfolio/portfolioLoading";
 import { LayoutContainer } from "@containers/Common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio, StackBadge } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { forwardRef, Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect } from "react";
 import useSWR from "swr";
 
 export interface BadgeWithPf extends MyPortfolio {

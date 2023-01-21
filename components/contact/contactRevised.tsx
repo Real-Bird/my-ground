@@ -2,7 +2,7 @@ import { FieldError, useForm } from "react-hook-form";
 import { memo, useEffect, useRef, useState } from "react";
 import useMutation from "@libs/client/useMutation";
 import { type KeyedMutator } from "swr";
-import type { ModalPostResponse } from "@components/contact/PostViewer";
+import type { ModalPostResponse } from "@components/contact/postViewer";
 import { cls } from "@libs/client/utils";
 import { ErrorToast, PostNavBtn } from "@components/common";
 

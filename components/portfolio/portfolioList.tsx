@@ -11,7 +11,7 @@ interface PortfolioProps {
 }
 
 const PortfolioListItem = dynamic(
-  async () => await import("@components/portfolio/PortfolioListItem"),
+  async () => await import("@components/portfolio/portfolioListItem"),
   { suspense: true }
 );
 

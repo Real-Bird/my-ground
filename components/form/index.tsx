@@ -1,3 +1,3 @@
-export * from "./FormWrapper";
-export * from "./ContentForm";
-export * from "./OptionsForm";
+export * from "./formWrapper";
+export * from "./contentForm";
+export * from "./optionsForm";
