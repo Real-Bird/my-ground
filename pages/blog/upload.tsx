@@ -1,18 +1,17 @@
 import type { NextPage } from "next";
-import Layout from "@components/common/layout";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Input from "@components/common/input";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import useMutation from "@libs/client/useMutation";
-import Button from "@components/common/buttonComponent";
 import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
 import useWindowSize from "@libs/client/useWindowSize";
+import { LayoutContainer } from "@containers/Common";
+import { Button, Input } from "@components/common";
 
 interface UploadFormResponse {
   category: string;
@@ -34,7 +33,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 });
 
 const Upload: NextPage = () => {
-  const { admin, ok } = useAdmin();
+  const { ok } = useAdmin();
   const [md, setMd] = useState<string | undefined>("");
   const router = useRouter();
   const { data: categoriesData } = useSWR<CategoricalResponse>(
@@ -46,7 +45,6 @@ const Upload: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
     setValue,
   } = useForm<UploadFormResponse>({ mode: "onChange" });
   const [keyword, setKeyword] = useState<string>("");
@@ -76,7 +74,7 @@ const Upload: NextPage = () => {
     }
   }, []);
   return (
-    <Layout title="Post" backUrl="back">
+    <LayoutContainer title="Post" backUrl="back">
       <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <Input
@@ -143,7 +141,7 @@ const Upload: NextPage = () => {
         </div>
         <Button text="Upload My Post" />
       </form>
-    </Layout>
+    </LayoutContainer>
   );
 };
 

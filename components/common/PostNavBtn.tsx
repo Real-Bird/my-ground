@@ -6,7 +6,7 @@ interface PostNavBtnProps {
   [key: string]: any;
 }
 
-export default function PostNavBtn({ link, text, ...rest }: PostNavBtnProps) {
+export const PostNavBtn = ({ link, text, ...rest }: PostNavBtnProps) => {
   return (
     <>
       {link ? (
@@ -25,4 +25,4 @@ export default function PostNavBtn({ link, text, ...rest }: PostNavBtnProps) {
       )}
     </>
   );
-}
+};

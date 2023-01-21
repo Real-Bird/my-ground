@@ -3,9 +3,9 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
 import { Router } from "next/router";
-import LoadingSpinner from "@components/common/loadingSpinner";
 import { Analytics } from "@vercel/analytics/react";
 import useAdmin from "@libs/client/useAdmin";
+import { LoadingSpinner } from "@components/common";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);

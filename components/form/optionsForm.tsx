@@ -1,87 +1,36 @@
-import FloatingInput from "@components/common/floatingInput";
-import Input from "@components/common/input";
-import { StackBadge } from "@prisma/client";
-import {
-  type KeyboardEventHandler,
-  useState,
-  MouseEventHandler,
-  useEffect,
-} from "react";
-import { useForm } from "react-hook-form";
+import { FloatingInput, Input } from "@components/common";
+import { PFUploadFormResponse } from "@containers/Portfolio/PFUploadContainer";
+import { KeyboardEventHandler, MouseEventHandler } from "react";
+import { UseFormGetValues, UseFormRegister } from "react-hook-form";
 
-interface OptionsData {
-  thumbnail: string;
-  startDate: string;
-  endDate: string;
-  github: string;
-  deploy?: string;
-  deployIcon?: string;
-  stackBadge: Pick<StackBadge, "stackName" | "stackColor">[];
-  deleteBadge?: Pick<StackBadge, "stackName" | "stackColor">[];
+type T = PFUploadFormResponse;
+
+interface OptionsFormProps extends T {
+  updateFields: (fields: Partial<T>) => void;
+  getValues: UseFormGetValues<T>;
+  register: UseFormRegister<T>;
+  maxDateFormat: string;
+  onPushStacks: KeyboardEventHandler<HTMLInputElement>;
+  onStackUpdate: KeyboardEventHandler<HTMLInputElement>;
+  onDeleteStack: MouseEventHandler<HTMLImageElement>;
 }
 
-interface OptionsFormProps extends OptionsData {
-  updateFields: (fields: Partial<OptionsData>) => void;
-}
-
-const OptionsForm = ({
+export const OptionsForm = ({
   thumbnail,
   deploy,
   endDate,
   github,
-  stackBadge,
   startDate,
   updateFields,
   deployIcon,
-  deleteBadge = [],
+  stackBadge = [],
+  getValues,
+  register,
+  maxDateFormat,
+  onPushStacks,
+  onStackUpdate,
+  onDeleteStack,
 }: OptionsFormProps) => {
-  const { register, setValue, getValues } = useForm<OptionsData>();
-  const [stackBadges, setStackBadges] = useState<
-    Pick<StackBadge, "stackName" | "stackColor">[]
-  >([]);
-  const onPushStacks: KeyboardEventHandler<HTMLInputElement> = (stacksForm) => {
-    if (stacksForm.key !== "Enter" || !stacksForm.target.value) return;
-    const [stack, color] = stacksForm.target.value.split("/");
-    if (stackBadges.find((e) => e.stackName === stack)) {
-      setValue("stackBadge", []);
-      return;
-    }
-    setStackBadges((prev) => [
-      ...prev,
-      { stackName: stack, stackColor: color },
-    ]);
-    updateFields({
-      stackBadge: [...stackBadge, { stackName: stack, stackColor: color }],
-    });
-    setValue("stackBadge", []);
-  };
-  const onStackUpdate: KeyboardEventHandler<HTMLInputElement> = (
-    stacksForm
-  ) => {
-    if (stacksForm.key !== "Enter") return;
-  };
-  const onDeleteStack: MouseEventHandler<HTMLImageElement> = (e) => {
-    const { id } = e.target as HTMLImageElement;
-    setStackBadges((prev) => prev.filter((i) => i.stackName !== id));
-    updateFields({
-      stackBadge: stackBadges.filter((i) => i.stackName !== id),
-      deleteBadge: [
-        ...deleteBadge,
-        ...stackBadges.filter((i) => i.stackName === id),
-      ],
-    });
-  };
-  const localeFormatter = new Intl.DateTimeFormat("fr-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-  const maxDateFormat = localeFormatter.format(new Date().getTime());
-  useEffect(() => {
-    if (stackBadge) {
-      setStackBadges(stackBadge);
-    }
-  }, [stackBadge, setValue]);
   return (
     <div className="flex h-full w-full flex-col items-center justify-center space-y-3 px-3 md:grid md:grid-cols-2 md:gap-5">
       <div className="flex w-full flex-col justify-center space-y-6 lg:h-4/5">
@@ -177,7 +126,7 @@ const OptionsForm = ({
             />
           </div>
           <div className="mx-3 flex w-1/2 flex-row flex-wrap justify-items-start">
-            {stackBadges.map((stack, i) => (
+            {stackBadge.map((stack, i) => (
               <img
                 className="mr-1 py-1"
                 key={i}
@@ -193,5 +142,3 @@ const OptionsForm = ({
     </div>
   );
 };
-
-export default OptionsForm;

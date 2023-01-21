@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Input from "@components/common/input";
 import useMutation from "@libs/client/useMutation";
 import { useRouter } from "next/router";
 import { User } from "@prisma/client";
-import Button from "@components/common/buttonComponent";
 import useAdmin from "@libs/client/useAdmin";
 import Link from "next/link";
-import Layout from "@components/common/layout";
+import { LayoutContainer } from "@containers/Common";
+import { Button, Input } from "@components/common";
 
 interface EnterForm {
   email?: string;
@@ -56,7 +55,7 @@ const Auth = () => {
     }
   }, [data, router, ok]);
   return (
-    <Layout title="Admin">
+    <LayoutContainer title="Admin">
       <div className="mt-16 flex flex-col space-y-3 px-4">
         <h3 className="text-center text-3xl font-bold">I am Admin</h3>
         {ok ? (
@@ -94,7 +93,7 @@ const Auth = () => {
           </div>
         )}
       </div>
-    </Layout>
+    </LayoutContainer>
   );
 };
 

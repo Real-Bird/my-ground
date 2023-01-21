@@ -1,14 +1,13 @@
-import FloatingButton from "@components/common/floatingBtn";
-import Layout from "@components/common/layout";
 import useAdmin from "@libs/client/useAdmin";
 import { MyBlog } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
-import Button from "@components/common/buttonComponent";
 import BlogPost from "@components/blog/blogPost";
 import useSWRInfinite from "swr/infinite";
+import { FooterContainer, LayoutContainer } from "@containers/Common";
+import { Button, FloatingButton } from "@components/common";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -44,7 +43,7 @@ const Blog: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
     setSize((prev) => prev + 1);
   };
   return (
-    <Layout title="BLOG" isFooter>
+    <LayoutContainer title="BLOG">
       <section className="mx-3 flex h-fit w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
@@ -93,7 +92,8 @@ const Blog: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
           </svg>
         </FloatingButton>
       )}
-    </Layout>
+      <FooterContainer />
+    </LayoutContainer>
   );
 };
 

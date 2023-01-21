@@ -6,6 +6,7 @@ declare module "iron-session" {
       id: number;
       admin: boolean;
       token: string;
+      maxAge: number;
     };
   }
 }

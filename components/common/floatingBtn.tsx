@@ -8,11 +8,7 @@ interface FloatingButton {
   type: string;
 }
 
-export default function FloatingButton({
-  children,
-  href,
-  type,
-}: FloatingButton) {
+export const FloatingButton = ({ children, href, type }: FloatingButton) => {
   return (
     <Link href={href}>
       <a
@@ -25,4 +21,4 @@ export default function FloatingButton({
       </a>
     </Link>
   );
-}
+};

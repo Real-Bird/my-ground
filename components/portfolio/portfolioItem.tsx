@@ -1,10 +1,11 @@
-import PostNavBtn from "@components/postNavBtn";
-import { BadgeWithPf } from "@containers/portfolioItemContainer";
+import { BadgeWithPf } from "@containers/Portfolio/PortfolioItemContainer";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import "@uiw/react-markdown-preview/markdown.css";
+import { PostNavBtn } from "@components/common";
+import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 
-const MarkdownViewer: any = dynamic(
+const MarkdownPreview = dynamic<MarkdownPreviewProps>(
   () => import("@uiw/react-markdown-preview"),
   {
     ssr: false,
@@ -17,33 +18,37 @@ interface PortfolioItemProps {
 }
 
 const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
+  const {
+    title,
+    id,
+    stackBadge,
+    github,
+    deploy,
+    deployIcon,
+    startDate,
+    endDate,
+    content,
+  } = portfolioData;
   return (
     <div className="lg:w-2/3">
       <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted lg:relative">
-        <h1 className="pt-1 pb-5 text-center text-5xl font-bold">
-          {portfolioData?.title}
-        </h1>
+        <h1 className="pt-1 pb-5 text-center text-5xl font-bold">{title}</h1>
       </div>
       <div className="py-5">
         <div className="flex flex-row justify-center md:justify-between">
           <div className="flex items-end space-x-2">
             <PostNavBtn link="/portfolio" text="목록" />
-            {ok && (
-              <PostNavBtn
-                link={`/portfolio/${portfolioData?.id}/revised`}
-                text="수정"
-              />
-            )}
+            {ok && <PostNavBtn link={`/portfolio/${id}/revised`} text="수정" />}
           </div>
           <div className="flex w-40 flex-col items-center space-y-1 md:w-[20%]">
             <span className="font-semibold">Stack</span>
             <div className="mx-auto w-36">
               <ul className="flex flex-row flex-wrap justify-start">
-                {portfolioData?.stackBadge.map((stack) => (
-                  <li key={stack.id}>
+                {stackBadge.map(({ id, stackName, stackColor }) => (
+                  <li key={id}>
                     <img
-                      src={`https://img.shields.io/badge/${stack.stackName}-${stack.stackColor}?style=flat&logo=${stack.stackName}&logoColor=white`}
-                      alt={stack.stackName}
+                      src={`https://img.shields.io/badge/${stackName}-${stackColor}?style=flat&logo=${stackName}&logoColor=white`}
+                      alt={stackName}
                       className="m-0.5"
                     />
                   </li>
@@ -52,7 +57,7 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
             </div>
           </div>
           <div className="flex w-1/3 flex-row justify-evenly space-x-5">
-            <Link href={portfolioData?.github}>
+            <Link href={github}>
               <a
                 target="_blank"
                 className="flex flex-1 flex-col items-center space-y-1"
@@ -68,7 +73,7 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
                 </svg>
               </a>
             </Link>
-            <Link href={portfolioData?.deploy}>
+            <Link href={deploy}>
               <a
                 target="_blank"
                 className="flex flex-1 flex-col items-center space-y-1"
@@ -77,7 +82,7 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
                 <div
                   className="h-8 w-8 py-1.5"
                   dangerouslySetInnerHTML={{
-                    __html: portfolioData?.deployIcon,
+                    __html: deployIcon,
                   }}
                 />
               </a>
@@ -87,18 +92,24 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
             <div className="font-semibold">Develop Date</div>
             <div className="w-36 text-center">
               <div className="text-sm">
-                <span className="letter-spacing-1.5">Start</span>:{" "}
-                {portfolioData?.startDate}
+                <span className="letter-spacing-1.5">Start</span>: {startDate}
               </div>
               <div className="text-sm">
-                <span>Finish</span>: {portfolioData?.endDate}
+                <span>Finish</span>: {endDate}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
-        <MarkdownViewer source={portfolioData?.content} />
+      <div
+        className="min-h-[68vh] rounded-md bg-slate-300 p-3"
+        data-color-mode="light"
+      >
+        <MarkdownPreview
+          source={content}
+          wrapperElement={{ "data-color-mode": "light" }}
+          style={{ backgroundColor: "#cbd5e1" }}
+        />
       </div>
     </div>
   );

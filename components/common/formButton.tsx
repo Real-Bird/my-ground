@@ -4,12 +4,10 @@ interface FormButtonProps {
   [key: string]: any;
 }
 
-const FormButton = ({ kind, text, ...rest }: FormButtonProps) => {
+export const FormButton = ({ kind, text, ...rest }: FormButtonProps) => {
   return (
     <button type={kind} {...rest}>
       {text}
     </button>
   );
 };
-
-export default FormButton;

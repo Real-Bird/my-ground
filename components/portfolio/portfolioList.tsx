@@ -1,25 +1,21 @@
-import FloatingButton from "@components/common/floatingBtn";
-import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio } from "@prisma/client";
 import Link from "next/link";
-import useSWR from "swr";
 import { Skeleton } from "@mui/material";
-import Button from "@components/common/buttonComponent";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { Button, FloatingButton } from "@components/common";
+
+interface PortfolioProps {
+  isAuth: boolean;
+  portfolio: MyPortfolio[];
+}
 
 const PortfolioListItem = dynamic(
-  () => import("@components/portfolio/portfolioListItem"),
+  async () => await import("@components/portfolio/PortfolioListItem"),
   { suspense: true }
 );
 
-interface PortfolioProps {
-  ok: boolean;
-  portfolio: MyPortfolio[];
-}
-const PortfolioList = () => {
-  const { ok } = useAdmin();
-  const { data } = useSWR<PortfolioProps>("/api/portfolio");
+const PortfolioList = ({ isAuth, portfolio }: PortfolioProps) => {
   return (
     <>
       <div className="mx-3 flex w-11/12 flex-col space-y-3 lg:my-5 lg:items-center">
@@ -27,7 +23,7 @@ const PortfolioList = () => {
           <h1 className="text-center text-xl text-red-600 md:py-5 md:text-2xl md:font-bold">
             My Portfolio List
           </h1>
-          {ok && (
+          {isAuth && (
             <Link href={"/portfolio/upload"}>
               <a className="hidden lg:absolute lg:right-0 lg:block lg:h-12 lg:w-24">
                 <Button text="Upload" />
@@ -36,7 +32,7 @@ const PortfolioList = () => {
           )}
         </div>
         <ul className="grid w-full grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-4">
-          {data?.portfolio?.map((pf) => (
+          {portfolio?.map((pf) => (
             <Suspense
               key={pf.id}
               fallback={
@@ -64,7 +60,7 @@ const PortfolioList = () => {
           ))}
         </ul>
       </div>
-      {ok && (
+      {isAuth && (
         <FloatingButton href="/portfolio/upload" type="Portfolio Upload">
           <svg
             xmlns="http://www.w3.org/2000/svg"

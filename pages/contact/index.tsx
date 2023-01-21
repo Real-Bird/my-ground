@@ -1,12 +1,12 @@
-import Layout from "@components/common/layout";
 import client from "@libs/server/client";
 import { MyGroundPost } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import useSWR, { SWRConfig } from "swr";
-import PostListItem from "@components/contact/postListItem";
-import PostViewer from "@components/contact/postViewer";
+import PostListItem from "@components/contact/PostListItem";
+import PostViewer from "@components/contact/PostViewer";
 import { useState } from "react";
-import ContactUpload from "@components/contact/contactUpload";
+import ContactUpload from "@components/contact/ContactUpload";
+import { FooterContainer, LayoutContainer } from "@containers/Common";
 
 export interface PostsPropsWithSSR {
   ok: boolean;
@@ -34,7 +34,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
   };
 
   return (
-    <Layout title="CONTACT" isFooter>
+    <LayoutContainer title="CONTACT">
       <section className="flex w-full flex-col space-y-3 px-2 text-center lg:my-5 lg:w-4/5 ">
         <div className="flex w-full flex-row items-center justify-center">
           <div className="flex w-full flex-col items-center justify-center ">
@@ -69,7 +69,8 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
           <PostViewer id={postId} onCloseModal={onCloseModal} isOpen={isOpen} />
         )}
       </section>
-    </Layout>
+      <FooterContainer />
+    </LayoutContainer>
   );
 };
 

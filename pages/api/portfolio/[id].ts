@@ -62,7 +62,7 @@ async function handler(
         deployIcon,
       },
     });
-    if (deleteBadge) {
+    if (!!deleteBadge) {
       deleteBadge.map(async ({ id }: { id: number }) => {
         await client.stackBadge.delete({
           where: { id: +id },

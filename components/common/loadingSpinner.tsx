@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const LoadingSpinner = () => {
+export const LoadingSpinner = () => {
   return (
     <div className="absolute top-[15%] mx-3 flex h-3/5 flex-col items-center justify-center space-y-3">
       <Head>
@@ -37,5 +37,3 @@ const LoadingSpinner = () => {
     </div>
   );
 };
-
-export default LoadingSpinner;

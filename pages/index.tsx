@@ -1,4 +1,4 @@
-import HomeContainer from "@containers/homeContainer";
+import HomeContainer from "@containers/Home/HomeContainer";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {

@@ -11,7 +11,7 @@ interface InputProps {
   className?: string;
 }
 
-export default function FloatingInput({
+export const FloatingInput = ({
   label,
   name,
   register,
@@ -19,7 +19,7 @@ export default function FloatingInput({
   value,
   isDisabled,
   className,
-}: InputProps) {
+}: InputProps) => {
   return (
     <>
       <div className="relative flex flex-col items-start rounded-md">
@@ -44,4 +44,4 @@ export default function FloatingInput({
       </div>
     </>
   );
-}
+};

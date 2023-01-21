@@ -12,7 +12,7 @@ interface InputProps {
   isTitle?: boolean;
 }
 
-export default function BorderBottomInput({
+export const BorderBottomInput = ({
   label,
   name,
   register,
@@ -21,7 +21,7 @@ export default function BorderBottomInput({
   placeholder,
   className,
   isTitle,
-}: InputProps) {
+}: InputProps) => {
   return (
     <div className={cls(className)}>
       {label && (
@@ -48,4 +48,4 @@ export default function BorderBottomInput({
       </div>
     </div>
   );
-}
+};

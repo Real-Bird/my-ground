@@ -1,4 +1,3 @@
-import { ConfirmForm } from "@components/contact/postViewer";
 import { ReactNode } from "react";
 
 interface ConfirmModalProps {
@@ -9,7 +8,7 @@ interface ConfirmModalProps {
   onClose: () => void;
 }
 
-const ConfirmModal = ({
+export const ConfirmModal = ({
   message,
   type,
   onClose,
@@ -85,5 +84,3 @@ const ConfirmModal = ({
     </div>
   );
 };
-
-export default ConfirmModal;

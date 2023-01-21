@@ -10,7 +10,7 @@ interface ErrorToastProps {
   onToastToggle: () => void;
 }
 
-const ErrorToast = ({
+const ErrorToastComponent = ({
   idx,
   errorsArr,
   openErrorToast,
@@ -68,4 +68,4 @@ const ErrorToast = ({
   );
 };
 
-export default memo(ErrorToast);
+export const ErrorToast = memo(ErrorToastComponent);

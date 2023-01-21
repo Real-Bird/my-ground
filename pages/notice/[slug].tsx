@@ -1,9 +1,9 @@
-import Layout from "@components/common/layout";
 import { readdirSync } from "fs";
 import matter from "gray-matter";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
+import { LayoutContainer } from "@containers/Common";
 
 const MarkdownViewer: any = dynamic(
   () =>
@@ -20,14 +20,14 @@ const NoticeDetail: NextPage<{ post: string; data: any }> = ({
   data,
 }) => {
   return (
-    <Layout title="NOTICE" canGoBack backUrl="/notice">
+    <LayoutContainer title="NOTICE" backUrl="/notice">
       <div className="m-5 w-[80%] space-y-2">
         <h1 className="py-5 text-center text-3xl font-bold">{data.title}</h1>
         <div className="min-h-[68vh] w-full rounded-md bg-slate-300 p-3">
           <MarkdownViewer source={post} />
         </div>
       </div>
-    </Layout>
+    </LayoutContainer>
   );
 };
 

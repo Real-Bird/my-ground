@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import ClientErrorBoundary from "@components/common/clientErrorBoundary";
+import { ErrorBoundaryContainer } from "@containers/Common";
 
 const NotAuth: NextPage = () => {
   return (
-    <ClientErrorBoundary
+    <ErrorBoundaryContainer
       title="403:FORBIDDEN"
       errCode={403}
       errDescription="접근 권한이 없습니다."

@@ -1,11 +1,10 @@
-import Layout from "@components/common/layout";
 import Link from "next/link";
 
 interface IntroduceProps {
   ok: boolean;
 }
 
-const Introduce = ({ ok }: IntroduceProps) => {
+export const Introduce = ({ ok }: IntroduceProps) => {
   return (
     <>
       <div>
@@ -123,5 +122,3 @@ const Introduce = ({ ok }: IntroduceProps) => {
     </>
   );
 };
-
-export default Introduce;

@@ -1,11 +1,6 @@
-// import dynamic from "next/dynamic";
-import RegDate from "@components/common/regDate";
+import { RegDate } from "@components/common";
 import { cls } from "@libs/client/utils";
 import { memo } from "react";
-
-// const RegDate = dynamic(() => import("@components/common/regDate"), {
-//   suspense: true,
-// });
 
 interface PostListItemProps {
   title: string;
@@ -49,9 +44,6 @@ const PostListItem = ({
             <RegDate
               className="rounded-md bg-orange-200 px-1 text-xs"
               regDate={created}
-              y
-              m
-              d
             />
           </div>
         </div>

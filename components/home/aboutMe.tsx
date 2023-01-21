@@ -1,4 +1,4 @@
-const AboutMe = () => {
+export const AboutMe = () => {
   return (
     <div className="flex flex-col flex-wrap space-y-3" id="about">
       <h1 className="text-2xl font-bold">About me</h1>
@@ -83,5 +83,3 @@ const AboutMe = () => {
     </div>
   );
 };
-
-export default AboutMe;

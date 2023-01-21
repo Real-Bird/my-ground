@@ -8,13 +8,13 @@ interface TextAreaProps {
   [key: string]: any;
 }
 
-export default function TextArea({
+export const TextArea = ({
   label,
   name,
   register,
   placeholder,
   ...rest
-}: TextAreaProps) {
+}: TextAreaProps) => {
   return (
     <>
       {label ? (
@@ -35,4 +35,4 @@ export default function TextArea({
       />
     </>
   );
-}
+};

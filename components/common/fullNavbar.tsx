@@ -1,18 +1,18 @@
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-export default function FullNavBar() {
-  const router = useRouter();
+interface FullNavBarProps {
+  pathname: string;
+}
+
+export const FullNavBar = ({ pathname }: FullNavBarProps) => {
   return (
-    <header>
-      <nav className="flex flex-row divide-x-4">
+    <header className="fixed right-4 top-0 z-[9999] hidden h-12 lg:block">
+      <nav className="flex h-full flex-row items-center divide-x-4 text-lg">
         <Link href={"/"}>
           <a
             className={cls(
-              router.pathname === "/"
-                ? "font-bold text-amber-500"
-                : "text-gray-500",
+              pathname === "/" ? "font-bold text-amber-500" : "text-gray-500",
               "px-2 text-center"
             )}
           >
@@ -22,7 +22,7 @@ export default function FullNavBar() {
         <Link href={"/portfolio"}>
           <a
             className={cls(
-              router.pathname.includes("/portfolio")
+              pathname.includes("/portfolio")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -34,7 +34,7 @@ export default function FullNavBar() {
         <Link href={"/blog"}>
           <a
             className={cls(
-              router.pathname.includes("/blog")
+              pathname.includes("/blog")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -46,7 +46,7 @@ export default function FullNavBar() {
         <Link href={"/contact"}>
           <a
             className={cls(
-              router.pathname.includes("/contact")
+              pathname.includes("/contact")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -58,7 +58,7 @@ export default function FullNavBar() {
         <Link href={"/notice"}>
           <a
             className={cls(
-              router.pathname.includes("/notice")
+              pathname.includes("/notice")
                 ? "font-bold text-amber-500"
                 : "text-gray-500",
               "px-2 text-center"
@@ -70,4 +70,4 @@ export default function FullNavBar() {
       </nav>
     </header>
   );
-}
+};

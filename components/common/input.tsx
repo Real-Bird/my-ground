@@ -15,7 +15,7 @@ interface InputProps {
   max?: string;
 }
 
-export default function Input({
+export const Input = ({
   label,
   name,
   register,
@@ -26,7 +26,7 @@ export default function Input({
   placeholder,
   onClick,
   max,
-}: InputProps) {
+}: InputProps) => {
   return (
     <div>
       <label
@@ -53,4 +53,4 @@ export default function Input({
       </div>
     </div>
   );
-}
+};

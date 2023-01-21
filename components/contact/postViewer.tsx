@@ -1,9 +1,11 @@
-import ConfirmModal from "@components/common/confirmModal";
-import ErrorToast from "@components/common/erroToast";
-import FloatingInput from "@components/common/floatingInput";
-import ContactRevised from "@components/contact/contactRevised";
-import PostListItem from "@components/contact/postListItem";
-import PostNavBtn from "@components/postNavBtn";
+import {
+  ConfirmModal,
+  ErrorToast,
+  FloatingInput,
+  PostNavBtn,
+} from "@components/common";
+import ContactRevised from "@components/contact/ContactRevised";
+import PostListItem from "@components/contact/PostListItem";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { MyGroundPost } from "@prisma/client";

@@ -66,5 +66,6 @@ module.exports = {
       },
     },
   },
+  darkMode: "class",
   plugins: [require("@tailwindcss/line-clamp"), require("flowbite/plugin")],
 };

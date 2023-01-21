@@ -28,6 +28,7 @@ async function handler(
           id: isUser.id,
           admin: true,
           token: "admin",
+          maxAge: 60 * 60 * 24 * 7,
         };
         await req.session.save();
         res.json({ ok: true });
@@ -54,19 +55,22 @@ async function handler(
     }
   }
   if (req.method === "GET") {
-    if (!req.session.user.admin)
+    const session = req.session.user;
+    if (!session.admin)
       return res.json({
         ok: false,
       });
     const admin = await client.user.findUnique({
       where: {
-        id: req.session.user?.id,
+        id: session?.id,
       },
       select: {
         id: true,
         name: true,
       },
     });
+    session.maxAge = 60 * 60 * 24 * 7;
+    await req.session.save();
     res.json({
       ok: true,
       admin,

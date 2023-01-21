@@ -1,4 +1,4 @@
-import PortfolioContainer from "@containers/portfolioContainer";
+import PortfolioContainer from "@containers/Portfolio/PortfolioContainer";
 import type { NextPage } from "next";
 
 const Portfolio: NextPage = () => {

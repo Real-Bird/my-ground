@@ -1,4 +1,4 @@
-import RegDate from "@components/common/regDate";
+import { RegDate } from "@components/common";
 import { cls } from "@libs/client/utils";
 import { MyBlog } from "@prisma/client";
 import Link from "next/link";
@@ -30,7 +30,7 @@ const BlogPost = ({ post, category, idx }: BlogPostProps) => {
           </div>
           <div className="flex flex-col items-end justify-end pb-1.5 text-sm">
             <span>{category}</span>
-            <RegDate regDate={post.created} y m d />
+            <RegDate regDate={post.created} />
           </div>
         </a>
       </Link>

@@ -1,5 +1,5 @@
-import Layout from "@components/common/layout";
-import RegDate from "@components/common/regDate";
+import { RegDate } from "@components/common";
+import { FooterContainer, LayoutContainer } from "@containers/Common";
 import { readdirSync, readFileSync } from "fs";
 import matter from "gray-matter";
 import { NextPage } from "next";
@@ -14,7 +14,7 @@ interface Post {
 
 const Notices: NextPage<{ posts: Post[] }> = ({ posts }) => {
   return (
-    <Layout title="NOTICES" isFooter>
+    <LayoutContainer title="NOTICES">
       <section className="mx-3 flex w-full flex-col space-y-3 text-center lg:my-5 lg:w-[80%]">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
@@ -42,7 +42,8 @@ const Notices: NextPage<{ posts: Post[] }> = ({ posts }) => {
           ))}
         </ul>
       </section>
-    </Layout>
+      <FooterContainer />
+    </LayoutContainer>
   );
 };
 

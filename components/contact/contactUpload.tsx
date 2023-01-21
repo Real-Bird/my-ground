@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import useMutation from "@libs/client/useMutation";
-import Button from "@components/common/buttonComponent";
-import TextArea from "@components/common/textarea";
-import BorderBottomInput from "@components/common/borderBottomInput";
-import FloatingInput from "@components/common/floatingInput";
 import type { KeyedMutator } from "swr";
 import type { PostsPropsWithSSR } from "pages/contact";
-import ErrorToast from "@components/common/erroToast";
+import {
+  BorderBottomInput,
+  Button,
+  ErrorToast,
+  FloatingInput,
+  TextArea,
+} from "@components/common";
 
 export interface UploadFormResponse {
   name: string;

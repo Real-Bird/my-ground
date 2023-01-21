@@ -1,16 +1,16 @@
-import Layout from "@components/common/layout";
 import { MyBlog } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
-import RegDate from "@components/common/regDate";
-import FloatingButton from "@components/common/floatingBtn";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
-import PostNavBtn from "@components/postNavBtn";
+import { LayoutContainer } from "@containers/Common";
+import { FloatingButton, PostNavBtn, RegDate } from "@components/common";
+import { TocContainer } from "@containers/Common/TocContainer";
+import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -18,15 +18,22 @@ interface CategoryWithBlog extends MyBlog {
   };
 }
 
-const MarkdownViewer: any = dynamic(
-  () =>
-    import("@uiw/react-md-editor").then((mod: any) => {
-      return mod.default.Markdown;
-    }),
+const MarkdownPreview = dynamic<MarkdownPreviewProps>(
+  () => import("@uiw/react-markdown-preview"),
   {
     ssr: false,
   }
 );
+
+// const MarkdownViewer: any = dynamic(
+//   () =>
+//     import("@uiw/react-md-editor").then((mod: any) => {
+//       return mod.default.Markdown;
+//     }),
+//   {
+//     ssr: false,
+//   }
+// );
 
 const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
   const { admin, ok } = useAdmin();
@@ -37,7 +44,7 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
     }
   }, []);
   return (
-    <Layout title="POST" backUrl="/blog">
+    <LayoutContainer title="POST" backUrl="/blog">
       <div className="w-4/5 max-w-6xl space-y-2 px-3 lg:py-4">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="w-full border-b-2 border-dotted py-5 text-center text-5xl font-bold">
@@ -60,13 +67,20 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
                 카테고리: {post?.category?.category}
               </div>
               <div className="lg:text-[1rem]">
-                작성일: <RegDate regDate={post?.updated} y m d />
+                작성일: <RegDate regDate={post?.updated} />
               </div>
             </div>
           </div>
         </div>
-        <div className="min-h-[68vh] rounded-md bg-slate-300 p-3">
-          <MarkdownViewer source={post?.content} />
+        <div
+          className="min-h-[68vh] rounded-md bg-slate-300 p-3"
+          data-color-mode="light"
+        >
+          <MarkdownPreview
+            source={post?.content}
+            wrapperElement={{ "data-color-mode": "light" }}
+            style={{ backgroundColor: "#cbd5e1" }}
+          />
         </div>
       </div>
       {ok && (
@@ -86,7 +100,11 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
           </svg>
         </FloatingButton>
       )}
-    </Layout>
+      <TocContainer
+        content={post ? post.content : ""}
+        title={post ? post.title : ""}
+      />
+    </LayoutContainer>
   );
 };
 
@@ -111,23 +129,6 @@ const Page: NextPage<{ post: CategoryWithBlog; id: number }> = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // const {
-  //   query: { id, valid },
-  // } = ctx;
-  // const post = await client.myGroundPost.findUnique({
-  //   where: {
-  //     id: +id,
-  //   },
-  //   select: {
-  //     id: true,
-  //     name: true,
-  //     title: true,
-  //     content: true,
-  //     isSecret: true,
-  //     created: true,
-  //     updated: true,
-  //   },
-  // });
   const {
     query: { id },
   } = ctx;

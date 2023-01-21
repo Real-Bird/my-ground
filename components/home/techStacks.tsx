@@ -1,4 +1,4 @@
-const TechStacks = () => {
+export const TechStacks = () => {
   return (
     <div className="space-y-1">
       <h2 className="py-2 text-2xl font-bold">Tech Stack</h2>
@@ -136,5 +136,3 @@ const TechStacks = () => {
     </div>
   );
 };
-
-export default TechStacks;

@@ -11,7 +11,6 @@ export default function useWindowScroll() {
       setPage((prev) => prev + 1);
     }
   };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
