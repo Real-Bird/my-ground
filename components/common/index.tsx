@@ -3,7 +3,6 @@ export * from "./footer";
 export * from "./mobileNavbar";
 export * from "./menu";
 export * from "./header";
-export * from "./button";
 export * from "./floatingBtn";
 export * from "./borderBottomInput";
 export * from "./confirmModal";

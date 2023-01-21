@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Skeleton } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { Button, FloatingButton } from "@components/common";
+import { FloatingButton } from "@components/common";
+import Button from "@components/common/button";
 
 interface PortfolioProps {
   isAuth: boolean;

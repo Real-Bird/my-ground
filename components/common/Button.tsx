@@ -7,7 +7,7 @@ interface ButtonProps {
   className?: string;
 }
 
-export const Button = ({ text, className, ...rest }: ButtonProps) => {
+export default function Button({ text, className, ...rest }: ButtonProps) {
   return (
     <button
       {...rest}
@@ -19,4 +19,4 @@ export const Button = ({ text, className, ...rest }: ButtonProps) => {
       {text}
     </button>
   );
-};
+}

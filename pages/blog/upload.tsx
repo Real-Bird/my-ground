@@ -11,7 +11,8 @@ import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
 import useWindowSize from "@libs/client/useWindowSize";
 import { LayoutContainer } from "@containers/Common";
-import { Button, Input } from "@components/common";
+import { Input } from "@components/common";
+import Button from "@components/common/button";
 
 interface UploadFormResponse {
   category: string;
@@ -136,7 +137,7 @@ const Upload: NextPage = () => {
             height={500}
             minHeight={500}
             maxHeight={500}
-            visiableDragbar={false}
+            visibleDragbar={false}
           />
         </div>
         <Button text="Upload My Post" />

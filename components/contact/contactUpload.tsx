@@ -7,11 +7,11 @@ import type { KeyedMutator } from "swr";
 import type { PostsPropsWithSSR } from "pages/contact";
 import {
   BorderBottomInput,
-  Button,
   ErrorToast,
   FloatingInput,
   TextArea,
 } from "@components/common";
+import Button from "@components/common/button";
 
 export interface UploadFormResponse {
   name: string;

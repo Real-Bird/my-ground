@@ -13,7 +13,8 @@ import useAdmin from "@libs/client/useAdmin";
 import { CategoricalResponse } from "pages/blog/upload";
 import useWindowSize from "@libs/client/useWindowSize";
 import { LayoutContainer } from "@containers/Common";
-import { Button, Input } from "@components/common";
+import { Input } from "@components/common";
+import Button from "@components/common/button";
 
 interface BlogRevisedFormResponse {
   category: string;
@@ -157,7 +158,7 @@ const BlogRevised: NextPage = () => {
             height={500}
             minHeight={500}
             maxHeight={500}
-            visiableDragbar={false}
+            visibleDragbar={false}
           />
         </div>
         <Button text="Revised your post" />
