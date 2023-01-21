@@ -30,7 +30,7 @@ const BlogPost = ({ post, category, idx }: BlogPostProps) => {
           </div>
           <div className="flex flex-col items-end justify-end pb-1.5 text-sm">
             <span>{category}</span>
-            <RegDate regDate={post.created} />
+            <RegDate regDate={post.updated} />
           </div>
         </a>
       </Link>
