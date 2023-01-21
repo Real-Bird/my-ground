@@ -14,7 +14,7 @@ import { CategoricalResponse } from "pages/blog/upload";
 import useWindowSize from "@libs/client/useWindowSize";
 import { LayoutContainer } from "@containers/Common";
 import { Input } from "@components/common";
-import Button from "@components/common/button";
+import Button from "@components/common/customButton";
 
 interface BlogRevisedFormResponse {
   category: string;

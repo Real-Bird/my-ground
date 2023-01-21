@@ -7,7 +7,7 @@ import useAdmin from "@libs/client/useAdmin";
 import Link from "next/link";
 import { LayoutContainer } from "@containers/Common";
 import { Input } from "@components/common";
-import Button from "@components/common/button";
+import Button from "@components/common/customButton";
 
 interface EnterForm {
   email?: string;

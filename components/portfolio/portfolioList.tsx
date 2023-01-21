@@ -4,7 +4,7 @@ import { Skeleton } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { FloatingButton } from "@components/common";
-import Button from "@components/common/button";
+import Button from "@components/common/customButton";
 
 interface PortfolioProps {
   isAuth: boolean;

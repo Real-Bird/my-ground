@@ -8,7 +8,7 @@ import BlogPost from "@components/blog/blogPost";
 import useSWRInfinite from "swr/infinite";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import { FloatingButton } from "@components/common";
-import Button from "@components/common/button";
+import Button from "@components/common/customButton";
 
 interface CategoryWithBlog extends MyBlog {
   category: {

@@ -12,7 +12,7 @@ import useAdmin from "@libs/client/useAdmin";
 import useWindowSize from "@libs/client/useWindowSize";
 import { LayoutContainer } from "@containers/Common";
 import { Input } from "@components/common";
-import Button from "@components/common/button";
+import Button from "@components/common/customButton";
 
 interface UploadFormResponse {
   category: string;

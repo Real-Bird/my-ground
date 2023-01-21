@@ -11,7 +11,7 @@ import {
   FloatingInput,
   TextArea,
 } from "@components/common";
-import Button from "@components/common/button";
+import Button from "@components/common/customButton";
 
 export interface UploadFormResponse {
   name: string;
