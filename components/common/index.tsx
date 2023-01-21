@@ -15,6 +15,5 @@ export * from "./FullNavbar";
 export * from "./Input";
 export * from "./LoadingSpinner";
 export * from "./PostNavBtn";
-export * from "./RegDate";
 export * from "./Textarea";
 export * from "./ClientErrorBoundary";
