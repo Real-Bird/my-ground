@@ -1,4 +1,4 @@
-import RegDate from "../common/RegDate";
+import RegDate from "@components/common/regDate";
 import { cls } from "@libs/client/utils";
 import { MyBlog } from "@prisma/client";
 import Link from "next/link";

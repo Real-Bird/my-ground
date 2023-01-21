@@ -11,7 +11,7 @@ import { LayoutContainer } from "@containers/Common";
 import { FloatingButton, PostNavBtn } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
-import RegDate from "@components/common/RegDate";
+import RegDate from "@components/common/regDate";
 
 interface CategoryWithBlog extends MyBlog {
   category: {

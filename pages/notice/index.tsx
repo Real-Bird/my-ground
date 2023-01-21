@@ -1,4 +1,4 @@
-import RegDate from "@components/common/RegDate";
+import RegDate from "@components/common/regDate";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import { readdirSync, readFileSync } from "fs";
 import matter from "gray-matter";
