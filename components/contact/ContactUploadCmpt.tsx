@@ -10,8 +10,8 @@ import {
   ErrorToast,
   FloatingInput,
   TextArea,
+  Button,
 } from "@components/common";
-import Button from "@components/common/customButton";
 
 export interface UploadFormResponse {
   name: string;

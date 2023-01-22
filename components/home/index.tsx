@@ -1,3 +1,3 @@
-export * from "./aboutMe";
-export * from "./introduce";
-export * from "./techStacks";
+export * from "./AboutMeCmpt";
+export * from "./IntroduceCmpt";
+export * from "./TechStacksCmpt";

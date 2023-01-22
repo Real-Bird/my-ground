@@ -1,4 +1,4 @@
-import Button from "@components/common/customButton";
+import { Button } from "@components/common";
 
 interface ClientErrorBoundaryProps {
   errCode: number;

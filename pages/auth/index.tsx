@@ -6,8 +6,7 @@ import { User } from "@prisma/client";
 import useAdmin from "@libs/client/useAdmin";
 import Link from "next/link";
 import { LayoutContainer } from "@containers/Common";
-import { Input } from "@components/common";
-import Button from "@components/common/customButton";
+import { Input, Button } from "@components/common";
 
 interface EnterForm {
   email?: string;

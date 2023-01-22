@@ -4,8 +4,8 @@ import {
   FloatingInput,
   PostNavBtn,
 } from "@components/common";
-import ContactRevised from "@components/contact/contactRevised";
-import PostListItem from "@components/contact/postListItem";
+import ContactRevised from "@components/contact/ContactRevisedCmpt";
+import PostListItem from "@components/contact/PostListItemCmpt";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { MyGroundPost } from "@prisma/client";

@@ -4,11 +4,10 @@ import type { GetServerSideProps, NextPage } from "next";
 import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
-import BlogPost from "@components/blog/blogPost";
+import { BlogPost } from "@components/blog";
 import useSWRInfinite from "swr/infinite";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
-import { FloatingButton } from "@components/common";
-import Button from "@components/common/customButton";
+import { FloatingButton, Button } from "@components/common";
 
 interface CategoryWithBlog extends MyBlog {
   category: {

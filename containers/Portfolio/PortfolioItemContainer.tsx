@@ -1,7 +1,6 @@
 import { FloatingButton } from "@components/common";
-import PortfolioLoading from "@components/portfolio/portfolioLoading";
-import { LayoutContainer } from "@containers/Common";
-import { TocContainer } from "@containers/Common/TocContainer";
+import PortfolioLoading from "@components/portfolio/PortfolioLoadingCmpt";
+import { LayoutContainer, TocContainer } from "@containers/Common";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio, StackBadge } from "@prisma/client";
 import dynamic from "next/dynamic";
@@ -19,7 +18,7 @@ interface PortfolioProps {
 }
 
 const PortfolioItem = dynamic(
-  async () => await import("@components/portfolio/portfolioItem"),
+  async () => await import("@components/portfolio/PortfolioItemCmpt"),
   { suspense: true }
 );
 

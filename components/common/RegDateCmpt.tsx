@@ -6,7 +6,7 @@ interface RegDateProps {
   [key: string]: any;
 }
 
-export default function RegDate({ regDate, ...rest }: RegDateProps) {
+export const RegDate = ({ regDate, ...rest }: RegDateProps) => {
   const [date, setDate] = useState<string>();
   useEffect(() => {
     if (regDate && window) {
@@ -16,4 +16,4 @@ export default function RegDate({ regDate, ...rest }: RegDateProps) {
   }, [regDate]);
 
   return <>{date ? <span {...rest}>{date}</span> : "Loading..."}</>;
-}
+};

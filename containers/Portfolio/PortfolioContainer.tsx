@@ -1,4 +1,4 @@
-import PortfolioList from "@components/portfolio/portfolioList";
+import PortfolioList from "@components/portfolio/PortfolioListCmpt";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio } from "@prisma/client";

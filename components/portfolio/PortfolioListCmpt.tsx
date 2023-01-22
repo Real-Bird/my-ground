@@ -3,8 +3,7 @@ import Link from "next/link";
 import { Skeleton } from "@mui/material";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import { FloatingButton } from "@components/common";
-import Button from "@components/common/customButton";
+import { FloatingButton, Button } from "@components/common";
 
 interface PortfolioProps {
   isAuth: boolean;
@@ -12,7 +11,7 @@ interface PortfolioProps {
 }
 
 const PortfolioListItem = dynamic(
-  async () => await import("@components/portfolio/portfolioListItem"),
+  async () => await import("@components/portfolio/PortfolioListItemCmpt"),
   { suspense: true }
 );
 

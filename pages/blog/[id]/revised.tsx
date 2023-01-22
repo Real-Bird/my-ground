@@ -13,8 +13,7 @@ import useAdmin from "@libs/client/useAdmin";
 import { CategoricalResponse } from "pages/blog/upload";
 import useWindowSize from "@libs/client/useWindowSize";
 import { LayoutContainer } from "@containers/Common";
-import { Input } from "@components/common";
-import Button from "@components/common/customButton";
+import { Input, Button } from "@components/common";
 
 interface BlogRevisedFormResponse {
   category: string;

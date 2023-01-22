@@ -8,7 +8,7 @@ import { useMultistepForm } from "@libs/client/useMultisteopForm";
 import { cls } from "@libs/client/utils";
 import { FormWrapper } from "@components/form";
 import { MyPortfolio, StackBadge } from "@prisma/client";
-import { FormButton } from "@components/common";
+import { FormButton } from "@components/form";
 import { ContentFormContainer } from "@containers/Common/ContentFormContainer";
 import { OptionsFormContainer } from "@containers/Common/OptionsFormContainer";
 import useSWR from "swr";

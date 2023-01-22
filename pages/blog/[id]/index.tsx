@@ -8,10 +8,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { SWRConfig } from "swr";
 import { LayoutContainer } from "@containers/Common";
-import { FloatingButton, PostNavBtn } from "@components/common";
+import { FloatingButton, PostNavBtn, RegDate } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
-import RegDate from "@components/common/regDate";
 
 interface CategoryWithBlog extends MyBlog {
   category: {

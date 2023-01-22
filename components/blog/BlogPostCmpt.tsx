@@ -1,4 +1,4 @@
-import RegDate from "@components/common/regDate";
+import { RegDate } from "@components/common";
 import { cls } from "@libs/client/utils";
 import { MyBlog } from "@prisma/client";
 import Link from "next/link";
@@ -9,7 +9,7 @@ interface BlogPostProps {
   idx: number;
 }
 
-const BlogPost = ({ post, category, idx }: BlogPostProps) => {
+export const BlogPost = ({ post, category, idx }: BlogPostProps) => {
   const ANIMATION_DELAY = `${0.2 * (idx % 10)}s`;
   return (
     <li
@@ -37,5 +37,3 @@ const BlogPost = ({ post, category, idx }: BlogPostProps) => {
     </li>
   );
 };
-
-export default BlogPost;

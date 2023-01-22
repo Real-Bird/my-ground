@@ -6,7 +6,7 @@ interface TocProps {
   activeId: string;
 }
 
-const Toc = ({ result, activeId }: TocProps) => {
+export const Toc = ({ result, activeId }: TocProps) => {
   return (
     <ul className="space-y-1">
       {result.map((item, idx) => {
@@ -35,5 +35,3 @@ const Toc = ({ result, activeId }: TocProps) => {
     </ul>
   );
 };
-
-export default Toc;

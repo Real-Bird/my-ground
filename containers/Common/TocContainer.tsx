@@ -1,4 +1,4 @@
-import Toc from "@components/portfolio/toc";
+import { Toc } from "@components/form";
 import { useIntersectionObserver } from "@libs/client/useIntersectionObserver";
 import { useState } from "react";
 

@@ -2,10 +2,10 @@ import client from "@libs/server/client";
 import { MyGroundPost } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import useSWR, { SWRConfig } from "swr";
-import PostListItem from "@components/contact/postListItem";
-import PostViewer from "@components/contact/postViewer";
+import PostListItem from "@components/contact/PostListItemCmpt";
+import PostViewer from "@components/contact/PostViewerCmpt";
 import { useState } from "react";
-import ContactUpload from "@components/contact/contactUpload";
+import ContactUpload from "@components/contact/ContactUploadCmpt";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 
 export interface PostsPropsWithSSR {

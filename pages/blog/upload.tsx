@@ -11,8 +11,7 @@ import { cls } from "@libs/client/utils";
 import useAdmin from "@libs/client/useAdmin";
 import useWindowSize from "@libs/client/useWindowSize";
 import { LayoutContainer } from "@containers/Common";
-import { Input } from "@components/common";
-import Button from "@components/common/customButton";
+import { Input, Button } from "@components/common";
 
 interface UploadFormResponse {
   category: string;

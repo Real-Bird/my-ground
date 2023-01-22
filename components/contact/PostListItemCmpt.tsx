@@ -1,4 +1,4 @@
-import RegDate from "@components/common/regDate";
+import { RegDate } from "@components/common";
 import { cls } from "@libs/client/utils";
 import { memo } from "react";
 
