@@ -12,6 +12,7 @@ import { FormButton } from "@components/form";
 import { ContentFormContainer } from "@containers/Common/ContentFormContainer";
 import { OptionsFormContainer } from "@containers/Common/OptionsFormContainer";
 import useSWR from "swr";
+import Head from "next/head";
 
 const MarkdownViewer = dynamic(() => import("@uiw/react-markdown-preview"), {
   ssr: false,
@@ -119,7 +120,6 @@ const PortfolioUploadContainer = () => {
   return (
     <FormWrapper
       title="PF Upload"
-      handleCheckKeyDown={checkKeyDown}
       onSubmit={handleSubmit}
       onValid={onValid}
       isLastStep={isLastStep}

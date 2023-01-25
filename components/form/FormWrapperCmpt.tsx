@@ -1,12 +1,11 @@
 import type { UseFormHandleSubmit } from "react-hook-form";
-import type { KeyboardEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { cls } from "@libs/client/utils";
 import Head from "next/head";
 import { PFUploadFormResponse } from "@containers/Portfolio/PFUploadContainer";
 
 interface FormWrapperProps {
   children: ReactNode;
-  handleCheckKeyDown: (e: KeyboardEvent) => void;
   onSubmit: UseFormHandleSubmit<PFUploadFormResponse>;
   onValid: (validForm: PFUploadFormResponse) => void;
   isLastStep: boolean;
@@ -15,7 +14,6 @@ interface FormWrapperProps {
 
 export const FormWrapper = ({
   children,
-  handleCheckKeyDown,
   onSubmit,
   onValid,
   isLastStep,
@@ -32,7 +30,9 @@ export const FormWrapper = ({
           "h-screen w-full"
         )}
         onSubmit={onSubmit(onValid)}
-        onKeyDown={handleCheckKeyDown}
+        onKeyDown={(e) => {
+          if (e.code === "Enter" && isLastStep) e.preventDefault();
+        }}
       >
         {children}
       </form>
