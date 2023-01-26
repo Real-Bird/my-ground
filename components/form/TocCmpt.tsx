@@ -14,6 +14,7 @@ export const Toc = ({ result, activeId }: TocProps) => {
           return (
             <li
               key={item.title + idx}
+              id={item.link}
               className={cls(
                 activeId === item.link
                   ? "border-l-2 border-amber-400 bg-gray-100 font-semibold"

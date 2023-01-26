@@ -9,7 +9,7 @@ interface BlogPostProps {
   idx: number;
 }
 
-export const BlogPost = ({ post, category, idx }: BlogPostProps) => {
+const BlogPost = ({ post, category, idx }: BlogPostProps) => {
   const ANIMATION_DELAY = `${0.2 * (idx % 10)}s`;
   return (
     <li
@@ -37,3 +37,5 @@ export const BlogPost = ({ post, category, idx }: BlogPostProps) => {
     </li>
   );
 };
+
+export default BlogPost;

@@ -1,16 +1,17 @@
 import { MyBlog } from "@prisma/client";
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { SWRConfig } from "swr";
 import { LayoutContainer } from "@containers/Common";
 import { FloatingButton, PostNavBtn, RegDate } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
+import PrevNextPost from "@components/blog/PrevNextPostCmpt";
+import getIntersectionObserver from "@libs/client/getIntersectionObserver";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -18,16 +19,30 @@ interface CategoryWithBlog extends MyBlog {
   };
 }
 
+type PrevNextPost = Pick<MyBlog, "id" | "title">;
+type RefProps = { [key: string]: IntersectionObserverEntry };
+
+interface TotalPostProps {
+  post: CategoryWithBlog;
+  prevPost: PrevNextPost;
+  nextPost: PrevNextPost;
+}
+
 const MarkdownPreview = dynamic<MarkdownPreviewProps>(
-  () => import("@uiw/react-markdown-preview"),
+  async () => await import("@uiw/react-markdown-preview"),
   {
     ssr: false,
   }
 );
 
-const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
-  const { admin, ok } = useAdmin();
+const BlogDetail: NextPage<{
+  totalPost: TotalPostProps;
+}> = ({ totalPost }) => {
+  const { post, prevPost, nextPost } = totalPost;
+  const { ok } = useAdmin();
   const router = useRouter();
+  const headingsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!post) {
       router.push("/404");
@@ -65,12 +80,29 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
         <div
           className="min-h-[68vh] rounded-md bg-slate-300 p-3"
           data-color-mode="light"
+          ref={headingsRef}
         >
           <MarkdownPreview
             source={post?.content}
-            wrapperElement={{ "data-color-mode": "light" }}
+            wrapperElement={{ "data-color-mode": "light", ref: headingsRef }}
             style={{ backgroundColor: "#cbd5e1" }}
           />
+        </div>
+        <div className="flex w-full items-center justify-between gap-3">
+          {prevPost && (
+            <PrevNextPost
+              id={prevPost.id}
+              title={prevPost.title}
+              label={"이전 글"}
+            />
+          )}
+          {nextPost && (
+            <PrevNextPost
+              id={nextPost.id}
+              title={nextPost.title}
+              label={"다음 글"}
+            />
+          )}
         </div>
       </div>
       {ok && (
@@ -91,37 +123,31 @@ const BlogDetail: NextPage<{ post: CategoryWithBlog }> = ({ post }) => {
         </FloatingButton>
       )}
       <TocContainer
-        content={post ? post.content : ""}
-        title={post ? post.title : ""}
+        headingsRef={headingsRef}
+        content={post ? post?.content : ""}
+        title={post ? post?.title : ""}
       />
     </LayoutContainer>
   );
 };
 
-const Page: NextPage<{ post: CategoryWithBlog; id: number }> = ({
-  post,
-  id,
-}) => {
-  return (
-    <SWRConfig
-      value={{
-        fallback: {
-          [`/api/contact/${id}`]: {
-            ok: true,
-            post,
-          },
-        },
-      }}
-    >
-      <BlogDetail post={post} />
-    </SWRConfig>
-  );
+const Page: NextPage<{
+  totalPost: TotalPostProps;
+}> = ({ totalPost }) => {
+  return <BlogDetail totalPost={totalPost} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+export const getStaticProps: GetStaticProps = async (ctx) => {
   const {
-    query: { id },
+    params: { id },
   } = ctx;
+
   const post = await client.myBlog.findUnique({
     where: {
       id: +id,
@@ -134,11 +160,37 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     },
   });
-  if (!post) return { props: {} };
+  if (!post)
+    return {
+      props: { totalPost: { post: null, prevPost: null, nextPost: null } },
+    };
+  const prevPost = await client.myBlog.findMany({
+    take: -1,
+    skip: 1,
+    cursor: {
+      id: +id,
+    },
+    select: {
+      id: true,
+      title: true,
+    },
+  });
+  const nextPost = await client.myBlog.findMany({
+    take: 1,
+    skip: 1,
+    cursor: {
+      id: +id,
+    },
+    select: {
+      id: true,
+      title: true,
+    },
+  });
   return {
     props: {
-      post: JSON.parse(JSON.stringify(post)),
-      postId: JSON.parse(JSON.stringify(id)),
+      totalPost: JSON.parse(
+        JSON.stringify({ post, prevPost: prevPost[0], nextPost: nextPost[0] })
+      ),
     },
   };
 };

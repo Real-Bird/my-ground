@@ -8,6 +8,12 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
+    if (!req.session.user?.admin)
+      return res.json({
+        ok: false,
+        message: "You are Not Admin! Don't hack me!",
+      });
+
     const {
       query: { id },
     } = req;
@@ -23,11 +29,6 @@ async function handler(
         },
       },
     });
-    if (!req.session.user?.admin)
-      return res.json({
-        ok: false,
-        message: "You are Not Admin! Don't hack me!",
-      });
     res.json({
       ok: true,
       post,

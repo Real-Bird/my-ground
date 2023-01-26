@@ -5,7 +5,7 @@ import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio, StackBadge } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import useSWR from "swr";
 
 export interface BadgeWithPf extends MyPortfolio {
@@ -29,6 +29,7 @@ const PortfolioItemContainer = () => {
     router.query.id ? `/api/portfolio/${router.query.id}` : null,
     { fallback: <PortfolioLoading /> }
   );
+  const headingsRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (data && !data.ok) {
       router.push("/404");
@@ -36,7 +37,10 @@ const PortfolioItemContainer = () => {
   }, [data, router]);
   return (
     <LayoutContainer title="Portfolio" backUrl="/portfolio">
-      <div className="w-full flex-col items-center justify-center space-y-2 px-3 lg:my-5 lg:flex">
+      <div
+        className="w-full flex-col items-center justify-center space-y-2 px-3 lg:my-5 lg:flex"
+        ref={headingsRef}
+      >
         <Suspense fallback={<PortfolioLoading />}>
           {data && <PortfolioItem ok={ok} portfolioData={data?.portfolio} />}
         </Suspense>
@@ -62,6 +66,7 @@ const PortfolioItemContainer = () => {
         )}
       </div>
       <TocContainer
+        headingsRef={headingsRef}
         content={data ? data.portfolio.content : ""}
         title={data ? data.portfolio.title : ""}
       />

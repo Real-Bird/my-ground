@@ -54,7 +54,7 @@ export const Header = ({
       <Link href={"/"}>
         <a className="absolute left-4 hidden lg:inline-block">
           <img
-            src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
+            src="https://raw.githubusercontent.com/Real-Bird/my-ground/main/public/myground.logo.png"
             className="h-10 w-10"
             alt="logo"
           />
@@ -66,7 +66,7 @@ export const Header = ({
         onClick={onToggleDropdown}
       >
         <img
-          src="https://raw.githubusercontent.com/Real-Bird/my-ground/dev-branch2/public/myground.logo.png"
+          src="https://raw.githubusercontent.com/Real-Bird/my-ground/main/public/myground.logo.png"
           alt="profile"
           className="h-10 w-10 rounded-full bg-gray-500"
         />

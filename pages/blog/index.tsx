@@ -4,7 +4,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import Link from "next/link";
-import { BlogPost } from "@components/blog";
+import BlogPost from "@components/blog/BlogPostCmpt";
 import useSWRInfinite from "swr/infinite";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import { FloatingButton, Button } from "@components/common";
