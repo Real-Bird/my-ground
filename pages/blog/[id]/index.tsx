@@ -11,7 +11,6 @@ import { FloatingButton, PostNavBtn, RegDate } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 import PrevNextPost from "@components/blog/PrevNextPostCmpt";
-import getIntersectionObserver from "@libs/client/getIntersectionObserver";
 
 interface CategoryWithBlog extends MyBlog {
   category: {
@@ -20,7 +19,6 @@ interface CategoryWithBlog extends MyBlog {
 }
 
 type PrevNextPost = Pick<MyBlog, "id" | "title">;
-type RefProps = { [key: string]: IntersectionObserverEntry };
 
 interface TotalPostProps {
   post: CategoryWithBlog;

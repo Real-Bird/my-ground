@@ -96,9 +96,6 @@ const PortfolioUploadContainer = () => {
     validForm = data;
     upload({ ...validForm });
   };
-  const checkKeyDown = (e: KeyboardEvent) => {
-    if (e.code === "Enter" && isLastStep) e.preventDefault();
-  };
   const onBackClick = () => {
     if (isLastStep) return back();
     router.back();
