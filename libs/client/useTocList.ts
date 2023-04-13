@@ -17,7 +17,7 @@ export function useTocList(content: string) {
       }
       const title = item.split("# ")[1].replace(/`/g, "").trim();
       let link = title
-        .replaceAll(/[`~!@#\$%\^&\*()=\+\\|\/\?<>,.\[\]_"'\{\}]/g, "")
+        .replaceAll(/[`~!@#\$%\^&\*()=\+\\|\/\?<>,.\[\]"'\{\}]/g, "")
         .replaceAll(" ", "-")
         .toLowerCase();
       link =

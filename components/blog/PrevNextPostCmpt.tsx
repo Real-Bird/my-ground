@@ -24,7 +24,10 @@ const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-6 w-6"
+              className={cls(
+                label === "다음 글" ? "rotate-180" : "",
+                "h-6 w-6"
+              )}
             >
               <path
                 strokeLinecap="round"
@@ -47,7 +50,12 @@ const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
             >
               {label}
             </span>
-            <span className="overflow-x-clip text-ellipsis whitespace-pre py-2 text-lg font-semibold">
+            <span
+              className={cls(
+                label === "다음 글" ? "self-end" : "text-start",
+                "overflow-x-clip text-ellipsis whitespace-pre py-2 text-lg font-semibold"
+              )}
+            >
               {title}
             </span>
           </div>
