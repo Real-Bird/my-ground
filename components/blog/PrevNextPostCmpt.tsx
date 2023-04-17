@@ -52,7 +52,7 @@ const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
             </span>
             <span
               className={cls(
-                label === "다음 글" ? "self-end" : "text-start",
+                label === "다음 글" ? "text-end" : "text-start",
                 "overflow-x-clip text-ellipsis whitespace-pre py-2 text-lg font-semibold"
               )}
             >

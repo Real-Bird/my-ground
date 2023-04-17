@@ -15,7 +15,13 @@ export const Introduce = ({ ok }: IntroduceProps) => {
         <div className="flex flex-col flex-wrap space-y-2">
           <h2 className="text-xl font-medium">
             <div>안녕하세요!🙋‍♂️</div>
-            <div>프론트엔드 개발자를 꿈꾸는 김진영입니다.</div>
+            <div>
+              어제보다 오늘 더 발전하는 개발자,
+              <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                김진영
+              </span>
+              입니다.
+            </div>
           </h2>
           <div className="flex flex-row">
             <div className="flex h-fit w-48 flex-col items-center space-y-3">
@@ -85,7 +91,14 @@ export const Introduce = ({ ok }: IntroduceProps) => {
             </div>
             <ul className="space-y-1 px-1">
               <li className="pb-1">
-                새로운 기술과 지식을 익히고 적용하기를 즐깁니다.
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  한국생산성본부
+                </span>
+                와{" "}
+                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
+                  정보통신기획평가원
+                </span>
+                에서 주관한 ICT 교육을 수료했습니다.
               </li>
               <li className="pb-1">
                 <span className="rounded-md bg-amber-500 px-1.5 font-bold">
@@ -95,7 +108,7 @@ export const Introduce = ({ ok }: IntroduceProps) => {
                 <span className="rounded-md bg-amber-500 px-1.5 font-bold">
                   React
                 </span>{" "}
-                위주의 개발을 선호합니다.
+                주로 사용하는 웹 프론트엔드 개발자를 지향합니다.
               </li>
               <li className="pb-1">
                 <span className="rounded-md bg-amber-500 px-1.5 font-bold">
@@ -104,16 +117,11 @@ export const Introduce = ({ ok }: IntroduceProps) => {
                 자격증을 취득하여 부족한 CS 지식을 보충했습니다.
               </li>
               <li className="pb-1">
+                문제가 발생할 경우 회피하지 않고{" "}
                 <span className="rounded-md bg-amber-500 px-1.5 font-bold">
-                  탁월한 문제해결력
+                  집요하게 해결
                 </span>
-                으로 문제를 포기하지 않고 끝까지 해결합니다.
-              </li>
-              <li className="pb-1">
-                <span className="rounded-md bg-amber-500 px-1.5 font-bold">
-                  향상심
-                </span>
-                으로 꾸준히 발전 하는 개발자가 되겠습니다.
+                하는 자세를 갖고 있습니다.
               </li>
             </ul>
           </div>
