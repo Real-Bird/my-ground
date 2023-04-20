@@ -37,7 +37,7 @@ const Notices: NextPage<{ posts: Post[] }> = ({ posts }) => {
                 </a>
               </Link>
               <div className="w-24 py-2 text-sm lg:w-64 lg:text-xl">
-                <RegDate regDate={new Date(post.createdAt)} y m d />
+                <RegDate regDate={new Date(post.updatedAt)} y m d />
               </div>
             </li>
           ))}
