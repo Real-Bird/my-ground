@@ -85,7 +85,7 @@ const RevisedContainer = () => {
       <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
         <PostInfoForm
           register={register}
-          categories={categoriesData.categories}
+          categories={categoriesData?.categories}
           errors={errors}
           keyword={keyword}
           searchKeyword={searchKeyword}

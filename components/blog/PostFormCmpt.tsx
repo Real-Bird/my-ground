@@ -47,7 +47,7 @@ export const PostInfoForm = ({
           type="text"
         />
         <ul className="absolute z-10 w-full" id="category">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <li
               key={category.id}
               className={cls(
