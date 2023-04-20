@@ -11,9 +11,9 @@ category: sub
 
 ### 1. blog
 
-- [ ] `SSG` 전환
-- [ ] `page`, `container`, `component` 분리
-- [ ] `upload/revised` UI 변경
+- [x] `SSG` 전환 - **23.04.19 수정**
+- [x] `page`, `container`, `component` 분리 **23.04.20 수정**
+- [ ] `upload/revised` UI 변경 및 코드 수정
 - [ ] 카테고리 키워드 여러 개 추가
 - [ ] 키워드 별 필터 설정
 

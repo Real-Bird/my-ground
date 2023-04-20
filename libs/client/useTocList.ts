@@ -9,7 +9,8 @@ export function useTocList(content: string) {
     const titles = content
       .replaceAll(/^```(?:\w*)\n([\s\S]*?)```$/gm, "")
       .split(`\n`)
-      .filter((t) => t.startsWith("#"));
+      .filter((t) => t.match(/^#{1,3} /g));
+
     const tocList = titles.map((item) => {
       let count = item.match(/#/g)?.length;
       if (count) {

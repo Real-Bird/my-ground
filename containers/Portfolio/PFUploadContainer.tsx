@@ -1,18 +1,15 @@
-import { useForm } from "react-hook-form";
-import { KeyboardEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
+import { MyPortfolio, StackBadge } from "@prisma/client";
+import { useForm } from "react-hook-form";
+import useSWR from "swr";
+import { FormWrapper, FormButton } from "@components/form";
+import { ContentFormContainer, OptionsFormContainer } from "@containers/Common";
 import useMutation from "@libs/client/useMutation";
 import { useMultistepForm } from "@libs/client/useMultisteopForm";
 import { cls } from "@libs/client/utils";
-import { FormWrapper } from "@components/form";
-import { MyPortfolio, StackBadge } from "@prisma/client";
-import { FormButton } from "@components/form";
-import { ContentFormContainer } from "@containers/Common/ContentFormContainer";
-import { OptionsFormContainer } from "@containers/Common/OptionsFormContainer";
-import useSWR from "swr";
-import Head from "next/head";
+import "@uiw/react-markdown-preview/markdown.css";
 
 const MarkdownViewer = dynamic(() => import("@uiw/react-markdown-preview"), {
   ssr: false,

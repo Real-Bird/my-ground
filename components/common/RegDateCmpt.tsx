@@ -7,13 +7,18 @@ interface RegDateProps {
 }
 
 export const RegDate = ({ regDate, ...rest }: RegDateProps) => {
-  const [date, setDate] = useState<string>();
-  useEffect(() => {
-    if (regDate && window) {
-      const date = timeAgo(regDate);
-      setDate(date);
-    }
-  }, [regDate]);
-
-  return <>{date ? <span {...rest}>{date}</span> : "Loading..."}</>;
+  // const [date, setDate] = useState<string>();
+  // useEffect(() => {
+  //   if (regDate && window) {
+  //     const date = timeAgo(regDate);
+  //     setDate(date);
+  //   }
+  // }, [regDate]);
+  const date = timeAgo(regDate);
+  // return <>{date ? <span {...rest}>{date}</span> : "Loading..."}</>;
+  return (
+    <time dateTime={date} suppressHydrationWarning>
+      {date}
+    </time>
+  );
 };

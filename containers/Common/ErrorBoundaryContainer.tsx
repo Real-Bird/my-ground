@@ -1,5 +1,5 @@
 import { ClientErrorBoundary } from "@components/common";
-import { LayoutContainer } from "@containers/Common";
+import { LayoutContainer } from "@containers/Common/LayoutContainer";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
