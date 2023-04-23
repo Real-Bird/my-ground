@@ -14,7 +14,7 @@ async function handler(
       body: { account, password },
     }: { body: { account: string; password: string } } = req;
 
-    const isUser = await client.user.findUnique({
+    const isUser = await client.user.findFirst({
       where: {
         account,
       },
