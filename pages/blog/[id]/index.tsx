@@ -46,7 +46,7 @@ const BlogDetail: NextPage<{
       <div className="w-4/5 max-w-6xl space-y-2 px-3 lg:py-4">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="w-full border-b-2 border-dotted py-5 text-center text-5xl font-bold">
-            {post?.title}
+            {post.title}
           </h1>
         </div>
         <div className="flex w-full items-end justify-between">
@@ -62,12 +62,12 @@ const BlogDetail: NextPage<{
           <div className="flex flex-col items-end justify-center py-1 px-1">
             <div className="text-sm">
               <div className="my-1 flex flex-wrap lg:text-[1rem]">
-                {categories?.map((category) => (
+                {categories.map((category) => (
                   <Badge key={category.id} label={category.category} />
                 ))}
               </div>
               <div className="text-end lg:text-[1rem]">
-                <RegDate regDate={post?.updated} />
+                <RegDate regDate={post.updated} />
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ const BlogDetail: NextPage<{
           ref={headingsRef}
         >
           <MarkdownPreview
-            source={post?.content}
+            source={post.content}
             wrapperElement={{ "data-color-mode": "light", ref: headingsRef }}
             style={{ backgroundColor: "#cbd5e1" }}
           />
@@ -101,7 +101,7 @@ const BlogDetail: NextPage<{
         </div>
       </div>
       {ok && (
-        <FloatingButton href={`/blog/${post?.id}/revised`} type="Revised">
+        <FloatingButton href={`/blog/${post.id}/revised`} type="Revised">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -119,8 +119,8 @@ const BlogDetail: NextPage<{
       )}
       <TocContainer
         headingsRef={headingsRef}
-        content={post ? post?.content : ""}
-        title={post ? post?.title : ""}
+        content={post ? post.content : ""}
+        title={post ? post.title : ""}
       />
     </LayoutContainer>
   );
