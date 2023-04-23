@@ -12,13 +12,14 @@ export default function timeAgo(startedDate: Date) {
   const daysPassed = Math.ceil(
     (started.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
   );
-
-  if (daysPassed === 0) {
-    const hoursPassed = Math.ceil(
-      (started.getTime() - today.getTime()) / (1000 * 60 * 60)
-    );
+  const hoursPassed = Math.ceil(
+    (started.getTime() - today.getTime()) / (1000 * 60 * 60)
+  );
+  if (hoursPassed === 0) {
+    return "방금 전";
+  } else if (hoursPassed < -1 && daysPassed > -1) {
     return relativeFormatter.format(hoursPassed, "hour");
-  } else if (daysPassed > -7) {
+  } else if (daysPassed <= -1 && daysPassed > -7) {
     return relativeFormatter.format(daysPassed, "day");
   } else {
     return localeFormatter.format(started.getTime());

@@ -1,2 +1,2 @@
 export * from "./BlogPostCmpt";
-export * from "./PostFormCmpt";
+export * from "./PrevNextPostCmpt";

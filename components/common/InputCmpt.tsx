@@ -1,5 +1,4 @@
 import { cls } from "@libs/client/utils";
-import { MouseEventHandler } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
@@ -11,7 +10,7 @@ interface InputProps {
   value?: string;
   placeholder?: string;
   isDisabled?: boolean;
-  onClick?: MouseEventHandler<HTMLInputElement>;
+  onClick?: () => void;
   max?: string;
 }
 
@@ -35,7 +34,7 @@ export const Input = ({
       >
         {label}
       </label>
-      <div className="relative flex flex-col items-start  rounded-md shadow-sm">
+      <div className="relative flex flex-col items-start rounded-md shadow-sm">
         <input
           id={name}
           {...register}

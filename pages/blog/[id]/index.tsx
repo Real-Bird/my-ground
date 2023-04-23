@@ -1,27 +1,22 @@
-import { MyBlog } from "@prisma/client";
+import { Category, MyBlog } from "@prisma/client";
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { LayoutContainer } from "@containers/Common";
-import { FloatingButton, PostNavBtn, RegDate } from "@components/common";
+import { Badge, FloatingButton, PostNavBtn, RegDate } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
-import PrevNextPost from "@components/blog/PrevNextPostCmpt";
-
-interface CategoryWithBlog extends MyBlog {
-  category: {
-    category: string;
-  };
-}
+import { PrevNextPost } from "@components/blog";
 
 type PrevNextPost = Pick<MyBlog, "id" | "title">;
 
 interface TotalPostProps {
-  post: CategoryWithBlog;
+  post: MyBlog;
+  categories: Category[];
   prevPost: PrevNextPost;
   nextPost: PrevNextPost;
 }
@@ -36,7 +31,7 @@ const MarkdownPreview = dynamic<MarkdownPreviewProps>(
 const BlogDetail: NextPage<{
   totalPost: TotalPostProps;
 }> = ({ totalPost }) => {
-  const { post, prevPost, nextPost } = totalPost;
+  const { post, categories, prevPost, nextPost } = totalPost;
   const { ok } = useAdmin();
   const router = useRouter();
   const headingsRef = useRef<HTMLDivElement>(null);
@@ -64,13 +59,15 @@ const BlogDetail: NextPage<{
               />
             )}
           </div>
-          <div className="flex flex-col items-end py-1 px-1">
+          <div className="flex flex-col items-end justify-center py-1 px-1">
             <div className="text-sm">
-              <div className="lg:text-[1rem]">
-                카테고리: {post?.category?.category}
+              <div className="my-1 flex flex-wrap lg:text-[1rem]">
+                {categories?.map((category) => (
+                  <Badge key={category.id} label={category.category} />
+                ))}
               </div>
-              <div className="lg:text-[1rem]">
-                작성일: <RegDate regDate={post?.updated} />
+              <div className="text-end lg:text-[1rem]">
+                <RegDate regDate={post?.updated} />
               </div>
             </div>
           </div>
@@ -150,18 +147,30 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     where: {
       id: +id,
     },
-    include: {
-      category: {
-        select: {
-          category: true,
+  });
+
+  const categories = await client.category.findMany({
+    where: {
+      posts: {
+        some: {
+          id: post.id,
         },
       },
     },
   });
+
   if (!post)
     return {
-      props: { totalPost: { post: null, prevPost: null, nextPost: null } },
+      props: {
+        totalPost: {
+          post: null,
+          categories: null,
+          prevPost: null,
+          nextPost: null,
+        },
+      },
     };
+
   const prevPost = await client.myBlog.findMany({
     take: -1,
     skip: 1,
@@ -187,7 +196,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       totalPost: JSON.parse(
-        JSON.stringify({ post, prevPost: prevPost[0], nextPost: nextPost[0] })
+        JSON.stringify({
+          post,
+          categories,
+          prevPost: prevPost[0],
+          nextPost: nextPost[0],
+        })
       ),
     },
   };

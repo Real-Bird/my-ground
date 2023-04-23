@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useAdmin from "@libs/client/useAdmin";
-import RevisedContainer from "@containers/Blog/RevisedContainer";
+import UploadContainer from "@containers/Blog/UploadContainer";
 
 const BlogRevised: NextPage = () => {
   const { ok } = useAdmin();
@@ -13,7 +13,7 @@ const BlogRevised: NextPage = () => {
       router.push("/403");
     }
   }, []);
-  return <RevisedContainer />;
+  return <UploadContainer />;
 };
 
 export default BlogRevised;

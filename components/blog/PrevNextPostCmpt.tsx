@@ -7,7 +7,7 @@ interface PrevNextPostProps {
   title: string;
 }
 
-const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
+export const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
   return (
     <div className="h-24 w-1/3 rounded-lg bg-slate-300 p-3 shadow-lg transition-colors hover:bg-slate-400">
       <Link href={`/blog/${id}`}>
@@ -64,5 +64,3 @@ const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
     </div>
   );
 };
-
-export default PrevNextPost;

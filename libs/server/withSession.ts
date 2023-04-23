@@ -1,3 +1,4 @@
+import { IronSessionOptions } from "iron-session";
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 
 declare module "iron-session" {
@@ -11,11 +12,12 @@ declare module "iron-session" {
   }
 }
 
-const cookieOptions = {
+const cookieOptions: IronSessionOptions = {
   cookieName: "myGroundSession",
   password: process.env.SESSION_PWD!,
   cookieOptions: {
     maxAge: 60 * 60 * 24 * 7,
+    httpOnly: true,
   },
 };
 

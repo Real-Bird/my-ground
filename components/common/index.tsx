@@ -18,3 +18,4 @@ export * from "./TextareaCmpt";
 export * from "./ClientErrorBoundaryCmpt";
 export * from "./MetaCmpt";
 export * from "./RegDateCmpt";
+export * from "./BadgeCmpt";

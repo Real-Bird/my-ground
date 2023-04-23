@@ -9,8 +9,8 @@ import { LayoutContainer } from "@containers/Common";
 import { Input, Button } from "@components/common";
 
 interface EnterForm {
-  email?: string;
-  phone?: string;
+  account?: string;
+  password?: string;
 }
 
 interface MutationResult {
@@ -51,7 +51,7 @@ const Auth = () => {
       reset();
     }
     if (!data?.ok) {
-      setError("phone", { message: data?.error });
+      setError("password", { message: data?.error });
     }
   }, [data, router, ok]);
   return (
@@ -69,17 +69,17 @@ const Auth = () => {
               className="mt-8 flex flex-col space-y-4"
             >
               <Input
-                register={register("email", { required: true })}
-                name="email"
+                register={register("account", { required: true })}
+                name="account"
                 label="Admin Identify"
                 type="text"
               />
               <Input
-                register={register("phone", { required: true })}
-                name="phone"
+                register={register("password", { required: true })}
+                name="password"
                 label="Admin Password"
                 type="password"
-                error={errors.phone?.message}
+                error={errors.password?.message}
               />
               <Button text={loading ? "Loading" : "Get login"} />
             </form>

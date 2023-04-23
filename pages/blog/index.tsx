@@ -1,19 +1,13 @@
 import useAdmin from "@libs/client/useAdmin";
-import { MyBlog } from "@prisma/client";
+import { Category, MyBlog } from "@prisma/client";
 import type { GetServerSideProps, NextPage } from "next";
 import { SWRConfig } from "swr";
 import client from "@libs/server/client";
-import Link from "next/link";
-import { BlogPost } from "@components/blog";
 import useSWRInfinite from "swr/infinite";
-import { FooterContainer, LayoutContainer } from "@containers/Common";
-import { FloatingButton, Button } from "@components/common";
 import BlogContainer from "@containers/Blog/BlogContainer";
 
 export interface CategoryWithBlog extends MyBlog {
-  category: {
-    category: string;
-  };
+  category: Category[];
 }
 
 interface BlogPropsWithSSR {
@@ -31,11 +25,8 @@ const getKey = (pageIndex: number, previousPageData: BlogPropsWithSSR) => {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Blog: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
-  const { admin, ok } = useAdmin();
-  const { data, setSize, size } = useSWRInfinite<BlogPropsWithSSR>(
-    getKey,
-    fetcher
-  );
+  const { ok } = useAdmin();
+  const { data, setSize } = useSWRInfinite<BlogPropsWithSSR>(getKey, fetcher);
 
   const currentPostList = data ? data.map((item) => item.posts).flat() : [];
   const nextPostList = data ? data.map((item) => item.nextPosts) : [];

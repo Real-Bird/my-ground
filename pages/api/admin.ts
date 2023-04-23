@@ -11,19 +11,20 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      body: { phone, email },
+      body: { account, password },
     } = req;
+
     const isUser = await client.user.findUnique({
       where: {
-        email,
+        account,
       },
     });
+
     if (isUser) {
-      const isVerified = await argon2.verify(isUser.phone, phone);
+      const isVerified = await argon2.verify(isUser.password, password);
       if (!isVerified) {
         return res.json({ ok: false, error: "Not Verified Password" });
-      }
-      if (phone === process.env.ADMIN_PWD!) {
+      } else {
         req.session.user = {
           id: isUser.id,
           admin: true,
@@ -34,17 +35,17 @@ async function handler(
         res.json({ ok: true });
       }
     } else {
-      if (!(phone === process.env.ADMIN_PWD!)) {
+      if (!(password === process.env.ADMIN_PWD!)) {
         return res.json({
           ok: false,
           error: "You are Not Admin! Don't hack me!",
         });
       }
-      const pwdHash = await argon2.hash(phone);
+      const pwdHash = await argon2.hash(password);
       const admin = await client.user.create({
         data: {
-          phone: pwdHash,
-          email,
+          password: pwdHash,
+          account,
           name: "김진영",
         },
       });

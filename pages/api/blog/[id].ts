@@ -17,6 +17,7 @@ async function handler(
     const {
       query: { id },
     } = req;
+
     const post = await client.myBlog.findUnique({
       where: {
         id: +id,
@@ -29,65 +30,101 @@ async function handler(
         },
       },
     });
+
+    const prevPost = await client.myBlog.findMany({
+      take: -1,
+      skip: 1,
+      cursor: {
+        id: +id,
+      },
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+    const nextPost = await client.myBlog.findMany({
+      take: 1,
+      skip: 1,
+      cursor: {
+        id: +id,
+      },
+      select: {
+        id: true,
+        title: true,
+      },
+    });
     res.json({
       ok: true,
       post,
+      prevPost,
+      nextPost,
     });
   }
   if (req.method === "POST") {
     const {
       query: { id },
-      body: { title, content, category, summary },
+      body,
     } = req;
-    const existCategory = await client.category.findFirst({
+    const {
+      title,
+      content,
+      categories,
+      summary,
+    }: {
+      title: string;
+      content: string;
+      categories: string[];
+      summary: string;
+    } = body;
+
+    const allCategories = await client.category.findMany({});
+
+    const existedCategories = await client.category.findMany({
       where: {
-        category,
-      },
-      select: {
-        id: true,
+        posts: {
+          some: {
+            id: +id,
+          },
+        },
       },
     });
-    if (!existCategory) {
-      const post = await client.myBlog.update({
-        where: {
-          id: +id,
+
+    const deleteCategories = existedCategories.filter(
+      (item) => !categories.includes(item.category)
+    );
+
+    const newCategories = categories.filter(
+      (category) =>
+        !existedCategories.map((item) => item.category).includes(category)
+    );
+
+    const alreadyCategories = allCategories
+      .filter((item) => newCategories.includes(item.category))
+      .map((item) => ({ ...item }));
+
+    const nonExistedCategories = newCategories.filter(
+      (existed) => !allCategories.map((item) => item.category).includes(existed)
+    );
+
+    const updatePost = await client.myBlog.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        title,
+        summary,
+        content,
+        category: {
+          disconnect: deleteCategories.map((category) => ({ id: category.id })),
+          create: nonExistedCategories.map((category) => ({
+            category,
+          })),
+          connect: alreadyCategories.map((category) => ({ id: category.id })),
         },
-        data: {
-          title,
-          content,
-          summary,
-          category: {
-            create: {
-              category,
-            },
-          },
-        },
-      });
-      res.json({
-        ok: true,
-        post,
-      });
-    } else {
-      const post = await client.myBlog.update({
-        where: {
-          id: +id,
-        },
-        data: {
-          category: {
-            connect: {
-              id: existCategory.id,
-            },
-          },
-          title,
-          content,
-          summary,
-        },
-      });
-      res.json({
-        ok: true,
-        post,
-      });
-    }
+      },
+    });
+
+    return res.json({ ok: true, updatePost });
   }
 }
 

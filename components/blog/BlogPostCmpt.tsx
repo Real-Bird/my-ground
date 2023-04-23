@@ -1,15 +1,15 @@
-import { RegDate } from "@components/common";
+import { Badge, RegDate } from "@components/common";
 import { cls } from "@libs/client/utils";
-import { MyBlog } from "@prisma/client";
+import { Category, MyBlog } from "@prisma/client";
 import Link from "next/link";
 
 interface BlogPostProps {
   post: MyBlog;
-  category: string;
+  categories: Category[];
   idx: number;
 }
 
-export const BlogPost = ({ post, category, idx }: BlogPostProps) => {
+export const BlogPost = ({ post, categories, idx }: BlogPostProps) => {
   const ANIMATION_DELAY = `${0.2 * (idx % 10)}s`;
   return (
     <li
@@ -21,15 +21,19 @@ export const BlogPost = ({ post, category, idx }: BlogPostProps) => {
       <Link href={`/blog/${post.id}`}>
         <a className="cursor-pointer">
           <div className="flex flex-col items-start">
-            <span className="overflow-x-clip text-ellipsis whitespace-pre py-2 text-lg font-semibold lg:text-xl">
+            <div className="whitespace-normal py-2 text-start text-lg font-semibold lg:text-xl">
               {post.title}
-            </span>
-            <span className="w-3/4 px-4 text-start text-sm font-medium">
+            </div>
+            <div className="w-3/4 px-4 text-start text-sm font-medium">
               {post.summary}
-            </span>
+            </div>
           </div>
-          <div className="flex flex-col items-end justify-end pb-1.5 text-sm">
-            <span>{category}</span>
+          <div className="flex flex-wrap items-end justify-between pb-1.5 text-sm">
+            <ul className="flex flex-wrap items-center justify-start py-1">
+              {categories.map((category) => (
+                <Badge key={category.id} label={category.category} />
+              ))}
+            </ul>
             <RegDate regDate={post.updated} />
           </div>
         </a>

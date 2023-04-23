@@ -8,51 +8,41 @@ async function handler(
 ) {
   if (req.method === "POST") {
     const {
-      body: { category, content, title, summary },
+      body: { categories, content, title, summary },
+    }: {
+      body: {
+        categories: string[];
+        content: string;
+        title: string;
+        summary: string;
+      };
     } = req;
-    const existCategory = await client.category.findFirst({
-      where: {
-        category,
-      },
-      select: {
-        id: true,
+
+    const allCategories = await client.category.findMany({});
+
+    const existedCategories = allCategories
+      .filter((item) => categories.includes(item.category))
+      .map((item) => ({ ...item }));
+    const nonExistedCategories = categories.filter(
+      (existed) => !allCategories.map((item) => item.category).includes(existed)
+    );
+
+    const post = await client.myBlog.create({
+      data: {
+        title,
+        content,
+        summary,
+        category: {
+          create: nonExistedCategories.map((category) => ({ category })),
+          connect: existedCategories.map((category) => ({ id: category.id })),
+        },
       },
     });
-    if (!existCategory) {
-      const post = await client.myBlog.create({
-        data: {
-          title,
-          content,
-          summary,
-          category: {
-            create: {
-              category,
-            },
-          },
-        },
-      });
-      res.json({
-        ok: true,
-        post,
-      });
-    } else {
-      const post = await client.myBlog.create({
-        data: {
-          title,
-          content,
-          summary,
-          category: {
-            connect: {
-              id: existCategory.id,
-            },
-          },
-        },
-      });
-      res.json({
-        ok: true,
-        post,
-      });
-    }
+
+    return res.json({
+      ok: true,
+      post,
+    });
   }
   if (req.method === "GET") {
     const limit = 10;

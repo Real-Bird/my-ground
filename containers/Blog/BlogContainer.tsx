@@ -37,7 +37,7 @@ const BlogContainer = ({
             <BlogPost
               key={post.id}
               post={post}
-              category={post.category.category}
+              categories={post.category}
               idx={idx}
             />
           ))}
