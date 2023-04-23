@@ -12,7 +12,7 @@ async function handler(
   if (req.method === "POST") {
     const {
       body: { account, password },
-    } = req;
+    }: { body: { account: string; password: string } } = req;
 
     const isUser = await client.user.findUnique({
       where: {
