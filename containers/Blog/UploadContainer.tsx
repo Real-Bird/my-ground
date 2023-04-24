@@ -53,9 +53,10 @@ const UploadContainer = () => {
     "/api/blog/categories"
   );
   const categories = categoriesData?.categories || [];
-  const [upload, { data: uploadData, loading: uploadLoading }] = useMutation(
-    router.query.id ? `/api/blog/${router.query.id}` : "/api/blog"
-  );
+  const [upload, { data: uploadData, loading: uploadLoading }] =
+    useMutation<RevisedResponse>(
+      router.query.id ? `/api/blog/${router.query.id}` : "/api/blog"
+    );
   const {
     register,
     handleSubmit,
@@ -128,7 +129,11 @@ const UploadContainer = () => {
 
   useEffect(() => {
     if (uploadData && uploadData.ok) {
-      router.push(`/blog`);
+      router.push(
+        router.query.id
+          ? `/blog/${router.query.id}`
+          : `/blog/${uploadData.post.id}`
+      );
     }
   }, [uploadData]);
   return (

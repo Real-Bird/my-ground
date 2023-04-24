@@ -123,7 +123,8 @@ async function handler(
         },
       },
     });
-
+    console.log(updatePost);
+    res.revalidate(`/blog/${updatePost.id}`);
     return res.json({ ok: true, updatePost });
   }
 }
