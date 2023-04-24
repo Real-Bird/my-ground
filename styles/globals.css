@@ -56,3 +56,13 @@ a {
 ol {
   list-style: decimal;
 }
+
+.temp__upload_categories {
+  height: fit-content;
+  max-height: 15rem;
+}
+
+.temp__upload_categories_option:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}

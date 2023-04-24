@@ -206,13 +206,13 @@ const UploadContainer = () => {
           </div>
           {isInputFocused ? (
             <ul
-              className="absolute z-10 h-fit max-h-60 w-full divide-y-2 overflow-y-scroll rounded-md border border-gray-300"
+              className="temp__upload_categories absolute z-10 h-fit max-h-60 w-full divide-y-2 overflow-y-scroll rounded-md border border-gray-300"
               id="category"
             >
               {categories.map(({ id, category }) => (
                 <li
                   key={id}
-                  className="w-full cursor-pointer bg-white px-3 py-2 placeholder-gray-400 shadow-sm hover:bg-gray-300"
+                  className="temp__upload_categories_option w-full cursor-pointer bg-white px-3 py-2 placeholder-gray-400 shadow-sm hover:bg-gray-300"
                   onClick={onAddExistedTag}
                   onMouseOver={() => setIsLiOver(true)}
                   onMouseLeave={() => setIsLiOver(false)}
