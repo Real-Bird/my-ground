@@ -109,7 +109,7 @@ const BlogDetail: NextPage<{
               />
             )
           ) : (
-            <PrevNextPost id="#" title="Loading..." label={"이전 글"} />
+            <PrevNextPost id="#" title="Loading..." label={"다음 글"} />
           )}
         </div>
       </div>
