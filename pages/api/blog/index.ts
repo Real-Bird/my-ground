@@ -50,7 +50,12 @@ async function handler(
       query: { page },
     } = req;
     const posts = await client.myBlog.findMany({
-      include: {
+      select: {
+        id: true,
+        title: true,
+        summary: true,
+        created: true,
+        updated: true,
         category: true,
       },
       orderBy: {
@@ -60,7 +65,12 @@ async function handler(
       skip: (+page - 1) * limit,
     });
     const nextPosts = await client.myBlog.findMany({
-      include: {
+      select: {
+        id: true,
+        title: true,
+        summary: true,
+        created: true,
+        updated: true,
         category: true,
       },
       orderBy: {

@@ -18,20 +18,7 @@ async function handler(
       query: { id },
     } = req;
 
-    const post = await client.myBlog.findUnique({
-      where: {
-        id: +id,
-      },
-      include: {
-        category: {
-          select: {
-            category: true,
-          },
-        },
-      },
-    });
-
-    const prevPost = await client.myBlog.findMany({
+    const prevPost = await client.myBlog.findFirst({
       take: -1,
       skip: 1,
       cursor: {
@@ -42,7 +29,7 @@ async function handler(
         title: true,
       },
     });
-    const nextPost = await client.myBlog.findMany({
+    const nextPost = await client.myBlog.findFirst({
       take: 1,
       skip: 1,
       cursor: {
@@ -55,7 +42,6 @@ async function handler(
     });
     res.json({
       ok: true,
-      post,
       prevPost,
       nextPost,
     });

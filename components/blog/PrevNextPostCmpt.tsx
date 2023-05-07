@@ -2,7 +2,7 @@ import { cls } from "@libs/client/utils";
 import Link from "next/link";
 
 interface PrevNextPostProps {
-  id: number;
+  id: number | "#";
   label: "이전 글" | "다음 글";
   title: string;
 }

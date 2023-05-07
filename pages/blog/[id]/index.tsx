@@ -11,14 +11,18 @@ import { Badge, FloatingButton, PostNavBtn, RegDate } from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 import { PrevNextPost } from "@components/blog";
+import useSWR from "swr";
 
-type PrevNextPost = Pick<MyBlog, "id" | "title">;
+type Pager = Pick<MyBlog, "id" | "title">;
 
-interface TotalPostProps {
+interface PagerResponse {
+  ok: boolean;
+  prevPost: Pager;
+  nextPost: Pager;
+}
+interface CurrentPostProps {
   post: MyBlog;
   categories: Category[];
-  prevPost: PrevNextPost;
-  nextPost: PrevNextPost;
 }
 
 const MarkdownPreview = dynamic<MarkdownPreviewProps>(
@@ -29,9 +33,10 @@ const MarkdownPreview = dynamic<MarkdownPreviewProps>(
 );
 
 const BlogDetail: NextPage<{
-  totalPost: TotalPostProps;
-}> = ({ totalPost }) => {
-  const { post, categories, prevPost, nextPost } = totalPost;
+  currentPost: CurrentPostProps;
+  pagerData: PagerResponse;
+}> = ({ currentPost, pagerData }) => {
+  const { post, categories } = currentPost;
   const { ok } = useAdmin();
   const router = useRouter();
   const headingsRef = useRef<HTMLDivElement>(null);
@@ -84,19 +89,27 @@ const BlogDetail: NextPage<{
           />
         </div>
         <div className="flex w-full items-center justify-between gap-3">
-          {prevPost && (
-            <PrevNextPost
-              id={prevPost.id}
-              title={prevPost.title}
-              label={"이전 글"}
-            />
+          {pagerData?.ok ? (
+            pagerData?.prevPost && (
+              <PrevNextPost
+                id={pagerData?.prevPost.id}
+                title={pagerData?.prevPost.title}
+                label={"이전 글"}
+              />
+            )
+          ) : (
+            <PrevNextPost id="#" title="Loading..." label={"이전 글"} />
           )}
-          {nextPost && (
-            <PrevNextPost
-              id={nextPost.id}
-              title={nextPost.title}
-              label={"다음 글"}
-            />
+          {pagerData?.ok ? (
+            pagerData?.nextPost && (
+              <PrevNextPost
+                id={pagerData?.nextPost.id}
+                title={pagerData?.nextPost.title}
+                label={"다음 글"}
+              />
+            )
+          ) : (
+            <PrevNextPost id="#" title="Loading..." label={"이전 글"} />
           )}
         </div>
       </div>
@@ -127,9 +140,13 @@ const BlogDetail: NextPage<{
 };
 
 const Page: NextPage<{
-  totalPost: TotalPostProps;
-}> = ({ totalPost }) => {
-  return <BlogDetail totalPost={totalPost} />;
+  currentPost: CurrentPostProps;
+}> = ({ currentPost }) => {
+  const router = useRouter();
+  const { data: pagerData } = useSWR<PagerResponse>(
+    router.query.id ? `/api/blog/${router.query.id}` : null
+  );
+  return <BlogDetail currentPost={currentPost} pagerData={pagerData} />;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -162,45 +179,19 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   if (!post)
     return {
       props: {
-        totalPost: {
+        currentPost: {
           post: null,
           categories: null,
-          prevPost: null,
-          nextPost: null,
         },
       },
     };
 
-  const prevPost = await client.myBlog.findMany({
-    take: -1,
-    skip: 1,
-    cursor: {
-      id: +id,
-    },
-    select: {
-      id: true,
-      title: true,
-    },
-  });
-  const nextPost = await client.myBlog.findMany({
-    take: 1,
-    skip: 1,
-    cursor: {
-      id: +id,
-    },
-    select: {
-      id: true,
-      title: true,
-    },
-  });
   return {
     props: {
-      totalPost: JSON.parse(
+      currentPost: JSON.parse(
         JSON.stringify({
           post,
           categories,
-          prevPost: prevPost[0],
-          nextPost: nextPost[0],
         })
       ),
     },
