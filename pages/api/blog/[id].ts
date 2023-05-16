@@ -12,6 +12,22 @@ async function handler(
       query: { id },
     } = req;
 
+    const post = await client.myBlog.findUnique({
+      where: {
+        id: +id,
+      },
+    });
+
+    const categories = await client.category.findMany({
+      where: {
+        posts: {
+          some: {
+            id: post.id,
+          },
+        },
+      },
+    });
+
     const prevPost = await client.myBlog.findFirst({
       take: -1,
       skip: 1,
@@ -36,6 +52,8 @@ async function handler(
     });
     res.json({
       ok: true,
+      post,
+      categories,
       prevPost,
       nextPost,
     });

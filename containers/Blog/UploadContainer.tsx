@@ -35,7 +35,8 @@ export interface BlogFormResponse {
 
 export interface RevisedResponse {
   ok: boolean;
-  post: CategoryWithBlog;
+  post: MyBlog;
+  categories: Category[];
 }
 
 export interface CategoricalResponse {
@@ -87,10 +88,12 @@ const UploadContainer = () => {
     setNewCategories((prev) => Array.from(new Set([...prev, textContent])));
     setValue("categories", []);
     setIsInputFocused(false);
+    setNewCategory("");
   };
 
   const onAddNewCategory = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter" || !e.currentTarget.value) return;
+    e.preventDefault();
     const currentCategory = e.currentTarget.value
       .toLowerCase()
       .replace(/[\W ]/, "");
@@ -116,11 +119,12 @@ const UploadContainer = () => {
   const onAllDeleteCategories = () => {
     setNewCategories([]);
   };
+
   const preview = useWindowSize();
 
   useEffect(() => {
     if (existedData && existedData.ok) {
-      setNewCategories(existedData.post.category.map((item) => item.category));
+      setNewCategories(existedData?.categories.map((item) => item.category));
       setValue("title", existedData?.post.title);
       setValue("summary", existedData?.post.summary);
       setMd(existedData?.post.content);
@@ -138,13 +142,7 @@ const UploadContainer = () => {
   }, [uploadData]);
   return (
     <LayoutContainer title="New Post" backUrl="back">
-      <form
-        className="space-y-4 p-4 lg:w-4/5"
-        onSubmit={handleSubmit(onValid)}
-        onKeyDown={(e) => {
-          if (e.code === "Enter") e.preventDefault();
-        }}
-      >
+      <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <label
             className="mb-1 block text-sm font-medium text-gray-700"
