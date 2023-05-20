@@ -36,7 +36,10 @@ const PortfolioItemContainer = () => {
     }
   }, [data, router]);
   return (
-    <LayoutContainer title="Portfolio" backUrl="/portfolio">
+    <LayoutContainer
+      title={data?.portfolio.title ?? "LOADING"}
+      backUrl="/portfolio"
+    >
       <div
         className="w-full flex-col items-center justify-center space-y-2 px-3 lg:my-5 lg:flex"
         ref={headingsRef}

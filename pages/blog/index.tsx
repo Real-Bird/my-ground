@@ -5,6 +5,7 @@ import { SWRConfig } from "swr";
 import client from "@libs/server/client";
 import useSWRInfinite from "swr/infinite";
 import BlogContainer from "@containers/Blog/BlogContainer";
+import { Meta } from "@components/common";
 
 export interface CategoryWithBlog extends MyBlog {
   category: Category[];
@@ -44,7 +45,11 @@ const Blog: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
   );
 };
 
-const Page: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
+const Page: NextPage<{ posts: BlogPropsWithSSR; categories: Category[] }> = ({
+  posts,
+  categories,
+}) => {
+  const categoriesArray = categories?.map((v) => v.category) || [];
   return (
     <SWRConfig
       value={{
@@ -56,6 +61,13 @@ const Page: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
         },
       }}
     >
+      <Meta
+        keywords={["blog", "posts", ...categoriesArray]}
+        description="my blog list"
+        og_description="my blog list"
+        og_title="my blog list"
+        og_url="blog"
+      />
       <Blog posts={posts} />
     </SWRConfig>
   );
@@ -64,6 +76,8 @@ const Page: NextPage<{ posts: BlogPropsWithSSR }> = ({ posts }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   const limit = 10;
   const page = 1;
+
+  const categories = await client.category.findMany({});
 
   const posts = await client.myBlog.findMany({
     include: {
@@ -78,6 +92,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts)),
+      categories: JSON.parse(JSON.stringify(categories)),
     },
   };
 };

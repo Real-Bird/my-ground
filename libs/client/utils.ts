@@ -2,6 +2,10 @@ export function cls(...classnames: string[]) {
   return classnames.join(" ");
 }
 
+export function toMetaString(...arr: string[]): string {
+  return arr.join(",").replace(/,$/g, "");
+}
+
 export function randomColor() {
   const colorList = [
     "#f8fafc",

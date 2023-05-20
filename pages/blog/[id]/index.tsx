@@ -7,11 +7,18 @@ import client from "@libs/server/client";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { LayoutContainer } from "@containers/Common";
-import { Badge, FloatingButton, PostNavBtn, RegDate } from "@components/common";
+import {
+  Badge,
+  FloatingButton,
+  Meta,
+  PostNavBtn,
+  RegDate,
+} from "@components/common";
 import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 import { PrevNextPost } from "@components/blog";
 import useSWR from "swr";
+import Head from "next/head";
 
 type Pager = Pick<MyBlog, "id" | "title">;
 
@@ -47,7 +54,7 @@ const BlogDetail: NextPage<{
     }
   }, []);
   return (
-    <LayoutContainer title="POST" backUrl="/blog">
+    <LayoutContainer title={currentPost.post.title} backUrl="/blog">
       <div className="w-4/5 max-w-6xl space-y-2 px-3 lg:py-4">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="w-full border-b-2 border-dotted py-5 text-center text-5xl font-bold">
@@ -146,7 +153,22 @@ const Page: NextPage<{
   const { data: pagerData } = useSWR<PagerResponse>(
     router.query.id ? `/api/blog/${router.query.id}` : null
   );
-  return <BlogDetail currentPost={currentPost} pagerData={pagerData} />;
+  const {
+    categories,
+    post: { title, summary },
+  } = currentPost;
+  return (
+    <>
+      <Meta
+        keywords={categories.map((v) => v.category)}
+        description={summary}
+        og_title={title}
+        og_description={summary}
+        og_url={router.asPath}
+      />
+      <BlogDetail currentPost={currentPost} pagerData={pagerData} />
+    </>
+  );
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

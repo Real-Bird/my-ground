@@ -6,7 +6,7 @@ const HomeContainer = () => {
   const { ok } = useAdmin();
   return (
     <>
-      <LayoutContainer title="HOME">
+      <LayoutContainer title="WELCOME">
         <section className="mx-3 my-5 flex h-fit flex-col space-y-3 divide-y-2">
           <Introduce ok={ok} />
           <TechStacks />

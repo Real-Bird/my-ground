@@ -27,11 +27,21 @@ export const stacks: ITechStacks.Payload = {
       { stack: "Node.js", color: "339933" },
       { stack: "Express", color: "000000" },
       { stack: "Passport", color: "34E27A" },
+      { stack: "Zxing Library", color: "000000" },
     ],
     tools: [{ stack: "PlanetScale", color: "000000" }],
   },
   knowledge: {
-    languages: [{ stack: "Python", color: "3776AB" }],
+    languages: [
+      { stack: "Java", color: "4b7696" },
+      { stack: "Python", color: "3776AB" },
+    ],
+    librariesAndFrameworks: [
+      { stack: "Tensorflow", color: "FF6F00" },
+      { stack: "Django", color: "092E20" },
+      { stack: "OpenCV", color: "5C3EE8" },
+      { stack: "Bootstrap", color: "7952B3" },
+    ],
     tools: [
       { stack: "MongoDB", color: "47A248" },
       { stack: "FireBase", color: "FFCA28" },
