@@ -4,6 +4,6 @@ export declare namespace IIntroduction {
     email: string;
     github: string;
     velog: string;
-    simpleIntro: string;
+    simpleIntro: string[];
   }
 }
