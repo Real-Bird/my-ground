@@ -2,7 +2,7 @@ import { AboutMe, Introduce, ResumeTab, TechStacks } from "@components/home";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import useAdmin from "@libs/client/useAdmin";
 import { cls } from "@libs/client/utils";
-import { introduction } from "payload";
+import { introduction, stacks } from "payload";
 import { useState } from "react";
 
 const HomeContainer = () => {
@@ -45,8 +45,9 @@ const HomeContainer = () => {
           </header>
           <main className="w-full">
             {isResumeTab ? (
-              <section className="w-full animate-fadein">
+              <section className="w-full animate-fadein space-y-2 divide-y-2">
                 <Introduce ok={ok} intros={introduction} />
+                <TechStacks stacks={stacks} />
               </section>
             ) : (
               <section>

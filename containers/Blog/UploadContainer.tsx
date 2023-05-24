@@ -142,7 +142,7 @@ const UploadContainer = () => {
   }, [uploadData]);
   return (
     <LayoutContainer title="New Post" backUrl="back">
-      <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
+      <form className="lg:w-4/5 space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <label
             className="mb-1 block text-sm font-medium text-gray-700"
@@ -153,7 +153,7 @@ const UploadContainer = () => {
           <div
             className={cls(
               isInputFocused ? "border-amber-400 ring-2 ring-amber-400" : "",
-              "relative box-border flex flex-1 flex-wrap items-center overflow-hidden rounded-md border border-gray-300 py-0.5 px-2 shadow-sm"
+              "relative box-border flex flex-1 flex-wrap items-center overflow-hidden rounded-md border border-gray-300 px-2 py-0.5 shadow-sm"
             )}
             onClick={() => setFocus("categories")}
           >
@@ -163,6 +163,7 @@ const UploadContainer = () => {
                 label={tag}
                 onClick={() => onDeleteCategory(idx)}
                 hasCancel
+                isHover
               />
             ))}
             <div className="visible m-0.5 box-border inline-grid flex-1 grid-cols-2 py-0.5 text-gray-500 outline-none">

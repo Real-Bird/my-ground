@@ -27,7 +27,7 @@ export const stacks: ITechStacks.Payload = {
       { stack: "Node.js", color: "339933" },
       { stack: "Express", color: "000000" },
       { stack: "Passport", color: "34E27A" },
-      { stack: "Zxing Library", color: "000000" },
+      { stack: "Zxing Library", color: "ffffff" },
     ],
     tools: [{ stack: "PlanetScale", color: "000000" }],
   },

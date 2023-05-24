@@ -5,6 +5,7 @@ export const introduction: IIntroduction.Payload = {
   email: "kjy_815@naver.com",
   github: "https://github.com/Real-Bird",
   velog: "https://velog.io/@Real-Bird",
+  blog: "https://blog.naver.com/real-bird-blog",
   simpleIntro: [
     "필요한 지식과 기술을 주도적으로 익히고 강화합니다.",
     "'ES6+'를 바탕으로 'TypeScript', 'React', 'Next.js'를 이용하여 프로젝트를 설계, 제작, 배포한 경험이 있습니다.",

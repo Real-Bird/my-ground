@@ -10,7 +10,7 @@ interface ContactMeProps {
 export const ContactMe = ({ logo, label, href }: ContactMeProps) => {
   return (
     <div className="flex w-full items-center space-x-3">
-      {logo}
+      <div className="h-10 w-10">{logo}</div>
       <span className="flex-1">
         {href ? (
           <Link href={href}>

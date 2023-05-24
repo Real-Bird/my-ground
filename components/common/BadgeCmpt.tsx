@@ -1,12 +1,20 @@
+import { cls } from "@libs/client/utils";
+
 interface BadgeProps {
   label: string;
   onClick?: () => void;
   hasCancel?: boolean;
+  isHover?: boolean;
 }
 
-export const Badge = ({ label, onClick, hasCancel }: BadgeProps) => {
+export const Badge = ({ label, onClick, hasCancel, isHover }: BadgeProps) => {
   return (
-    <div className="mx-0.5 flex flex-wrap items-center justify-center rounded-md bg-amber-400 py-0.5 px-1 hover:bg-amber-500">
+    <div
+      className={cls(
+        "mx-0.5 flex flex-wrap items-center justify-center rounded-md bg-amber-400 px-1 py-0.5",
+        isHover ? "cursor-pointer hover:bg-amber-500" : ""
+      )}
+    >
       <div className="px-1 text-sm">{label}</div>
       {hasCancel && (
         <div className="cursor-pointer px-0.5" onClick={onClick}>

@@ -71,14 +71,14 @@ const BlogDetail: NextPage<{
               />
             )}
           </div>
-          <div className="flex flex-col items-end justify-center py-1 px-1">
+          <div className="flex flex-col items-end justify-center px-1 py-1">
             <div className="text-sm">
-              <div className="my-1 flex flex-wrap lg:text-[1rem]">
+              <div className="lg:text-[1rem] my-1 flex flex-wrap">
                 {categories.map((category) => (
-                  <Badge key={category.id} label={category.category} />
+                  <Badge key={category.id} label={category.category} isHover />
                 ))}
               </div>
-              <div className="text-end lg:text-[1rem]">
+              <div className="lg:text-[1rem] text-end">
                 <RegDate regDate={post.updated} />
               </div>
             </div>
