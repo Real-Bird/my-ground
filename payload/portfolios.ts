@@ -54,7 +54,7 @@ export const portfolios: IPortfolios.Payload[] = [
   {
     title: "거북목 멈춰",
     classify: "팀",
-    peaple: 3,
+    people: 3,
     createdAt: "2021.07",
     lastUpdated: "2021.10",
     github: "https://github.com/Real-Bird/IITP_Fianl_Project_StopTurtleNeck",
@@ -82,7 +82,7 @@ export const portfolios: IPortfolios.Payload[] = [
 const template: (typeof portfolios)[0] = {
   title: "",
   classify: "개인",
-  peaple: 3,
+  people: 3,
   createdAt: "",
   lastUpdated: "",
   github: "",

@@ -1,8 +1,14 @@
-import { AboutMe, Introduce, ResumeTab, TechStacks } from "@components/home";
+import {
+  AboutMe,
+  Introduce,
+  Portfolios,
+  ResumeTab,
+  TechStacks,
+} from "@components/home";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import useAdmin from "@libs/client/useAdmin";
 import { cls } from "@libs/client/utils";
-import { introduction, stacks } from "payload";
+import { introduction, portfolios, stacks } from "payload";
 import { useState } from "react";
 
 const HomeContainer = () => {
@@ -14,14 +20,16 @@ const HomeContainer = () => {
       <LayoutContainer title="WELCOME">
         <section className="mx-3 my-5 flex h-fit w-full max-w-3xl flex-col space-y-3">
           <header>
-            <div className="flex items-end space-x-10">
+            <div className="flex items-end space-x-2 lg:space-x-10">
               <div className="flex items-end space-x-2">
-                <h1 className="text-4xl font-extrabold">김진영</h1>
-                <h3 className="text-xl font-semibold text-gray-500">
+                <h1 className="text-2xl font-extrabold lg:text-4xl">김진영</h1>
+                <h3 className="text-lg font-semibold text-gray-500 lg:text-xl">
                   Kim Jin Young
                 </h3>
               </div>
-              <h2 className="text-2xl font-bold">Web Front-End Developer</h2>
+              <h2 className="text-xl font-bold lg:text-2xl">
+                Web Front-End Developer
+              </h2>
             </div>
             <nav className="mt-5">
               <ul className="flex items-end justify-between">
@@ -48,6 +56,7 @@ const HomeContainer = () => {
               <section className="w-full animate-fadein space-y-2 divide-y-2">
                 <Introduce ok={ok} intros={introduction} />
                 <TechStacks stacks={stacks} />
+                <Portfolios portfolios={portfolios} />
               </section>
             ) : (
               <section>

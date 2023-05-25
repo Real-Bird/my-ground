@@ -4,7 +4,7 @@ export declare namespace IPortfolios {
   export interface Payload {
     title: string;
     classify: "개인" | "팀";
-    peaple?: number;
+    people?: number;
     createdAt: string;
     lastUpdated?: string;
     summary: string;

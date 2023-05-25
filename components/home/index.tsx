@@ -5,3 +5,5 @@ export * from "./ResumeTabCmpt";
 export * from "./ContactMeCmpt";
 export * from "./StackBadgeCmpt";
 export * from "./StackListCmpt";
+export * from "./StackListOverview";
+export * from "./PortfoliosCmpt";
