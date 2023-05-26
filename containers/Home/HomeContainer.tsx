@@ -92,9 +92,6 @@ const HomeContainer = () => {
                 <HomeOverview title="Portfolios">
                   <Portfolios portfolios={portfolios} />
                 </HomeOverview>
-                <HomeOverview title="Portfolios">
-                  <Portfolios portfolios={portfolios} />
-                </HomeOverview>
                 <HomeOverview title="Educations">
                   <Educations educations={educations} />
                 </HomeOverview>
