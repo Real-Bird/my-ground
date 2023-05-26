@@ -87,7 +87,7 @@ const ContactRevised = ({
       console.log(data);
     }
   }, [data]);
-  console.log(errors);
+
   return (
     <form style={{ margin: 0 }} onSubmit={handleSubmit(onValid)}>
       <div className="flex w-full items-center justify-start space-x-1 px-1 py-2 ">
