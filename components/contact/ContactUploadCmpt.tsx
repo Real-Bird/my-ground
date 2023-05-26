@@ -129,13 +129,13 @@ const ContactUpload = ({ mutate }: ContactUploadProps) => {
         <Button text="게시하기" />
       </form>
       {errors && (
-        <div className="fixed top-12 right-5 my-2 space-y-2">
+        <div className="fixed right-5 top-12 my-2 space-y-2">
           {[...Object.values(errors)].map((error, idx) => (
             <ErrorToast
               key={Date.now() + idx}
               idx={idx}
-              errorsArr={[...Object.values(errors)]}
-              onToastToggle={() => onToastToggle(error)}
+              errorsLength={Object.values(errors).length}
+              onToastToggle={() => onToastToggle(error as FieldError)}
               openErrorToast={openErrorToast}
               message={error.message}
             />

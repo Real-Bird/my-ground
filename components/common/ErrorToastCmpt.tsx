@@ -4,7 +4,7 @@ import { memo } from "react";
 
 interface ErrorToastProps {
   idx: number;
-  errorsArr: FieldError[];
+  errorsLength: number;
   message: string;
   openErrorToast: boolean;
   onToastToggle: () => void;
@@ -12,7 +12,7 @@ interface ErrorToastProps {
 
 const ErrorToastComponent = ({
   idx,
-  errorsArr,
+  errorsLength,
   openErrorToast,
   onToastToggle,
   message,
@@ -24,7 +24,7 @@ const ErrorToastComponent = ({
         "flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 opacity-0 shadow"
       )}
       style={{
-        animationDelay: `${0.2 * (idx % errorsArr.length)}s`,
+        animationDelay: `${0.2 * (idx % errorsLength)}s`,
       }}
       role={"alert"}
     >

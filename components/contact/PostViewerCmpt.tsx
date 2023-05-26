@@ -102,7 +102,7 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
     >
       <div className="relative my-5 h-[36rem] w-5/6 rounded-lg bg-white shadow-md lg:h-[90vh]">
         <div
-          className="absolute top-1 right-1 cursor-pointer text-amber-500 hover:text-amber-600"
+          className="absolute right-1 top-1 cursor-pointer text-amber-500 hover:text-amber-600"
           onClick={onCloseModal}
         >
           <svg
@@ -169,13 +169,13 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
               />
             </form>
             {errors && (
-              <div className="fixed top-1 right-1 z-50 my-2 space-y-2 ">
+              <div className="fixed right-1 top-1 z-50 my-2 space-y-2 ">
                 {[...Object.values(errors)].map((error, idx) => (
                   <ErrorToast
                     key={Date.now() + idx}
                     idx={idx}
-                    errorsArr={[...Object.values(errors)]}
-                    onToastToggle={() => onToastToggle(error)}
+                    errorsLength={Object.values(errors).length}
+                    onToastToggle={() => onToastToggle(error as FieldError)}
                     openErrorToast={openErrorToast}
                     message={error.message}
                   />

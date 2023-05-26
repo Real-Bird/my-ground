@@ -87,6 +87,7 @@ const ContactRevised = ({
       console.log(data);
     }
   }, [data]);
+  console.log(errors);
   return (
     <form style={{ margin: 0 }} onSubmit={handleSubmit(onValid)}>
       <div className="flex w-full items-center justify-start space-x-1 px-1 py-2 ">
@@ -142,13 +143,13 @@ const ContactRevised = ({
         <PostNavBtn type={"submit"} text="확인" />
       </div>
       {errors && (
-        <div className="fixed top-1 right-1 my-2 space-y-2">
+        <div className="fixed right-1 top-1 my-2 space-y-2">
           {[...Object.values(errors)].map((error, idx) => (
             <ErrorToast
               key={Date.now() + idx}
               idx={idx}
-              errorsArr={[...Object.values(errors)]}
-              onToastToggle={() => onToastToggle(error)}
+              errorsLength={Object.values(errors).length}
+              onToastToggle={() => onToastToggle(error as FieldError)}
               openErrorToast={openErrorToast}
               message={error.message}
             />
