@@ -31,7 +31,9 @@ export const Meta = ({
       <meta
         name="keywords"
         content={
-          keywords ? toMetaString(...keywords) : "next.js,찐새,real-bird,블로그"
+          keywords
+            ? toMetaString(...keywords) + ", RB's Ground"
+            : "next.js, 찐새, real-bird, 블로그, RB's Ground"
         }
       />
       <meta name="description" content={description} />
@@ -39,7 +41,7 @@ export const Meta = ({
       <meta property="og:description" content={og_description} />
       <meta
         property="og:url"
-        content={`https://real-bird.vercel.app/${og_url}`}
+        content={`https://real-bird.vercel.app${og_url}`}
       />
     </Head>
   );

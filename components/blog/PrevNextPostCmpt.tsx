@@ -9,7 +9,7 @@ interface PrevNextPostProps {
 
 export const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
   return (
-    <div className="h-24 w-1/3 rounded-lg bg-slate-300 p-3 shadow-lg transition-colors hover:bg-slate-400">
+    <div className="h-24 w-1/3 min-w-[45%] rounded-lg bg-slate-300 p-3 shadow-lg transition-colors hover:bg-slate-400">
       <Link href={`/blog/${id}`}>
         <a
           className={cls(

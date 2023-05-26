@@ -3,7 +3,14 @@ export function cls(...classnames: string[]) {
 }
 
 export function toMetaString(...arr: string[]): string {
-  return arr.join(",").replace(/,$/g, "");
+  return arr.join(", ");
+}
+
+export function toBoldDangerousHtml(str: string) {
+  return str.replace(
+    /(`|'|")((?=\w)[\w\W ]+?|[ㄱ-ㅎ가-힣 ]+?)(`|'|")/gm,
+    `<strong class="font-bold px-1 bg-amber-400 rounded-md">$2</strong>`
+  );
 }
 
 export function randomColor() {

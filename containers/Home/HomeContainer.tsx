@@ -1,18 +1,30 @@
 import {
-  AboutMe,
+  SelfIntroduction,
+  Educations,
+  Etc,
+  HomeOverview,
   Introduce,
   Portfolios,
   ResumeTab,
   TechStacks,
+  TechStacksOpt,
 } from "@components/home";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import useAdmin from "@libs/client/useAdmin";
 import { cls } from "@libs/client/utils";
-import { introduction, portfolios, stacks } from "payload";
+import {
+  educations,
+  etc,
+  introduction,
+  portfolios,
+  selfIntroduction,
+  stacks,
+} from "payload";
 import { useState } from "react";
 
 const HomeContainer = () => {
   const [isResumeTab, setIsResumeTab] = useState(true);
+  const [isHover, setIsHover] = useState(false);
   const { ok } = useAdmin();
 
   return (
@@ -53,30 +65,53 @@ const HomeContainer = () => {
           </header>
           <main className="w-full">
             {isResumeTab ? (
-              <section className="w-full animate-fadein space-y-2 divide-y-2">
-                <Introduce ok={ok} intros={introduction} />
-                <TechStacks stacks={stacks} />
-                <Portfolios portfolios={portfolios} />
+              <section
+                key="resume"
+                className="w-full animate-fadein space-y-2 divide-y-2"
+              >
+                <HomeOverview
+                  title="Simple Intro"
+                  opt={
+                    ok && <div className="h-2 w-2 rounded-full bg-green-500" />
+                  }
+                >
+                  <Introduce intros={introduction} />
+                </HomeOverview>
+                <HomeOverview
+                  title="Tech Stacks"
+                  opt={
+                    <TechStacksOpt
+                      onMouseOver={() => setIsHover(true)}
+                      onMouseLeave={() => setIsHover(false)}
+                      isHover={isHover}
+                    />
+                  }
+                >
+                  <TechStacks stacks={stacks} />
+                </HomeOverview>
+                <HomeOverview title="Portfolios">
+                  <Portfolios portfolios={portfolios} />
+                </HomeOverview>
+                <HomeOverview title="Portfolios">
+                  <Portfolios portfolios={portfolios} />
+                </HomeOverview>
+                <HomeOverview title="Educations">
+                  <Educations educations={educations} />
+                </HomeOverview>
+                <HomeOverview title="ETC">
+                  <Etc etc={etc} />
+                </HomeOverview>
               </section>
             ) : (
-              <section>
-                <p className="w-full animate-fadein">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Integer viverra pulvinar nunc, et fringilla ante. Donec vel
-                  diam id ligula blandit scelerisque eget non leo. In posuere
-                  finibus lacus non fringilla. Aenean quis tempus libero.
-                  Maecenas posuere, ante cursus eleifend feugiat, eros elit
-                  ultrices urna, pharetra tristique purus eros at sem. Integer
-                  sodales tempor dui. Phasellus vehicula iaculis ante id
-                  efficitur. Suspendisse et mi eros. Nulla dictum, magna et
-                  scelerisque ultrices, dui leo bibendum tortor, nec accumsan
-                  felis nisl ac lectus. Duis vel turpis suscipit, pharetra
-                  libero eu, consequat felis. Maecenas luctus tincidunt velit,
-                  sit amet suscipit nunc pharetra a. In hac habitasse platea
-                  dictumst. Ut pharetra venenatis leo in condimentum. In gravida
-                  dapibus sapien, nec sodales purus consequat at. Aenean quis
-                  leo quam. Aliquam erat volutpat.
-                </p>
+              <section
+                key="self-introduction"
+                className="animate-fadein space-y-2 divide-y-2"
+              >
+                {selfIntroduction.map((intro) => (
+                  <HomeOverview key={intro.title} title={intro.title}>
+                    <SelfIntroduction details={intro.details} />
+                  </HomeOverview>
+                ))}
               </section>
             )}
           </main>

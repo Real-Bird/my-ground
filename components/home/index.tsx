@@ -1,4 +1,5 @@
-export * from "./AboutMeCmpt";
+export * from "./HomeOverviewCmpt";
+export * from "./SelfIntroduction";
 export * from "./IntroduceCmpt";
 export * from "./TechStacksCmpt";
 export * from "./ResumeTabCmpt";
@@ -7,3 +8,5 @@ export * from "./StackBadgeCmpt";
 export * from "./StackListCmpt";
 export * from "./StackListOverview";
 export * from "./PortfoliosCmpt";
+export * from "./EducationsCmpt";
+export * from "./EtcCmpt";
