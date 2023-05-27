@@ -12,11 +12,11 @@ export const Introduce = ({ ok, intros }: IntroduceProps) => {
   const { idPhoto, email, github, velog, simpleIntro, blog } = intros;
   return (
     <>
-      <div className="flex gap-4">
-        <figure className="h-fit w-48">
+      <div className="flex flex-wrap items-start justify-evenly gap-4">
+        <figure className="h-fit">
           <img
             src={idPhoto}
-            className="aspect-[3/4] h-60 bg-slate-500"
+            className="aspect-[8/9] h-60 bg-slate-500"
             alt="portrait"
           />
         </figure>

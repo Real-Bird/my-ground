@@ -32,7 +32,9 @@ const PortfolioItem = ({ ok, portfolioData }: PortfolioItemProps) => {
   return (
     <div className="lg:w-2/3">
       <div className="flex w-full flex-row items-center justify-center border-b-2 border-dotted lg:relative">
-        <h1 className="pt-1 pb-5 text-center text-5xl font-bold">{title}</h1>
+        <h1 className="break-all pb-5 pt-1 text-start text-2xl font-bold lg:text-5xl">
+          {title}
+        </h1>
       </div>
       <div className="py-5">
         <div className="flex flex-row justify-center md:justify-between">

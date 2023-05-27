@@ -1,3 +1,4 @@
+import { Meta } from "@components/common";
 import PortfolioList from "@components/portfolio/PortfolioListCmpt";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import useAdmin from "@libs/client/useAdmin";
@@ -14,6 +15,13 @@ const PortfolioContainer = () => {
   const { data } = useSWR<PortfolioResponse>("/api/portfolio");
   return (
     <>
+      <Meta
+        og_url="/portfolio"
+        description="My Portfolio List"
+        og_description="My Portfolio List"
+        og_title="PORTFOLIO"
+        keywords={data?.portfolio.map((item) => item.title)}
+      />
       <LayoutContainer title="PORTFOLIO">
         <PortfolioList isAuth={ok} portfolio={data?.portfolio} />
       </LayoutContainer>

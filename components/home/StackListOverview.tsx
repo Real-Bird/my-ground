@@ -17,7 +17,7 @@ export const StackListOverview = ({
   return (
     <article className="grid grid-cols-[20%_minmax(80%,_1fr)] py-1">
       <h2 className="flex flex-row items-center space-x-2 self-start text-lg font-medium">
-        <span>
+        <span className="hidden sm:block">
           {label === "High" && (
             <svg
               xmlns="http://www.w3.org/2000/svg"

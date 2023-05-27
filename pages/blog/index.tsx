@@ -65,8 +65,8 @@ const Page: NextPage<{ posts: BlogPropsWithSSR; categories: Category[] }> = ({
         keywords={["blog", "posts", ...categoriesArray]}
         description="my blog list"
         og_description="my blog list"
-        og_title="my blog list"
-        og_url="blog"
+        og_title="BLOG"
+        og_url="/blog"
       />
       <Blog posts={posts} />
     </SWRConfig>

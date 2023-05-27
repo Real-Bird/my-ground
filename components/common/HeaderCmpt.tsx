@@ -60,7 +60,7 @@ export const Header = ({
           />
         </a>
       </Link>
-      <span className="lg:hidden">{title}</span>
+      <span className="max-w-xs truncate lg:hidden">{title}</span>
       <div
         className="absolute right-4 top-1 cursor-pointer lg:hidden"
         onClick={onToggleDropdown}

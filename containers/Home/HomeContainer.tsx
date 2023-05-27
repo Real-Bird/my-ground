@@ -32,7 +32,7 @@ const HomeContainer = () => {
       <LayoutContainer title="WELCOME">
         <section className="mx-3 my-5 flex h-fit w-full max-w-3xl flex-col space-y-3">
           <header>
-            <div className="flex items-end space-x-2 lg:space-x-10">
+            <div className="flex flex-wrap items-end gap-2 lg:flex-nowrap lg:space-x-10">
               <div className="flex items-end space-x-2">
                 <h1 className="text-2xl font-extrabold lg:text-4xl">김진영</h1>
                 <h3 className="text-lg font-semibold text-gray-500 lg:text-xl">
@@ -67,7 +67,7 @@ const HomeContainer = () => {
             {isResumeTab ? (
               <section
                 key="resume"
-                className="w-full animate-fadein space-y-2 divide-y-2"
+                className="animate-fadein space-y-2 divide-y-2"
               >
                 <HomeOverview
                   title="Simple Intro"

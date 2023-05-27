@@ -19,10 +19,8 @@ export const LayoutContainer = ({
 }: LayoutContainerProps) => {
   const [isDropdown, setIsDropdown] = useState(false);
   const { ok } = useAdmin();
-  const [isLogged, setIsLogged] = useState(ok);
   const toggleDropdown = () => {
     setIsDropdown((prev) => !prev);
-    setIsLogged((prev) => ok);
   };
   const isSize = useWindowSize(1024);
   useEffect(() => {
@@ -40,7 +38,8 @@ export const LayoutContainer = ({
   return (
     <div
       id="layout"
-      className="flex w-full flex-col items-center justify-center"
+      className="flex w-[99%] flex-col items-center justify-center"
+      onClick={() => (isDropdown ? setIsDropdown(false) : null)}
     >
       <Head>
         <title>{`${title} || RB's Ground`}</title>
@@ -51,7 +50,7 @@ export const LayoutContainer = ({
         onToggleDropdown={toggleDropdown}
         onBackUrl={onBackUrl}
         pathname={router.pathname}
-        isLogged={isLogged}
+        isLogged={ok}
         isDropdown={isDropdown}
         isHeaderShow={isHeaderShow}
       />

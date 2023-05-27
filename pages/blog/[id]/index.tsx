@@ -55,9 +55,9 @@ const BlogDetail: NextPage<{
   }, []);
   return (
     <LayoutContainer title={currentPost.post.title} backUrl="/blog">
-      <div className="w-4/5 max-w-6xl space-y-2 px-3 lg:py-4">
+      <div className="w-full max-w-6xl space-y-2 px-3 lg:py-4">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
-          <h1 className="w-full border-b-2 border-dotted py-5 text-center text-5xl font-bold">
+          <h1 className="w-full break-all border-b-2 border-dotted py-5 text-start text-2xl font-bold lg:text-5xl">
             {post.title}
           </h1>
         </div>
@@ -73,12 +73,12 @@ const BlogDetail: NextPage<{
           </div>
           <div className="flex flex-col items-end justify-center px-1 py-1">
             <div className="text-sm">
-              <div className="lg:text-[1rem] my-1 flex flex-wrap">
+              <div className="my-1 flex flex-wrap lg:text-[1rem]">
                 {categories.map((category) => (
                   <Badge key={category.id} label={category.category} isHover />
                 ))}
               </div>
-              <div className="lg:text-[1rem] text-end">
+              <div className="text-end lg:text-[1rem]">
                 <RegDate regDate={post.updated} />
               </div>
             </div>

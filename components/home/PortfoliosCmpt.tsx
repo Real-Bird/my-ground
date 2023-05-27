@@ -41,7 +41,7 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
                   )}
                 </div>
               </header>
-              <section className="grid grid-cols-[20%_80%]">
+              <section className="grid grid-cols-[20%_minmax(min-content,_80%)] gap-2">
                 <div className="flex flex-col items-center space-y-2">
                   <time className="flex flex-col items-center -space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
                     <span>{createdAt}</span>

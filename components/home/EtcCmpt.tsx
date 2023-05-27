@@ -12,9 +12,9 @@ export const Etc = ({ etc }: EtcProps) => {
         .map(({ title, classify, date, result }) => (
           <div
             key={title}
-            className="grid grid-flow-row-dense grid-cols-[20%_80%] gap-2"
+            className="grid grid-flow-row-dense grid-cols-[20%_minmax(min-content,_80%)] gap-2"
           >
-            <header className="gap-1s col-span-full grid grid-cols-[20%_80%]">
+            <header className="gap-1s col-span-full grid grid-cols-[20%_80%] gap-3">
               <div className="flex flex-col items-center space-y-2">
                 <time className="flex flex-col items-center justify-start space-x-2 lg:flex-row">
                   <span>{date}</span>
