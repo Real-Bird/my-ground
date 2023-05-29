@@ -11,8 +11,8 @@ export const Badge = ({ label, onClick, hasCancel, isHover }: BadgeProps) => {
   return (
     <div
       className={cls(
-        "mx-0.5 flex flex-wrap items-center justify-center rounded-md bg-amber-400 px-1 py-0.5",
-        isHover ? "cursor-pointer hover:bg-amber-500" : ""
+        "mx-0.5 flex flex-wrap items-center justify-center rounded-md bg-amber-500 px-1 py-0.5",
+        isHover ? "cursor-pointer hover:bg-amber-600" : ""
       )}
     >
       <div className="px-1 text-sm">{label}</div>

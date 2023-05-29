@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import "@uiw/react-markdown-preview/markdown.css";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext, Suspense } from "react";
 import { useRouter } from "next/router";
 import { LayoutContainer } from "@containers/Common";
 import {
@@ -18,7 +18,7 @@ import { TocContainer } from "@containers/Common/TocContainer";
 import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 import { PrevNextPost } from "@components/blog";
 import useSWR from "swr";
-import Head from "next/head";
+import { ThemeContext } from "@libs/client/context";
 
 type Pager = Pick<MyBlog, "id" | "title">;
 
@@ -47,6 +47,7 @@ const BlogDetail: NextPage<{
   const { ok } = useAdmin();
   const router = useRouter();
   const headingsRef = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (!post) {
@@ -85,38 +86,40 @@ const BlogDetail: NextPage<{
           </div>
         </div>
         <div
-          className="min-h-[68vh] rounded-md bg-slate-300 p-3"
-          data-color-mode="light"
+          className="min-h-[68vh] rounded-md bg-slate-300 p-3 dark:bg-slate-600"
+          data-color-mode={theme}
           ref={headingsRef}
         >
           <MarkdownPreview
             source={post.content}
-            wrapperElement={{ "data-color-mode": "light", ref: headingsRef }}
-            style={{ backgroundColor: "#cbd5e1" }}
+            className="bg-slate-300 dark:bg-slate-600 dark:text-white"
+            wrapperElement={{
+              "data-color-mode": theme,
+              ref: headingsRef,
+            }}
+            style={{
+              backgroundColor: theme === "light" ? "#cbd5e1" : "#475569",
+            }}
           />
         </div>
         <div className="flex w-full items-center justify-between gap-3">
-          {pagerData?.ok ? (
-            pagerData?.prevPost && (
-              <PrevNextPost
-                id={pagerData?.prevPost.id}
-                title={pagerData?.prevPost.title}
-                label={"이전 글"}
-              />
-            )
-          ) : (
-            <PrevNextPost id="#" title="Loading..." label={"이전 글"} />
-          )}
-          {pagerData?.ok ? (
-            pagerData?.nextPost && (
-              <PrevNextPost
-                id={pagerData?.nextPost.id}
-                title={pagerData?.nextPost.title}
-                label={"다음 글"}
-              />
-            )
-          ) : (
-            <PrevNextPost id="#" title="Loading..." label={"다음 글"} />
+          {pagerData?.ok && (
+            <>
+              {pagerData?.prevPost && (
+                <PrevNextPost
+                  id={pagerData?.prevPost.id}
+                  title={pagerData?.prevPost.title}
+                  label={"이전 글"}
+                />
+              )}
+              {pagerData?.nextPost && (
+                <PrevNextPost
+                  id={pagerData?.nextPost.id}
+                  title={pagerData?.nextPost.title}
+                  label={"다음 글"}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

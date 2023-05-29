@@ -39,7 +39,8 @@ export const OptionsForm = ({
             <img
               src={thumbnail ? thumbnail : getValues("thumbnail")}
               alt="thumbnail"
-              className="my-0 mx-auto"
+              className="mx-auto my-0"
+              loading="lazy"
             />
           ) : null}
         </div>
@@ -111,12 +112,12 @@ export const OptionsForm = ({
           <div className="flex flex-col">
             <label
               htmlFor="stacks"
-              className="mb-1 block text-sm font-medium text-gray-700"
+              className="mb-1 block text-sm font-medium text-gray-700 dark:text-white"
             >
               Stack Icon
             </label>
             <input
-              className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+              className="w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-amber-500 dark:text-slate-800"
               {...register("stackBadge", {
                 required: true,
               })}

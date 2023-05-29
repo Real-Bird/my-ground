@@ -130,7 +130,7 @@ const ContactRevised = ({
       </div>
       <textarea
         className={cls(
-          "-mb-1.5 h-96 w-full resize-none appearance-none overflow-y-scroll whitespace-pre-wrap break-words rounded-xl border-2 border-gray-400 bg-gray-200 p-3 px-2 text-start placeholder-gray-400 placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500 lg:h-[40rem]"
+          "-mb-1.5 h-96 w-full resize-none appearance-none overflow-y-scroll whitespace-pre-wrap break-words rounded-xl border-2 border-gray-400 bg-gray-200 p-3 px-2 text-start placeholder-gray-400 placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500 dark:bg-slate-800 lg:h-[40rem]"
         )}
         {...register("content", {
           required: "내용을 입력하세요.",

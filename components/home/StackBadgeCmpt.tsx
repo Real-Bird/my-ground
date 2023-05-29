@@ -8,6 +8,7 @@ export const StackBadge = ({ stack, color = "ffffff" }: StackBadgeProps) => {
     <img
       src={`https://img.shields.io/badge/${stack}-${color}?style=flat&logo=${stack}&logoColor=white`}
       alt={stack}
+      loading="lazy"
     />
   );
 };

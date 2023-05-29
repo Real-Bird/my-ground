@@ -1,15 +1,16 @@
 import { cls } from "@libs/client/utils";
+import { Skeleton } from "@mui/material";
 import Link from "next/link";
 
 interface PrevNextPostProps {
   id: number | "#";
   label: "이전 글" | "다음 글";
-  title: string;
+  title?: string;
 }
 
 export const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
   return (
-    <div className="h-24 w-1/3 min-w-[45%] rounded-lg bg-slate-300 p-3 shadow-lg transition-colors hover:bg-slate-400">
+    <div className="h-24 w-1/3 min-w-[45%] rounded-lg bg-slate-300 p-3 shadow-lg transition-colors hover:bg-slate-400 dark:bg-slate-600 dark:hover:bg-slate-700">
       <Link href={`/blog/${id}`}>
         <a
           className={cls(
@@ -56,7 +57,11 @@ export const PrevNextPost = ({ id, label, title }: PrevNextPostProps) => {
                 "overflow-x-clip text-ellipsis whitespace-pre py-2 text-lg font-semibold"
               )}
             >
-              {title}
+              {title ? (
+                title
+              ) : (
+                <Skeleton variant="rounded" height={24} width="100%" />
+              )}
             </span>
           </div>
         </a>

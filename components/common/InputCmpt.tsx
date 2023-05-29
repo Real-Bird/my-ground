@@ -29,7 +29,7 @@ export const Input = ({
   return (
     <div>
       <label
-        className="mb-1 block text-sm font-medium text-gray-700"
+        className="mb-1 block text-sm font-medium text-gray-700 dark:text-white"
         htmlFor={name}
       >
         {label}
@@ -41,7 +41,7 @@ export const Input = ({
           type={type}
           className={cls(
             isDisabled ? "bg-gray-300" : "",
-            "w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+            "w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500 dark:bg-slate-600 dark:text-white dark:placeholder-slate-800"
           )}
           value={value}
           placeholder={placeholder}

@@ -7,9 +7,9 @@ export const introduction: IIntroduction.Payload = {
   velog: "https://velog.io/@Real-Bird",
   blog: "https://blog.naver.com/real-bird-blog",
   simpleIntro: [
+    "'내가 겪는 에러는 누군가가 이미 해결한 에러이다'라는 마인드로, 마주한 문제를 회피하지 않고 집요하게 해결하는 자세로 개발에 임합니다.",
     "필요한 지식과 기술을 주도적으로 익히고 강화합니다.",
     "'ES6+'를 바탕으로 'TypeScript', 'React', 'Next.js'를 이용하여 프로젝트를 설계, 제작, 배포한 경험이 있습니다.",
-    "마주한 문제를 회피하지 않고 집요하게 해결하는 자세로 개발에 임합니다.",
     "새로운 기술을 토이 프로젝트에 먼저 시도해보는 것을 좋아하고, 그 기술을 제것으로 만들기 위해 노력합니다.",
   ],
 };

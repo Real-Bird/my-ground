@@ -15,6 +15,7 @@ interface ContentData {
   register: UseFormRegister<PFUploadFormResponse>;
   height: number;
   mdeWrapper: MutableRefObject<HTMLDivElement>;
+  theme: "light" | "dark";
 }
 
 interface ContentFormProps extends ContentData {
@@ -28,6 +29,7 @@ export const ContentForm = ({
   register,
   height,
   mdeWrapper,
+  theme,
 }: ContentFormProps) => {
   return (
     <>
@@ -41,11 +43,13 @@ export const ContentForm = ({
         name="title"
         type="text"
         placeholder="제목을 입력해주세요..."
-        className="flex flex-col justify-start"
+        className="flex flex-col justify-start dark:bg-slate-800 dark:text-white dark:focus:bg-slate-700"
       />
-      <div className="h-full w-full bg-white" ref={mdeWrapper}>
+      <div
+        className="h-full w-full bg-white dark:bg-transparent dark:text-white"
+        ref={mdeWrapper}
+      >
         <MDEditor
-          className="w-full"
           {...register("content")}
           value={content}
           onChange={(e) => updateFields({ content: e })}
@@ -53,7 +57,10 @@ export const ContentForm = ({
           height={height - 1}
           visibleDragbar={false}
           hideToolbar
-          data-color-mode="light"
+          data-color-mode={theme}
+          style={{
+            backgroundColor: theme === "light" ? "transparent" : "#1e293b",
+          }}
         />
       </div>
     </>

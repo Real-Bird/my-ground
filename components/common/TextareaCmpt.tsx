@@ -20,7 +20,7 @@ export const TextArea = ({
       {label ? (
         <label
           htmlFor={name}
-          className="mb-1 block text-sm font-medium text-gray-700"
+          className="mb-1 block text-sm font-medium text-gray-700 dark:text-white"
         >
           {label}
         </label>
@@ -28,7 +28,7 @@ export const TextArea = ({
       <textarea
         id={name}
         {...register}
-        className="w-full resize-none appearance-none overflow-y-scroll rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500"
+        className="w-full resize-none appearance-none overflow-y-scroll rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-amber-500 dark:bg-transparent"
         rows={6}
         {...rest}
         placeholder={placeholder}

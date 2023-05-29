@@ -1,7 +1,8 @@
 import { ContentForm } from "@components/form";
 import { PFUploadFormResponse } from "@containers/Portfolio/PFUploadContainer";
 import { useForm } from "react-hook-form";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { ThemeContext } from "@libs/client/context";
 
 type T = PFUploadFormResponse;
 
@@ -20,14 +21,23 @@ export const ContentFormContainer = ({
   });
   const [height, setHeight] = useState(0);
   const mdeWrapper = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ThemeContext);
   useEffect(() => {
-    if (mdeWrapper) {
-      setHeight(mdeWrapper.current.clientHeight);
-    }
     if (title) {
       setValue("title", title);
     }
   }, [title, setValue]);
+
+  useEffect(() => {
+    if (mdeWrapper) {
+      setHeight(
+        document.documentElement.clientHeight -
+          (mdeWrapper.current.offsetTop +
+            mdeWrapper.current.parentElement.nextElementSibling.clientHeight)
+      );
+    }
+  }, []);
+
   return (
     <ContentForm
       {...data}
@@ -35,6 +45,7 @@ export const ContentFormContainer = ({
       register={register}
       height={height}
       mdeWrapper={mdeWrapper}
+      theme={theme}
     />
   );
 };

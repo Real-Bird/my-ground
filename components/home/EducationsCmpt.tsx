@@ -16,7 +16,7 @@ export const Educations = ({ educations }: EducationsProps) => {
         .map(({ title, startedAt, endedAt, status, addition, details }) => (
           <div
             key={title}
-            className="grid grid-flow-row-dense grid-cols-[20%_80%] gap-2"
+            className="grid grid-flow-row-dense grid-cols-[20%_80%] gap-2 pt-2"
           >
             <header className="col-span-full grid grid-cols-[20%_minmax(min-content,_80%)] gap-3">
               <div className="flex flex-col items-center space-y-2">

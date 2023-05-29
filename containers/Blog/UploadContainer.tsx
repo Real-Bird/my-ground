@@ -3,6 +3,7 @@ import {
   ChangeEvent,
   KeyboardEvent,
   MouseEvent,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -17,6 +18,7 @@ import { LayoutContainer } from "@containers/Common";
 import { Badge, Button, Input } from "@components/common";
 import { cls } from "@libs/client/utils";
 import { Category, MyBlog } from "@prisma/client";
+import { ThemeContext } from "@libs/client/context";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -70,6 +72,7 @@ const UploadContainer = () => {
   const [newCategories, setNewCategories] = useState<string[]>([]);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isLiOver, setIsLiOver] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   const onValid = (validForm: BlogFormResponse) => {
     if (uploadLoading) return;
@@ -142,10 +145,10 @@ const UploadContainer = () => {
   }, [uploadData]);
   return (
     <LayoutContainer title="New Post" backUrl="back">
-      <form className="lg:w-4/5 space-y-4 p-4" onSubmit={handleSubmit(onValid)}>
+      <form className="space-y-4 p-4 lg:w-4/5" onSubmit={handleSubmit(onValid)}>
         <div className="relative">
           <label
-            className="mb-1 block text-sm font-medium text-gray-700"
+            className="mb-1 block text-sm font-medium text-gray-700 dark:text-white"
             htmlFor="categories"
           >
             Categories
@@ -153,7 +156,7 @@ const UploadContainer = () => {
           <div
             className={cls(
               isInputFocused ? "border-amber-400 ring-2 ring-amber-400" : "",
-              "relative box-border flex flex-1 flex-wrap items-center overflow-hidden rounded-md border border-gray-300 px-2 py-0.5 shadow-sm"
+              "relative box-border flex flex-1 flex-wrap items-center overflow-hidden rounded-md border border-gray-300 px-2 py-0.5 shadow-sm  dark:bg-slate-600"
             )}
             onClick={() => setFocus("categories")}
           >
@@ -166,7 +169,7 @@ const UploadContainer = () => {
                 isHover
               />
             ))}
-            <div className="visible m-0.5 box-border inline-grid flex-1 grid-cols-2 py-0.5 text-gray-500 outline-none">
+            <div className="visible m-0.5 box-border inline-grid flex-1 grid-cols-2 py-0.5 text-gray-500 outline-none dark:text-white">
               <input
                 id="categories"
                 {...register("categories", {
@@ -175,7 +178,7 @@ const UploadContainer = () => {
                 })}
                 type="text"
                 autoComplete="off"
-                className="m-0 w-full min-w-[2px] border-0 border-transparent p-0 text-inherit opacity-100 focus:border-transparent focus:ring-0"
+                className="m-0 w-full min-w-[2px] border-0 border-transparent bg-transparent p-0 text-inherit opacity-100 focus:border-transparent focus:ring-0"
                 onFocus={() => setIsInputFocused(true)}
                 onBlur={() => {
                   if (isLiOver) return;
@@ -211,7 +214,7 @@ const UploadContainer = () => {
               {categories.map(({ id, category }) => (
                 <li
                   key={id}
-                  className="temp__upload_categories_option w-full cursor-pointer bg-white px-3 py-2 placeholder-gray-400 shadow-sm hover:bg-gray-300"
+                  className="temp__upload_categories_option w-full cursor-pointer bg-white px-3 py-2 placeholder-gray-400 shadow-sm hover:bg-gray-300 dark:bg-slate-600 dark:hover:bg-slate-700"
                   onClick={onAddExistedTag}
                   onMouseOver={() => setIsLiOver(true)}
                   onMouseLeave={() => setIsLiOver(false)}
@@ -250,7 +253,7 @@ const UploadContainer = () => {
           type="text"
           error={errors.summary?.message}
         />
-        <div className="h-[500px] rounded-md bg-slate-400">
+        <div className="h-[500px] rounded-md bg-slate-400 dark:bg-slate-600">
           <MDEditor
             {...register("content")}
             value={md}
@@ -261,7 +264,15 @@ const UploadContainer = () => {
             minHeight={500}
             maxHeight={500}
             visibleDragbar={false}
-            data-color-mode="light"
+            data-color-mode={theme}
+            style={{
+              backgroundColor: theme === "light" ? "#cbd5e1" : "#475569",
+            }}
+            previewOptions={{
+              style: {
+                backgroundColor: theme === "light" ? "#cbd5e1" : "#475569",
+              },
+            }}
           />
         </div>
         <Button text="Upload My Post" />

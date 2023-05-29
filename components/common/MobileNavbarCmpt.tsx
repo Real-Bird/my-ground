@@ -7,13 +7,13 @@ interface MobileNavigationProps {
 
 export const MobileNavigation = ({ pathname }: MobileNavigationProps) => {
   return (
-    <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700 lg:hidden">
+    <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700 dark:bg-slate-800 lg:hidden">
       <Link href="/">
         <a
           className={cls(
             pathname == "/"
               ? "text-amber-600"
-              : "text-gray-500 transition-colors",
+              : "text-gray-500 transition-colors dark:text-white",
             "flex flex-col items-center space-y-2"
           )}
         >
@@ -39,7 +39,7 @@ export const MobileNavigation = ({ pathname }: MobileNavigationProps) => {
           className={cls(
             pathname == "/portfolio"
               ? "text-amber-600"
-              : "text-gray-500 transition-colors",
+              : "text-gray-500 transition-colors dark:text-white",
             "flex flex-col items-center space-y-2"
           )}
         >
@@ -65,7 +65,7 @@ export const MobileNavigation = ({ pathname }: MobileNavigationProps) => {
           className={cls(
             pathname == "/blog"
               ? "text-amber-600"
-              : "text-gray-500 transition-colors",
+              : "text-gray-500 transition-colors dark:text-white",
             "flex flex-col items-center space-y-2"
           )}
         >
@@ -91,7 +91,7 @@ export const MobileNavigation = ({ pathname }: MobileNavigationProps) => {
           className={cls(
             pathname == "/contact"
               ? "text-amber-600"
-              : "text-gray-500 transition-colors",
+              : "text-gray-500 transition-colors dark:text-white",
             "flex flex-col items-center space-y-2"
           )}
         >

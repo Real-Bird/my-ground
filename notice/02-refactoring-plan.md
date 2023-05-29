@@ -15,13 +15,12 @@ category: sub
 - [x] `page`, `container`, `component` 분리 **23.04.20 수정**
 - [x] 태그 기능 수정(여러 태그 추가/수정/삭제) **23.04.21~23.04.23 수정**
 - [x] `SEO` 상향을 위한 `meta` 태그 추가 **23.05.20~23.05.21**
-- [ ] `upload/revised` UI 변경 및 코드 수정
 - [ ] 키워드 별 필터 설정
 
 ### 2. whole
 
 - [ ] `api` 요청 및 응답 수정(불필요한 응답 데이터 제거, `authorization` 추가)
-- [ ] `dark mode` 추가
+- [x] `dark mode` 추가 **23.05.28~ 23.05.29수정**
 - [ ] `manifest.json` 추가
 
 ### 3. notice
@@ -32,4 +31,4 @@ category: sub
 
 ### 4. home
 
-- [ ] 이력서 스타일로 UI 변경(resume 탭, self-introduction 탭)
+- [x] 이력서 스타일로 UI 변경(resume 탭, self-introduction 탭) **23.05.24~23.05.26 수정**

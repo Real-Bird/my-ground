@@ -1,11 +1,12 @@
 import { FloatingButton, Meta } from "@components/common";
 import PortfolioLoading from "@components/portfolio/PortfolioLoadingCmpt";
 import { LayoutContainer, TocContainer } from "@containers/Common";
+import { ThemeContext } from "@libs/client/context";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio, StackBadge } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useContext } from "react";
 import useSWR from "swr";
 
 export interface BadgeWithPf extends MyPortfolio {
@@ -30,6 +31,7 @@ const PortfolioItemContainer = () => {
     { fallback: <PortfolioLoading /> }
   );
   const headingsRef = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ThemeContext);
   useEffect(() => {
     if (data && !data.ok) {
       router.push("/404");
@@ -47,7 +49,13 @@ const PortfolioItemContainer = () => {
           ref={headingsRef}
         >
           <Suspense fallback={<PortfolioLoading />}>
-            {data && <PortfolioItem ok={ok} portfolioData={data?.portfolio} />}
+            {data && (
+              <PortfolioItem
+                ok={ok}
+                portfolioData={data?.portfolio}
+                theme={theme}
+              />
+            )}
           </Suspense>
           {ok && (
             <FloatingButton

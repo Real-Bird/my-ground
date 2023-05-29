@@ -1,4 +1,5 @@
 import { FullNavBar, Menu } from "@components/common";
+import { ThemeButton } from "@components/common/ThemeBtnCmpt";
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
 
@@ -11,6 +12,8 @@ interface HeaderProps {
   isDropdown: boolean;
   isLogged: boolean;
   isHeaderShow: boolean;
+  theme: string;
+  handleTheme: () => void;
 }
 
 export const Header = ({
@@ -22,12 +25,14 @@ export const Header = ({
   isDropdown,
   isLogged,
   isHeaderShow,
+  theme,
+  handleTheme,
 }: HeaderProps) => {
   return (
     <header
       className={cls(
-        isHeaderShow ? "opacity-100" : "opacity-0",
-        "fixed top-0 z-10 flex h-12 w-full max-w-xl items-center justify-center border-b bg-white px-10 text-lg font-medium text-gray-800 lg:max-w-full"
+        isHeaderShow ? "opacity-100" : "lg:opacity-0",
+        "fixed top-0 z-10 flex h-12 w-full max-w-xl items-center justify-center border-b bg-white px-10 text-lg font-medium text-gray-800 dark:bg-slate-800 dark:text-white lg:max-w-full"
       )}
     >
       {backUrl ? (
@@ -69,15 +74,20 @@ export const Header = ({
           src="https://raw.githubusercontent.com/Real-Bird/my-ground/main/public/myground.logo.png"
           alt="profile"
           className="h-10 w-10 rounded-full bg-gray-500"
+          loading="lazy"
         />
+        {isDropdown && (
+          <ul className="absolute right-1 top-10 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-slate-600 lg:hidden">
+            <Menu path="/auth" menu={isLogged ? "로그아웃" : "로그인"} />
+            <Menu path="/notice" menu="공지사항" />
+            <Menu
+              menu={theme === "light" ? "Light Mode" : "Dark Mode"}
+              handleTheme={handleTheme}
+            />
+          </ul>
+        )}
       </div>
-      {isDropdown && (
-        <ul className="absolute right-1 top-10 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 sm:right-[8%] md:right-[15%] lg:hidden">
-          <Menu path="/auth" menu={isLogged ? "로그아웃" : "로그인"} />
-          <Menu path="/notice" menu="공지사항" />
-        </ul>
-      )}
-      <FullNavBar pathname={pathname} />
+      <FullNavBar pathname={pathname} theme={theme} handleTheme={handleTheme} />
     </header>
   );
 };

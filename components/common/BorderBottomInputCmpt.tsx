@@ -26,7 +26,7 @@ export const BorderBottomInput = ({
     <div className={cls(className)}>
       {label && (
         <label
-          className="mb-1 block text-sm font-medium text-gray-700 "
+          className="mb-1 block text-sm font-medium text-gray-700 dark:text-white"
           htmlFor={name}
         >
           {label}
@@ -40,7 +40,7 @@ export const BorderBottomInput = ({
           className={cls(
             className,
             isTitle && "text-xl lg:text-3xl",
-            "block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2 px-2 text-sm  text-gray-900 placeholder-gray-400 placeholder:text-xl placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-0"
+            "block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-2 py-2 text-sm text-gray-900 placeholder-gray-400 placeholder:text-xl placeholder:italic focus:border-amber-500 focus:outline-none focus:ring-0 dark:text-white"
           )}
           value={value}
           placeholder={placeholder}

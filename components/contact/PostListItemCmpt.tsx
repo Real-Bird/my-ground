@@ -42,7 +42,7 @@ const PostListItem = ({
           <div className="flex items-center justify-start space-x-2">
             <span className="w-20 text-sm">{name}</span>
             <RegDate
-              className="rounded-md bg-orange-200 px-1 text-xs"
+              className="rounded-md bg-orange-200 px-1 text-xs dark:bg-orange-700"
               regDate={created}
             />
           </div>
@@ -52,8 +52,8 @@ const PostListItem = ({
         className={cls(
           isModal
             ? "h-96 overflow-y-scroll break-words lg:h-[40rem]"
-            : "h-[9.5rem] overflow-y-hidden truncate leading-7 line-clamp-5 lg:h-[17rem] lg:line-clamp-[9] ",
-          "w-full whitespace-pre-wrap rounded-xl bg-orange-200 p-3 px-2 text-start"
+            : "line-clamp-5 h-[9.5rem] overflow-y-hidden truncate leading-7 lg:line-clamp-[9] lg:h-[17rem] ",
+          "w-full whitespace-pre-wrap rounded-xl bg-orange-200 p-3 px-2 text-start dark:bg-slate-800"
         )}
       >
         {content}

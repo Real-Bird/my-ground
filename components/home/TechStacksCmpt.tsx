@@ -23,6 +23,7 @@ export const TechStacksOpt = ({
       className="relative flex-1 cursor-help self-start"
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
+      onTouchStart={onMouseOver}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +42,7 @@ export const TechStacksOpt = ({
       <div
         className={cls(
           isHover ? "block" : "hidden",
-          "absolute -top-14 left-6 rounded-md border-2 bg-gray-50 p-1"
+          "absolute -top-14 left-6 rounded-md border-2 bg-gray-50 p-1 dark:bg-slate-600"
         )}
       >
         <p className="grid grid-cols-[12%_88%] text-sm">

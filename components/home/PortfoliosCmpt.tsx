@@ -28,7 +28,7 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
             stacks,
             details,
           }) => (
-            <div key={title} className="grid grid-flow-row-dense gap-3">
+            <div key={title} className="grid grid-flow-row-dense gap-3 pt-1">
               <header className="flex items-center justify-start gap-2">
                 <h2 className="text-xl font-semibold">{title}</h2>
                 <div className="flex text-sm">
@@ -69,14 +69,14 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
                 </div>
                 <div className="space-y-1 divide-y-2 divide-dashed">
                   <h3 className="font-medium">{summary}</h3>
-                  <ul className="flex flex-wrap">
+                  <ul className="flex flex-wrap py-2">
                     {stacks.map(({ stack, color }) => (
                       <li key={stack} className="p-0.5">
                         <StackBadge stack={stack} color={color} />
                       </li>
                     ))}
                   </ul>
-                  <ul className="space-y-2 py-1 pl-5">
+                  <ul className="space-y-2 py-2 pl-5">
                     {details.map((text, i) => (
                       <ol key={text + i} className="list-item">
                         <p

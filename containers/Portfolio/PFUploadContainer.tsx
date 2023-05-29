@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { MyPortfolio, StackBadge } from "@prisma/client";
@@ -10,6 +10,7 @@ import useMutation from "@libs/client/useMutation";
 import { useMultistepForm } from "@libs/client/useMultisteopForm";
 import { cls } from "@libs/client/utils";
 import "@uiw/react-markdown-preview/markdown.css";
+import { ThemeContext } from "@libs/client/context";
 
 const MarkdownViewer = dynamic(() => import("@uiw/react-markdown-preview"), {
   ssr: false,
@@ -67,6 +68,8 @@ const PortfolioUploadContainer = () => {
   const { handleSubmit } = useForm<PFUploadFormResponse>({
     mode: "onChange",
   });
+  const { theme } = useContext(ThemeContext);
+
   function updateFields(fields: Partial<PFUploadFormResponse>) {
     setData((prev) => {
       return { ...prev, ...fields };
@@ -123,25 +126,28 @@ const PortfolioUploadContainer = () => {
         <div className={cls("flex h-fit")}>
           <FormButton
             kind="button"
-            className="w-1/3 border border-transparent bg-transparent px-4 py-3 text-base font-medium text-amber-500 shadow-sm hover:bg-gray-50 hover:text-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+            className="focus:ring-offset-2dark:border-transparent w-1/3 border border-transparent bg-transparent px-4 py-3 text-base font-medium text-amber-500 shadow-sm hover:bg-gray-50 hover:text-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-amber-500 dark:text-slate-800 dark:hover:bg-amber-600"
             onClick={onBackClick}
             text="⬅"
           />
           <FormButton
             kind="submit"
-            className="w-full rounded-none border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:bg-amber-600 focus:outline-none"
+            className="w-full rounded-none border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-600 focus:bg-amber-600 focus:outline-none dark:border-transparent dark:bg-slate-800 dark:hover:bg-slate-700"
             text={isLastStep ? "업로드" : "다음"}
           />
         </div>
       </div>
       {isFirstStep && (
         <div
-          className="box-border hidden h-screen overflow-y-scroll border-2 border-l-[1px] border-gray-300 bg-white px-2 py-3 lg:block"
-          data-color-mode="light"
+          className="box-border hidden h-screen overflow-y-scroll border-2 border-l-[1px] border-gray-300 bg-white px-2 py-3 dark:border-transparent dark:bg-slate-600 lg:block"
+          data-color-mode={theme}
         >
           <MarkdownViewer
             source={data.content}
-            wrapperElement={{ "data-color-mode": "light" }}
+            wrapperElement={{ "data-color-mode": theme }}
+            style={{
+              backgroundColor: theme === "light" ? "#cbd5e1" : "#475569",
+            }}
           />
         </div>
       )}

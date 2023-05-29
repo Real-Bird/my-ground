@@ -99,8 +99,12 @@ const PostViewer = ({ id, onCloseModal, isOpen }: PostListItemProps) => {
         "fixed left-0 top-0 z-20 flex min-h-screen min-w-full flex-col items-center justify-center bg-slate-400 bg-opacity-60 backdrop-blur-sm"
       )}
       style={{ margin: 0 }}
+      onClick={onCloseModal}
     >
-      <div className="relative my-5 h-[36rem] w-5/6 rounded-lg bg-white shadow-md lg:h-[90vh]">
+      <div
+        className="relative my-5 h-[36rem] w-5/6 rounded-lg bg-white shadow-md dark:bg-slate-600 lg:h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div
           className="absolute right-1 top-1 cursor-pointer text-amber-500 hover:text-amber-600"
           onClick={onCloseModal}

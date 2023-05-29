@@ -35,7 +35,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
 
   return (
     <LayoutContainer title="CONTACT">
-      <section className="flex w-full flex-col space-y-3 px-2 text-center lg:my-5 lg:w-4/5 ">
+      <section className="flex w-full flex-col space-y-3 px-2 text-center lg:my-5 lg:w-4/5">
         <div className="flex w-full flex-row items-center justify-center">
           <div className="flex w-full flex-col items-center justify-center ">
             <h1 className="text-center text-xl font-bold text-red-600 lg:py-5 lg:text-2xl">
@@ -51,7 +51,7 @@ const Contact: NextPage<{ posts: MyGroundPost[] }> = ({ posts }) => {
               style={{
                 animationDelay: `${0.2 * (idx % contactPosts?.posts.length)}s`,
               }}
-              className="flex h-80 w-full animate-fadein cursor-pointer flex-col items-start rounded-md border-2 opacity-0 shadow-lg lg:h-[28rem] lg:animate-fadeside"
+              className="flex h-80 w-full animate-fadein cursor-pointer flex-col items-start rounded-md border-2 opacity-0 shadow-lg dark:bg-slate-700 lg:h-[28rem] lg:animate-fadeside"
               onClick={() => onOpenModal(post.id)}
             >
               <PostListItem
