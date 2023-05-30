@@ -21,7 +21,7 @@ category: sub
 
 - [ ] `api` 요청 및 응답 수정(불필요한 응답 데이터 제거, `authorization` 추가)
 - [x] `dark mode` 추가 **23.05.28~ 23.05.29수정**
-- [ ] `manifest.json` 추가
+- [x] `manifest.json` 추가 **23.05.30 수정**
 
 ### 3. notice
 

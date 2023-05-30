@@ -46,6 +46,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       }
     }
   }, [theme, router]);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/pwabuilder-sw.js");
+    }
+  }, []);
   return (
     <SWRConfig
       value={{
