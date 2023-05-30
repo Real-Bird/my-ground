@@ -7,7 +7,7 @@
   "orientation": "portrait",
   "scope": "/",
   "short_name": "RB's Ground",
-  "start_url": "http://real-bird.vercel.app/",
+  "start_url": "https://real-bird.vercel.app/",
   "theme_color": "#ee8f02",
   "categories": ["personalization", "tech blog"],
   "screenshots": [],
