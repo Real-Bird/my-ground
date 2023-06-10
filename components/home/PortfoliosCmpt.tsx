@@ -84,13 +84,11 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
                       </li>
                     ))}
                   </ul>
-                  <ul className="space-y-2 py-2 pl-5">
+                  <ul className="space-y-5 py-2 pl-5">
                     {issues.map(({ issue, solution }, i) => (
                       <li key={issue + i} className="list-disc">
                         <div>
-                          <h4 className="inline font-semibold text-red-500">
-                            Issue
-                          </h4>
+                          <h4 className="inline font-semibold">Issue</h4>
                           <span> : </span>
                           <p
                             className="inline"
@@ -100,9 +98,7 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
                           />
                         </div>
                         <div>
-                          <h4 className="inline font-semibold text-cyan-600 dark:text-cyan-400">
-                            Solution
-                          </h4>
+                          <h4 className="inline font-semibold">Solution</h4>
                           <span> : </span>
                           <p
                             className="inline"

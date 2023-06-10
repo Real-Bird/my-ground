@@ -1,24 +1,25 @@
 import { ContactMe } from "@components/home/ContactMeCmpt";
 import { toBoldDangerousHtml } from "@libs/client/utils";
 import { IIntroduction } from "interface/IIntroduction";
-import Link from "next/link";
+import Image from "next/image";
 
 interface IntroduceProps {
   intros: IIntroduction.Payload;
 }
 
 export const Introduce = ({ intros }: IntroduceProps) => {
-  const { idPhoto, email, github, velog, simpleIntro, blog } = intros;
+  const { idPhoto, email, github, velog, simpleIntro } = intros;
   return (
     <>
       <div className="flex flex-wrap items-start justify-evenly gap-4">
         <figure className="h-fit">
-          <img
+          <Image
             src={idPhoto}
-            className="aspect-[8/9] h-60 w-52 bg-slate-500"
+            className="aspect-[8/9] h-60 w-52 bg-slate-300 dark:bg-white"
             alt="portrait"
-            width="13rem"
-            height="15rem"
+            width={208}
+            height={240}
+            layout="fixed"
           />
         </figure>
         <section className="space-y-6">

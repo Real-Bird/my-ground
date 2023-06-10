@@ -1,8 +1,10 @@
 import { StackBadge } from "@components/home/StackBadgeCmpt";
-import { ITechStacks } from "interface/ITechStacks";
 
 interface StackListProps {
-  stackArray: ITechStacks.Stack[];
+  stackArray: {
+    stack: string;
+    color: string;
+  }[];
   label: string;
 }
 

@@ -1,7 +1,8 @@
 import { FullNavBar, Menu } from "@components/common";
-import { ThemeButton } from "@components/common/ThemeBtnCmpt";
+import Image from "next/image";
 import { cls } from "@libs/client/utils";
 import Link from "next/link";
+import logo from "../../public/myground.logo.png";
 
 interface HeaderProps {
   backUrl: string;
@@ -58,9 +59,11 @@ export const Header = ({
       ) : null}
       <Link href={"/"}>
         <a className="absolute left-4 hidden lg:inline-block">
-          <img
-            src="https://raw.githubusercontent.com/Real-Bird/my-ground/main/public/myground.logo.png"
-            className="h-10 w-10"
+          <Image
+            src={logo}
+            width={40}
+            height={40}
+            className="h-10 w-10 bg-gray-500"
             alt="logo"
           />
         </a>
@@ -70,11 +73,12 @@ export const Header = ({
         className="absolute right-4 top-1 cursor-pointer lg:hidden"
         onClick={onToggleDropdown}
       >
-        <img
-          src="https://raw.githubusercontent.com/Real-Bird/my-ground/main/public/myground.logo.png"
+        <Image
+          src={logo}
+          width={40}
+          height={40}
           alt="profile"
           className="h-10 w-10 rounded-full bg-gray-500"
-          loading="lazy"
         />
         {isDropdown && (
           <ul className="absolute right-1 top-10 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-slate-600 lg:hidden">
