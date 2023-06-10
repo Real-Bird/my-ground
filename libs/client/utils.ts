@@ -9,7 +9,14 @@ export function toMetaString(...arr: string[]): string {
 export function toBoldDangerousHtml(str: string) {
   return str.replace(
     /(`|'|")((?=\w)[\w\W ]+?|[ㄱ-ㅎ가-힣 ]+?)(`|'|")/gm,
-    `<strong class="font-bold px-1 bg-amber-500 rounded-md" style="color:black;">$2</strong>`
+    `<strong class="font-bold px-1 bg-amber-500 rounded-md">$2</strong>`
+  );
+}
+
+export function toUnderlineDangerousHtml(str: string) {
+  return str.replace(
+    /(`|'|")((?=\w)[\w\W ]+?|[ㄱ-ㅎ가-힣 ]+?)(`|'|")/gm,
+    `<strong class="font-semibold underline text-amber-500">$2</strong>`
   );
 }
 

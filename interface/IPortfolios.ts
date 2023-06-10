@@ -7,12 +7,15 @@ export declare namespace IPortfolios {
     people?: number;
     createdAt: string;
     lastUpdated?: string;
-    summary: string;
     github: string;
     deploy?: string;
-    stacks: ITechStacks.Stack[];
-    details: Detail[];
+    stacks: ITechStacks.StackDescriptions[];
+    description: string;
+    issues: IssueDetail[];
   }
 
-  export type Detail = string;
+  export interface IssueDetail {
+    issue: string;
+    solution: string;
+  }
 }

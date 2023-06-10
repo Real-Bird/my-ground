@@ -2,14 +2,13 @@ import { IIntroduction } from "interface/IIntroduction";
 
 export const introduction: IIntroduction.Payload = {
   idPhoto: "/selfie.jpg",
-  email: "kjy_815@naver.com",
+  email: "marbil815@gmail.com",
   github: "https://github.com/Real-Bird",
   velog: "https://velog.io/@Real-Bird",
-  blog: "https://blog.naver.com/real-bird-blog",
   simpleIntro: [
-    "'내가 겪는 에러는 누군가가 이미 해결한 에러이다'라는 마인드로, 마주한 문제를 회피하지 않고 집요하게 해결하는 자세로 개발에 임합니다.",
-    "필요한 지식과 기술을 주도적으로 익히고 강화합니다.",
-    "'ES6+'를 바탕으로 'TypeScript', 'React', 'Next.js'를 이용하여 프로젝트를 설계, 제작, 배포한 경험이 있습니다.",
-    "새로운 기술을 토이 프로젝트에 먼저 시도해보는 것을 좋아하고, 그 기술을 제것으로 만들기 위해 노력합니다.",
+    "기록과 함께 성장하는 개발자로, 학습한 내용을 `Velog`에 기록하고 있습니다. `190`여 개의 글을 포스팅했고 자체적으로 참고하며 개발에 임하고 있습니다. 사소한 내용이라도 새롭다면 기록합니다.",
+    "모든 프론트엔드 개발을 `TypeScript`로 하는 것을 선호하며, `JavaScript(ES6+)`, `React`, `Next.js`를 이용해 프로젝트를 제작 및 배포했습니다. 현재 개인 블로그와 웹 책장 서비스 `BiP`를 운영 중입니다.",
+    "경험에 의한 주장 보다 `데이터에 근거`한 의견을 추종합니다. 프로젝트 주제로 팀원과 의견이 갈렸을 때, 가용할 수 있는 자료를 찾아 비교해 주제를 선정한 경험이 있습니다.",
+    "원활한 협업을 위해서는 사소하더라도 `의견 교류`가 잦아야 한다고 생각합니다. 이것이 부족해 갈등을 겪었던 적이 있어 하나의 소통 창구를 만들고 매일 의견을 나눴었습니다.",
   ],
 };

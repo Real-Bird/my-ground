@@ -3,8 +3,8 @@ export declare namespace IIntroduction {
     idPhoto: string;
     email: string;
     github: string;
-    velog: string;
-    blog: string;
+    velog?: string;
+    blog?: string;
     simpleIntro: string[];
   }
 }

@@ -41,15 +41,15 @@ export const Educations = ({ educations }: EducationsProps) => {
             </header>
             <section className="col-start-2 row-start-2">
               <div className="space-y-1 divide-y-2 divide-dashed">
-                <ul className="space-y-2 py-1 pl-5">
+                <ul className="space-y-2 py-1  pl-5">
                   {details?.map((text, i) => (
-                    <ol key={text + i} className="list-item">
+                    <li key={text + i} className="list-disc">
                       <p
                         dangerouslySetInnerHTML={{
                           __html: toBoldDangerousHtml(text),
                         }}
                       />
-                    </ol>
+                    </li>
                   ))}
                 </ul>
               </div>

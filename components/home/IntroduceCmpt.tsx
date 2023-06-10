@@ -15,8 +15,10 @@ export const Introduce = ({ intros }: IntroduceProps) => {
         <figure className="h-fit">
           <img
             src={idPhoto}
-            className="aspect-[8/9] h-60 bg-slate-500"
+            className="aspect-[8/9] h-60 w-52 bg-slate-500"
             alt="portrait"
+            width="13rem"
+            height="15rem"
           />
         </figure>
         <section className="space-y-6">
@@ -59,20 +61,6 @@ export const Introduce = ({ intros }: IntroduceProps) => {
             }
             label="velog.io/@real-bird"
             href={velog}
-          />
-          <ContactMe
-            logo={
-              <svg
-                role="img"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="#03C75A"
-              >
-                <path d="M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z" />
-              </svg>
-            }
-            label="blog.naver.com/real-bird-blog"
-            href={blog}
           />
         </section>
       </div>

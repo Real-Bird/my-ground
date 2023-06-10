@@ -1,24 +1,16 @@
-import { StackList } from "@components/home/StackListCmpt";
+import { cls, toBoldDangerousHtml } from "@libs/client/utils";
 import { ITechStacks } from "interface/ITechStacks";
 
 interface StackListOverviewProps {
-  langs: ITechStacks.Stack[];
-  libsFw: ITechStacks.Stack[];
-  tools: ITechStacks.Stack[];
-  label: "High" | "Mid" | "Low";
+  field?: ITechStacks.StackList;
 }
 
-export const StackListOverview = ({
-  langs,
-  libsFw,
-  tools,
-  label,
-}: StackListOverviewProps) => {
+export const StackListOverview = ({ field }: StackListOverviewProps) => {
   return (
     <article className="grid grid-cols-[20%_minmax(80%,_1fr)] py-1">
       <h2 className="flex flex-row items-center space-x-2 self-start text-lg font-medium">
         <span className="hidden sm:block">
-          {label === "High" && (
+          {field?.type === "Front" && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -34,7 +26,7 @@ export const StackListOverview = ({
               />
             </svg>
           )}
-          {label === "Mid" && (
+          {field?.type === "Back" && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -50,7 +42,7 @@ export const StackListOverview = ({
               />
             </svg>
           )}
-          {label === "Low" && (
+          {field?.type === "ETC" && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -67,13 +59,41 @@ export const StackListOverview = ({
             </svg>
           )}
         </span>
-        <span>{label}</span>
+        <span>{field?.type}</span>
       </h2>
-      <figure className="flex flex-col justify-start gap-2 divide-y-2 py-1">
-        <StackList stackArray={langs} label="Langs" />
-        <StackList stackArray={libsFw} label="Libs & FW" />
-        <StackList stackArray={tools} label="Tools" />
-      </figure>
+      <ul
+        className={cls(
+          field?.type === "ETC"
+            ? "flex-row"
+            : "flex-col justify-start space-y-2 divide-y-2",
+          "flex flex-wrap gap-2"
+        )}
+      >
+        {field?.stackAndDescriptions.map(({ stack, descriptions }) => (
+          <li key={stack}>
+            <h3
+              className={cls(
+                field?.type === "ETC" ? "text-base" : "text-xl font-bold",
+                "m-1 w-fit rounded-md px-1 py-0.5"
+              )}
+            >
+              <strong>{stack}</strong>
+            </h3>
+            <ul className="pl-5">
+              {descriptions?.map((description, i) => (
+                <li key={description + i} className="list-disc">
+                  <p
+                    className="py-0.5"
+                    dangerouslySetInnerHTML={{
+                      __html: toBoldDangerousHtml(description),
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </article>
   );
 };

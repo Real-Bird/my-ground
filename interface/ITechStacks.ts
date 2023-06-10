@@ -1,18 +1,17 @@
 export declare namespace ITechStacks {
   export interface Payload {
-    main: Classify;
-    sub: Classify;
-    knowledge: Classify;
+    fields?: StackList[];
   }
 
-  export interface Classify {
-    languages?: Stack[];
-    librariesAndFrameworks?: Stack[];
-    tools?: Stack[];
+  export type Field = "Front" | "Back" | "ETC";
+
+  export interface StackList {
+    type?: Field;
+    stackAndDescriptions?: StackDescriptions[];
   }
 
-  export interface Stack {
+  export interface StackDescriptions {
     stack: string;
-    color: string;
+    descriptions?: string[];
   }
 }

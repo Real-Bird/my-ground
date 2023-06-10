@@ -7,6 +7,10 @@ export const etc: IEtc.Payload[] = [
     classify: "자격증",
     result: "최종합격",
   },
+  {
+    title: "컴퓨터활용능력 1급",
+    date: "2021.02",
+    classify: "자격증",
+    result: "최종합격",
+  },
 ];
-
-const template = { title: "", date: "", classify: "", result: "" };

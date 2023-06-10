@@ -1,5 +1,9 @@
 import { StackBadge } from "@components/home/StackBadgeCmpt";
-import { cls, toBoldDangerousHtml } from "@libs/client/utils";
+import {
+  cls,
+  toBoldDangerousHtml,
+  toUnderlineDangerousHtml,
+} from "@libs/client/utils";
 import { IPortfolios } from "interface/IPortfolios";
 import Link from "next/link";
 
@@ -24,9 +28,9 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
             lastUpdated,
             github,
             deploy,
-            summary,
             stacks,
-            details,
+            description,
+            issues,
           }) => (
             <div key={title} className="grid grid-flow-row-dense gap-3 pt-1">
               <header className="flex items-center justify-start gap-2">
@@ -41,6 +45,11 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
                   )}
                 </div>
               </header>
+              <em
+                dangerouslySetInnerHTML={{
+                  __html: toUnderlineDangerousHtml(description),
+                }}
+              />
               <section className="grid grid-cols-[20%_minmax(min-content,_80%)] gap-2">
                 <div className="flex flex-col items-center space-y-2">
                   <time className="flex flex-col items-center -space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
@@ -68,23 +77,41 @@ export const Portfolios = ({ portfolios }: PortfoliosProps) => {
                   )}
                 </div>
                 <div className="space-y-1 divide-y-2 divide-dashed">
-                  <h3 className="font-medium">{summary}</h3>
                   <ul className="flex flex-wrap py-2">
-                    {stacks.map(({ stack, color }) => (
+                    {stacks.map(({ stack }) => (
                       <li key={stack} className="p-0.5">
-                        <StackBadge stack={stack} color={color} />
+                        <p className="text-sm font-semibold">{stack}</p>
                       </li>
                     ))}
                   </ul>
                   <ul className="space-y-2 py-2 pl-5">
-                    {details.map((text, i) => (
-                      <ol key={text + i} className="list-item">
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html: toBoldDangerousHtml(text),
-                          }}
-                        />
-                      </ol>
+                    {issues.map(({ issue, solution }, i) => (
+                      <li key={issue + i} className="list-disc">
+                        <div>
+                          <h4 className="inline font-semibold text-red-500">
+                            Issue
+                          </h4>
+                          <span> : </span>
+                          <p
+                            className="inline"
+                            dangerouslySetInnerHTML={{
+                              __html: toUnderlineDangerousHtml(issue),
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <h4 className="inline font-semibold text-cyan-600 dark:text-cyan-400">
+                            Solution
+                          </h4>
+                          <span> : </span>
+                          <p
+                            className="inline"
+                            dangerouslySetInnerHTML={{
+                              __html: toUnderlineDangerousHtml(solution),
+                            }}
+                          />
+                        </div>
+                      </li>
                     ))}
                   </ul>
                 </div>
