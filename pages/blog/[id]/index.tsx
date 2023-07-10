@@ -55,7 +55,7 @@ const BlogDetail: NextPage<{
     }
   }, []);
   return (
-    <LayoutContainer title={currentPost.post.title} backUrl="/blog">
+    <LayoutContainer title={currentPost.post.title} backUrl="/">
       <div className="w-full max-w-6xl space-y-2 px-3 lg:py-4">
         <div className="flex w-full flex-row items-center justify-center lg:relative">
           <h1 className="w-full break-all border-b-2 border-dotted py-5 text-start text-2xl font-bold lg:text-5xl">
@@ -64,7 +64,7 @@ const BlogDetail: NextPage<{
         </div>
         <div className="flex w-full items-end justify-between">
           <div className="flex space-x-2">
-            <PostNavBtn link="/blog" text="목록" />
+            <PostNavBtn link="/" text="목록" />
             {ok && (
               <PostNavBtn
                 link={`/blog/${router.query.id}/revised`}

@@ -2,7 +2,7 @@ import { BlogPost } from "@components/blog";
 import { Button, FloatingButton } from "@components/common";
 import { FooterContainer, LayoutContainer } from "@containers/Common";
 import Link from "next/link";
-import { CategoryWithBlog } from "pages/blog";
+import { CategoryWithBlog } from "pages";
 
 interface BlogContainerProps {
   ok: boolean;
@@ -51,7 +51,7 @@ const BlogContainer = ({
         )}
       </section>
       {ok && (
-        <FloatingButton href="/blog/upload" type="Portfolio Upload">
+        <FloatingButton href="/blog/upload" type="Blog Upload">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"

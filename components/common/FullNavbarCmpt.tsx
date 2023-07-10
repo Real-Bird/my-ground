@@ -43,18 +43,6 @@ export const FullNavBar = ({
             포트폴리오
           </a>
         </Link>
-        <Link href={"/blog"}>
-          <a
-            className={cls(
-              pathname.includes("/blog")
-                ? "font-bold text-amber-500"
-                : "text-gray-500 dark:text-white",
-              "px-2 text-center"
-            )}
-          >
-            블로그
-          </a>
-        </Link>
         <Link href={"/contact"}>
           <a
             className={cls(
@@ -65,18 +53,6 @@ export const FullNavBar = ({
             )}
           >
             게시판
-          </a>
-        </Link>
-        <Link href={"/notice"}>
-          <a
-            className={cls(
-              pathname.includes("/notice")
-                ? "font-bold text-amber-500"
-                : "text-gray-500 dark:text-white",
-              "px-2 text-center"
-            )}
-          >
-            공지사항
           </a>
         </Link>
       </nav>
