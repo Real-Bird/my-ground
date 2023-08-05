@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import dynamic from "next/dynamic";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { LayoutContainer } from "@containers/Common";
 import {
@@ -15,7 +15,6 @@ import {
 } from "@components/common";
 import { PrevNextPost } from "@components/blog";
 import useSWR from "swr";
-import { ThemeContext } from "@libs/client/context";
 
 type Pager = Pick<MyBlog, "id" | "title">;
 
@@ -41,6 +40,12 @@ const BlogDetail: NextPage<{
   const { post, categories } = currentPost;
   const { ok } = useAdmin();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!post) {
+      router.push("/404");
+    }
+  }, []);
 
   return (
     <LayoutContainer title={currentPost.post.title} backUrl="/">
@@ -144,13 +149,9 @@ const Page: NextPage<{
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await client.myBlog.findMany({});
-  const paths = posts.map((post) => ({
-    params: { id: post.id.toString() },
-  }));
   return {
-    paths: paths,
-    fallback: false,
+    paths: [],
+    fallback: "blocking",
   };
 };
 export const getStaticProps: GetStaticProps = async (ctx) => {

@@ -6,6 +6,7 @@ import rehypeRaw from "rehype-raw";
 import { makeHeadingId } from "@libs/client/utils";
 import { useRef } from "react";
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 
 const TocContainer = dynamic(
   async () => await import("@containers/Common/TocContainer"),
@@ -18,6 +19,13 @@ const TocContainer = dynamic(
 export const MarkDownViewer = ({ title, markdown }: MarkDownViewerProps) => {
   const mdWithHeadingId = makeHeadingId(markdown);
   const headingsRef = useRef<HTMLDivElement>(null);
+  const [markdownViewerLoaded, setMarkdownViewerLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMarkdownViewerLoaded(true);
+    }, 1000);
+  }, []);
   return (
     <div ref={headingsRef}>
       <ReactMarkdown
@@ -118,11 +126,13 @@ export const MarkDownViewer = ({ title, markdown }: MarkDownViewerProps) => {
       >
         {mdWithHeadingId}
       </ReactMarkdown>
-      <TocContainer
-        headingsRef={headingsRef}
-        content={markdown}
-        title={title}
-      />
+      {markdownViewerLoaded && (
+        <TocContainer
+          headingsRef={headingsRef}
+          content={markdown}
+          title={title}
+        />
+      )}
     </div>
   );
 };
