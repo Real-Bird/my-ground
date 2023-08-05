@@ -18,7 +18,7 @@ export const BlogPost = ({ post, categories, idx }: BlogPostProps) => {
       )}
       style={{ animationDelay: ANIMATION_DELAY }}
     >
-      <Link href={`/blog/${post.id}`}>
+      <Link href="" as={`/blog/${post.id}`}>
         <a className="cursor-pointer">
           <div className="flex flex-col items-start">
             <div className="whitespace-normal py-2 text-start text-lg font-semibold lg:text-xl">
