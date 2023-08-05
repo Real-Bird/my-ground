@@ -1,8 +1,8 @@
 import { Toc } from "@components/form";
-import getIntersectionObserver from "@libs/client/getIntersectionObserver";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useTocList } from "@libs/client/useTocList";
+import useHeadingObserver from "@libs/client/useHeadingObserver";
 
 interface TocContainer {
   title: string;
@@ -17,27 +17,21 @@ export interface TOCList {
 }
 export type RefProps = { [key: string]: IntersectionObserverEntry };
 
-export const TocContainer = ({ title, content, headingsRef }: TocContainer) => {
-  const headingElementsRef = useRef<RefProps>({});
+const TocContainer = ({ title, content, headingsRef }: TocContainer) => {
   const router = useRouter();
-  const [activeId, setActiveId] = useState("");
   const results = useTocList(content);
+  const { activeId, setHeadingElements } = useHeadingObserver();
+
   useEffect(() => {
-    const headingElements = Array.from<HTMLHeadingElement>(
-      headingsRef?.current?.querySelectorAll("h1, h2, h3")
-    );
-    const observer = getIntersectionObserver(
-      setActiveId,
-      headingElementsRef,
-      headingElements
-    );
-    headingElements.map((header) => {
-      observer.observe(header);
-    });
-    return () => observer.disconnect();
-  }, [router, headingsRef, activeId, headingElementsRef, content]);
+    if (headingsRef.current) {
+      setHeadingElements(
+        Array.from(headingsRef.current.querySelectorAll("h1,h2,h3"))
+      );
+    }
+  }, [headingsRef.current, router]);
+
   return (
-    <div className="fixed top-20 right-5 hidden w-48 text-sm text-slate-400 lg:block">
+    <div className="fixed right-5 top-20 hidden w-48 text-sm text-slate-400 lg:block">
       <h1 className="mb-1 border-b-2 border-dotted border-gray-400 text-center text-lg font-bold">
         {title}
       </h1>
@@ -45,3 +39,5 @@ export const TocContainer = ({ title, content, headingsRef }: TocContainer) => {
     </div>
   );
 };
+
+export default TocContainer;

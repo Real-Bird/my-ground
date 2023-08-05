@@ -1,6 +1,6 @@
 import { FloatingButton, Meta } from "@components/common";
 import PortfolioLoading from "@components/portfolio/PortfolioLoadingCmpt";
-import { LayoutContainer, TocContainer } from "@containers/Common";
+import { LayoutContainer } from "@containers/Common";
 import { ThemeContext } from "@libs/client/context";
 import useAdmin from "@libs/client/useAdmin";
 import { MyPortfolio, StackBadge } from "@prisma/client";
@@ -30,7 +30,6 @@ const PortfolioItemContainer = () => {
     router.query.id ? `/api/portfolio/${router.query.id}` : null,
     { fallback: <PortfolioLoading /> }
   );
-  const headingsRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
   useEffect(() => {
     if (data && !data.ok) {
@@ -44,10 +43,7 @@ const PortfolioItemContainer = () => {
         title={data?.portfolio.title ?? "LOADING"}
         backUrl="/portfolio"
       >
-        <div
-          className="w-full flex-col items-center justify-center space-y-2 px-3 lg:my-5 lg:flex"
-          ref={headingsRef}
-        >
+        <div className="w-full flex-col items-center justify-center space-y-2 px-3 lg:my-5 lg:flex">
           <Suspense fallback={<PortfolioLoading />}>
             {data && (
               <PortfolioItem
@@ -78,11 +74,6 @@ const PortfolioItemContainer = () => {
             </FloatingButton>
           )}
         </div>
-        <TocContainer
-          headingsRef={headingsRef}
-          content={data ? data.portfolio.content : ""}
-          title={data ? data.portfolio.title : ""}
-        />
       </LayoutContainer>
     </>
   );

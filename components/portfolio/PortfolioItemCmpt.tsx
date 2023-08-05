@@ -1,15 +1,12 @@
 import { BadgeWithPf } from "@containers/Portfolio/PortfolioItemContainer";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import "@uiw/react-markdown-preview/markdown.css";
 import { PostNavBtn } from "@components/common";
-import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
+import { RefObject } from "react";
 
-const MarkdownPreview = dynamic<MarkdownPreviewProps>(
-  () => import("@uiw/react-markdown-preview"),
-  {
-    ssr: false,
-  }
+const MarkDownViewer = dynamic(
+  async () => await import("@components/common/MarkdownViewer"),
+  { loading: () => <div>Loading...</div> }
 );
 
 interface PortfolioItemProps {
@@ -108,14 +105,7 @@ const PortfolioItem = ({ ok, portfolioData, theme }: PortfolioItemProps) => {
         className="min-h-[68vh] rounded-md bg-slate-300 p-3 dark:bg-slate-600"
         data-color-mode={theme}
       >
-        <MarkdownPreview
-          source={content}
-          className="bg-slate-300 dark:bg-slate-600 dark:text-white"
-          wrapperElement={{
-            "data-color-mode": theme,
-          }}
-          style={{ backgroundColor: theme === "light" ? "#cbd5e1" : "#475569" }}
-        />
+        <MarkDownViewer markdown={content} title={title} />
       </div>
     </div>
   );

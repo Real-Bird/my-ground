@@ -100,3 +100,29 @@ export function randomChroma() {
   const chromaList = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
   return chromaList[Math.floor(Math.random() * chromaList.length)].toString();
 }
+
+export function makeHeadingId(content: string) {
+  const tempArr: string[] = [];
+  const containedId = content
+    .split(`\n`)
+    .map((item) => {
+      if (item.match(/^#{1,3} /g)) {
+        const count = item.match(/#/g)?.length;
+        const title = item.split("# ")[1].replace(/`/g, "").trim();
+        let link = title
+          .replace(/[`~!@#\$%\^&\*()=\+\\|\/\?<>,.\[\]"'\{\}]/g, "")
+          .replaceAll(" ", "-")
+          .toLowerCase();
+        link =
+          tempArr.filter((t) => t.includes(link)).length > 0
+            ? `${link}-${tempArr.filter((t) => t.includes(link)).length}`
+            : link;
+        const temp = link.replace(/(-\d)$/g, "");
+        tempArr.push(temp);
+        return "#".repeat(count) + " " + title + "\\#" + link;
+      }
+      return item;
+    })
+    .join("\n");
+  return containedId;
+}

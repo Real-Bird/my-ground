@@ -11,7 +11,6 @@ async function handler(
     const {
       query: { id },
     } = req;
-
     const post = await client.myBlog.findUnique({
       where: {
         id: +id,
