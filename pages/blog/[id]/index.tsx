@@ -41,13 +41,6 @@ const BlogDetail: NextPage<{
   const { post, categories } = currentPost;
   const { ok } = useAdmin();
   const router = useRouter();
-  const { theme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    if (!post) {
-      router.push("/404");
-    }
-  }, []);
 
   return (
     <LayoutContainer title={currentPost.post.title} backUrl="/">
