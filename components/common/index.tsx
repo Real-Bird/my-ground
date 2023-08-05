@@ -19,3 +19,4 @@ export * from "./ClientErrorBoundaryCmpt";
 export * from "./MetaCmpt";
 export * from "./RegDateCmpt";
 export * from "./BadgeCmpt";
+export * from "./MarkdownViewer";

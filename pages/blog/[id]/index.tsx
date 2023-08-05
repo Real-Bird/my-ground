@@ -1,10 +1,9 @@
 import { Category, MyBlog } from "@prisma/client";
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import dynamic from "next/dynamic";
-import "@uiw/react-markdown-preview/markdown.css";
 import useAdmin from "@libs/client/useAdmin";
 import client from "@libs/server/client";
-import { useEffect, useRef, useContext, Suspense } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { LayoutContainer } from "@containers/Common";
 import {
@@ -14,11 +13,8 @@ import {
   PostNavBtn,
   RegDate,
 } from "@components/common";
-import { TocContainer } from "@containers/Common/TocContainer";
-import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 import { PrevNextPost } from "@components/blog";
 import useSWR from "swr";
-import { ThemeContext } from "@libs/client/context";
 
 type Pager = Pick<MyBlog, "id" | "title">;
 
@@ -32,11 +28,9 @@ interface CurrentPostProps {
   categories: Category[];
 }
 
-const MarkdownPreview = dynamic<MarkdownPreviewProps>(
-  async () => await import("@uiw/react-markdown-preview"),
-  {
-    ssr: false,
-  }
+const MarkDownViewer = dynamic(
+  async () => await import("@components/common/MarkdownViewer"),
+  { ssr: false, loading: () => <div>Loading...</div> }
 );
 
 const BlogDetail: NextPage<{
@@ -46,14 +40,13 @@ const BlogDetail: NextPage<{
   const { post, categories } = currentPost;
   const { ok } = useAdmin();
   const router = useRouter();
-  const headingsRef = useRef<HTMLDivElement>(null);
-  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (!post) {
       router.push("/404");
     }
   }, []);
+
   return (
     <LayoutContainer title={currentPost.post.title} backUrl="/">
       <div className="w-full max-w-6xl space-y-2 px-3 lg:py-4">
@@ -85,22 +78,8 @@ const BlogDetail: NextPage<{
             </div>
           </div>
         </div>
-        <div
-          className="min-h-[68vh] rounded-md bg-slate-300 p-3 dark:bg-slate-600"
-          data-color-mode={theme}
-          ref={headingsRef}
-        >
-          <MarkdownPreview
-            source={post.content}
-            className="bg-slate-300 dark:bg-slate-600 dark:text-white"
-            wrapperElement={{
-              "data-color-mode": theme,
-              ref: headingsRef,
-            }}
-            style={{
-              backgroundColor: theme === "light" ? "#cbd5e1" : "#475569",
-            }}
-          />
+        <div className="min-h-[68vh] rounded-md bg-slate-300 p-3 dark:bg-slate-600">
+          <MarkDownViewer markdown={post.content} title={post.title} />
         </div>
         <div className="flex w-full items-center justify-between gap-3">
           {pagerData?.ok && (
@@ -140,11 +119,6 @@ const BlogDetail: NextPage<{
           </svg>
         </FloatingButton>
       )}
-      <TocContainer
-        headingsRef={headingsRef}
-        content={post ? post.content : ""}
-        title={post ? post.title : ""}
-      />
     </LayoutContainer>
   );
 };
